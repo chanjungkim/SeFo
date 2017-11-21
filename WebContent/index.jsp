@@ -1,6 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <html>
 <head>
-<title>비밀의숲 로그인</title>
+<title>비밀의숲 메인</title>
+<link rel="stylesheet" href="assets/css/index.css">
 </head>
 <body>
 	<div class="cotn_principal">
@@ -61,4 +64,9 @@
 		</div>
 	</div>
 </body>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="assets/js/index.js"></script>
 </html>
