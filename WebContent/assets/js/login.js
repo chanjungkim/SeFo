@@ -28,7 +28,6 @@ function cambiar_sign_up(at) {
 }
 
 function ocultar_login_sign_up() {
-
 	document.querySelector('.cont_forms').className = "cont_forms";
 	document.querySelector('.cont_form_sign_up').style.opacity = "0";
 	document.querySelector('.cont_form_login').style.opacity = "0";
