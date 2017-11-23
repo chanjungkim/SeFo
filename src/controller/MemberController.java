@@ -27,6 +27,7 @@ public class MemberController {
 	@Autowired
 	private ArticleService articleService;
 	
+	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public void login(String id, @RequestParam("password")String pwd, HttpSession session, HttpServletResponse response) {
 		if(service.login(id, pwd)) {
@@ -64,6 +65,11 @@ public class MemberController {
 	
 	@RequestMapping("/loginPageMove.do")
 	public String loginPageMove(HttpSession session) {
-		return "login2";
+		return "login";
  	}
+	
+	@RequestMapping("/moveSignupForm.do")
+	public String moveSignupForm() {
+		return "signup_form";
+	}
 }

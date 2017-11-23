@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<html>
+	pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html lang="en" >
 <head>
-<title>비밀의숲 메인</title>
-<link rel="stylesheet" href="./assets/css/login.css">
-<script type="text/javascript" src="./assets/js/jquery.js"></script>
-<script type="text/javascript">
+  <meta charset="UTF-8">
+  <title>Login Box Concept</title>
+  <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+  <link rel="stylesheet" href="./assets/css/login2.css">
+  <script type="text/javascript" src="./assets/js/jquery.js"></script>
+	<script type="text/javascript">
 	$(function(){
 		$('#btnLogin').click(function(){
 			var id = $('#id').val();
@@ -29,70 +32,62 @@
 			})
 		})
 	})
-</script>
+</script>  
 </head>
+
 <body>
-	<div class="cotn_principal">
-		<div class="cont_centrar">
-			<div class="cont_login">
-				<div class="cont_info_log_sign_up">
-					<div class="col_md_login">
-						<div class="cont_ba_opcitiy">
-							<h2>LOGIN</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-							<button class="btn_login" onclick="cambiar_login()">LOGIN</button>
-						</div>
-					</div>
-					<div class="col_md_sign_up">
-						<div class="cont_ba_opcitiy">
-							<h2>SIGN UP</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-							<button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN
-								UP</button>
-						</div>
-					</div>
-				</div>
-				<div class="cont_back_info">
-					<div class="cont_img_back_grey">
-						<img
-							src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d"
-							alt="" />
-					</div>
-				</div>
-				<div class="cont_forms">
-					<div class="cont_img_back_">
-						<img
-							src="https://images.unsplash.com/42/U7Fc1sy5SCUDIu4tlJY3_NY_by_PhilippHenzler_philmotion.de.jpg?ixlib=rb-0.3.5&q=50&fm=jpg&crop=entropy&s=7686972873678f32efaf2cd79671673d"
-							alt="" />
-					</div>
-					<div class="cont_form_login">
-						<a href="#" onclick="ocultar_login_sign_up()"><i
-							class="material-icons">&#xE5C4;</i></a>
-						<h2>LOGIN</h2>
-						<input type="text" placeholder="id" id="id"/> 
-						<input type="password"placeholder="Password" id="pwd"/>
-						<button id="btnLogin" class="btn_login" onclick="cambiar_login()">LOGIN</button>
-					</div>
+  <div class='brand'>
+  <a href='https://www.jamiecoulter.co.uk' target='_blank'>
+    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/logo.png'>
+  </a>
+</div>
+<div class='login'>
+  <div class='login_title'>
+    <span>Login to your account</span>
+  </div>
+  <div class='login_fields'>
+    <div class='login_fields__user'>
+      <div class='icon'>
+        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png'>
+      </div>
+      <input placeholder='Username' type='text' id="id">
+        <div class='validation'>
+          <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+        </div>
+      </input>
+    </div>
+    <div class='login_fields__password'>
+      <div class='icon'>
+        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
+      </div>
+      <input placeholder='Password' type='password' id="pwd">
+      <div class='validation'>
+        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+      </div>
+    </div>
+    <div class='login_fields__submit'>
+      <input id="btnLogin" type='submit' value='로그인'>
+      <input style="margin-left: 8px"type='submit' value='회원가입'>
+      <div class='forgot'>
+        <a href='#'>Forgotten password?</a>
+      </div>
+    </div>
+  </div>
+  <div class='disclaimer'>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper laoreet placerat. Nullam semper auctor justo, rutrum posuere odio vulputate nec.</p>
+  </div>
+</div>
+<div class='authent'>
+  <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/puff.svg'>
+  <p>Authenticating...</p>
+</div>
+<div class='love'>
+  <p>Made with <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/love_copy.png" /> by <a href='https://www.jamiecoulter.co.uk' target='_blank'> Jcoulterdesign </a></p>
+</div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 
-					<div class="cont_form_sign_up">
-						<a href="#" onclick="ocultar_login_sign_up()"><i
-							class="material-icons">&#xE5C4;</i></a>
-						<h2>SIGN UP</h2>
-						<input type="text" placeholder="Email" /> <input type="text"
-							placeholder="User" /> <input type="password"
-							placeholder="Password" /> <input type="password"
-							placeholder="Confirm Password" />
-						<button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN
-							UP</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <script  src="./assets/js/login2.js"></script>
+
 </body>
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="./assets/js/login.js"></script>
 </html>

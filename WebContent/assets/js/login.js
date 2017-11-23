@@ -1,40 +1,26 @@
-function cambiar_login() {
-	document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_login";
-	document.querySelector('.cont_form_login').style.display = "block";
-	document.querySelector('.cont_form_sign_up').style.opacity = "0";
+$('input[type="submit"]').click(function(){
 
-	setTimeout(function() {
-		document.querySelector('.cont_form_login').style.opacity = "1";
-	}, 400);
+});
 
-	setTimeout(function() {
-		document.querySelector('.cont_form_sign_up').style.display = "none";
-	}, 200);
-}
+$('input[type="text"],input[type="password"]').focus(function(){
+  $(this).prev().animate({'opacity':'1'},200)
+});
+$('input[type="text"],input[type="password"]').blur(function(){
+  $(this).prev().animate({'opacity':'.5'},200)
+});
 
-function cambiar_sign_up(at) {
-	document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_sign_up";
-	document.querySelector('.cont_form_sign_up').style.display = "block";
-	document.querySelector('.cont_form_login').style.opacity = "0";
+$('input[type="text"],input[type="password"]').keyup(function(){
+  if(!$(this).val() == ''){
+    $(this).next().animate({'opacity':'1','right' : '30'},200)
+  } else {
+    $(this).next().animate({'opacity':'0','right' : '20'},200)
+  }
+});
 
-	setTimeout(function() {
-		document.querySelector('.cont_form_sign_up').style.opacity = "1";
-	}, 100);
+var open = 0;
+$('.tab').click(function(){
+  $(this).fadeOut(200,function(){
+    $(this).parent().animate({'left':'0'})
+  });
+});
 
-	setTimeout(function() {
-		document.querySelector('.cont_form_login').style.display = "none";
-	}, 400);
-
-}
-
-function ocultar_login_sign_up() {
-	document.querySelector('.cont_forms').className = "cont_forms";
-	document.querySelector('.cont_form_sign_up').style.opacity = "0";
-	document.querySelector('.cont_form_login').style.opacity = "0";
-
-	setTimeout(function() {
-		document.querySelector('.cont_form_sign_up').style.display = "none";
-		document.querySelector('.cont_form_login').style.display = "none";
-	}, 500);
-
-}
