@@ -4,13 +4,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="repository.mapper.ArticleMapper">
 	<insert id="insertArticle" parameterType="int">
-		INSERT INTO ARTICLE(ID, WRITE_TIME, CONTENT, PHOTO_PATH) 
-		VALUES(#{id}, #{write_time}, #{content}, #{photo_path}) 
+		INSERT INTO ARTICLE(ID,
+		WRITE_TIME, CONTENT, PHOTO_PATH)
+		VALUES(#{id}, #{write_time}, #{content}, #{photo_path})
 	</insert>
-	
+
 	<select id="selectAllArticle" resultType="ArticleVO">
-		SELECT * FROM ARTICLE WHERE ID = 
-		(SELECT FOLLOWEE FROM FOLLOW WHERE id=#{id}) OR ID =#{id} 
-		ORDER BY WRITE_TIME DESC
+		select
+		*
+		from
+		article
+		where id in (select 
+						followee 
+					from 
+						follow 
+					where id = #{id}) OR id = #{id}
+		ORDER BY WRITE_TIME DESC;
 	</select>
 </mapper>
