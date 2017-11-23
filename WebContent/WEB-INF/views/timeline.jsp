@@ -28,17 +28,17 @@
 			var content = $('#content').val();
 			
 			$.ajax({
-				type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
-				url : 'writePost.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
+				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
+				url : 'writePost.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
 				data : {
 					'content' : content
-				}, // ê²€ìƒ‰ì–´ ë°ì´í„°
-				dataType : 'text',// ì‘ë‹µë°ì´í„° í˜•ì‹
+				}, // °Ë»ö¾î µ¥ÀÌÅÍ
+				dataType : 'text',// ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
 				success : function(resultData) {
 					$(".article-list").append("<p class='blue'>test</p>");
 				},
 				error : function() {
-					alert('ajax ìš”ì²­ ì‹¤íŒ¨');
+					alert('ajax ¿äÃ» ½ÇÆĞ');
 				}
 			})
 		})
@@ -196,7 +196,7 @@
 														<i class="glyphicon glyphicon-thumbs-up"></i>
 													</button>
 													<!-- List of people who liked if more than 3, show number  otherwise id -->
-													<label>ì•„ì´ë”” ë¦¬ìŠ¤íŠ¸</label>
+													<label>¾ÆÀÌµğ ¸®½ºÆ®</label>
 													<!-- EO liked list -->
 												</p>
 												<p>
@@ -205,8 +205,8 @@
 													<tr>
 														<td><img
 															src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"
-															height="28px" width="28px"> <span>ì•„ì´ë””</span></td>
-														<td>ëŒ“ê¸€ ë‚´ìš©</td>
+															height="28px" width="28px"> <span>¾ÆÀÌµğ</span></td>
+														<td>´ñ±Û ³»¿ë</td>
 													</tr>
 													<!--  EO Comment -->
 												</table>
