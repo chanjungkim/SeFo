@@ -12,13 +12,13 @@ public class MemberDao {
 	@Autowired
 	private SqlSessionTemplate session;
 	
-	public int loginMember(String email, String pwd) {
+	public int loginMember(String id, String pwd) {
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		return mapper.loginMember(email, pwd);
+		return mapper.loginMember(id, pwd);
 	}
 	
-	public MemberVO initMain(String email) {
+	public MemberVO initMain(String id) {
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		return mapper.initMain(email);
+		return mapper.initMain(id);
 	}
 }

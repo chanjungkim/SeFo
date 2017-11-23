@@ -14,8 +14,15 @@
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 <link href="assets/css/facebook.css" rel="stylesheet">
+<style>
+.prifile{
+	border-radius: 50px 50px 50px 50px;
+	border-style: dotted;
+	border-color: fuchsia;
+	border-width: 3px;
+}
+</style>
 </head>
-
 <body>
 	<c:if test="${empty sessionScope.loginId}">
 		<%
@@ -134,8 +141,8 @@
 														class="glyphicon glyphicon-picture"></i></a></li>
 												<li><a href="#"><i
 														class="glyphicon glyphicon-camera"></i></a></li>
-												<!-- 												<li><a href=""><i -->
-												<!-- 														class="glyphicon glyphicon-map-marker"></i></a></li> -->
+												<!-- <li><a href=""><i -->
+												<!-- class="glyphicon glyphicon-map-marker"></i></a></li> -->
 											</ul>
 										</form>
 									</div>
@@ -145,14 +152,16 @@
 										<div class="panel panel-default">
 											<div class="panel-thumbnail"></div>
 											<div class="panel-body">
+												<a href="#">
 												<p class="lead">
 													<!--  profile -->
-													<img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"
-														height="28px" width="28px"> <span>${articleVO.id}</span>
+													<img class="prifile" src="assets/img/profile_pictures/${articleVO.id}.JPG"
+														height="40px" width="40px"> <span>${articleVO.id}</span>
 													<!--  -->
 												</p>
+												</a>
 												<!--  if photo exists -->
-												<img src="assets/img/bg_5.jpg" class="img-responsive">
+												<img src="${articleVO.photo_path}" class="img-responsive">
 												<!-- -->
 												<p>${articleVO.content}</p>
 												<p>

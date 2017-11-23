@@ -3,25 +3,27 @@ package vo;
 import java.util.Date;
 
 public class MemberVO {
-	int member_num;
-	String email;
-	String password;
-	String name;
-	Date birth;
-	String photo_path;
-	String phone;
-	Character gender;
+	private int member_num;
+	private String id;
+	private String password;
+	private String name;
+	private String email;
+	private Date birth;
+	private String photo_path;
+	private String phone;
+	private Character gender;
+	private int follow_count;
 	public int getMember_num() {
 		return member_num;
 	}
 	public void setMember_num(int member_num) {
 		this.member_num = member_num;
 	}
-	public String getEmail() {
-		return email;
+	public String getId() {
+		return id;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getPassword() {
 		return password;
@@ -34,6 +36,12 @@ public class MemberVO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public Date getBirth() {
 		return birth;
@@ -59,5 +67,10 @@ public class MemberVO {
 	public void setGender(Character gender) {
 		this.gender = gender;
 	}
-	
+	public int getFollow_count() {
+		return follow_count;
+	}
+	public void setFollow_count(int follow_count) {
+		this.follow_count = follow_count;
+	}
 }

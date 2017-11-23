@@ -3,18 +3,17 @@
 <html>
 <head>
 <title>비밀의숲 메인</title>
-<link rel="stylesheet" href="assets/css/login.css">
-
+<link rel="stylesheet" href="./assets/css/login.css">
 <script type="text/javascript" src="./assets/js/jquery.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$('#btnLogin').click(function(){
-			var email = $('#email').val();
+			var id = $('#id').val();
 			var pwd = $('#pwd').val();
 			$.ajax({
 				type:'post', // 요청 보내면 doPost가 실행됨
 				url:'login.do', // 우리가 작성한 java 서블릿에게
-				data:{'email':''+email, 'password':''+pwd}, // 검색어 데이터
+				data:{'id':''+id, 'password':''+pwd}, // 검색어 데이터
 				dataType: 'text',// 응답데이터 형식
 				success: function(resultData){
 					
@@ -70,7 +69,7 @@
 						<a href="#" onclick="ocultar_login_sign_up()"><i
 							class="material-icons">&#xE5C4;</i></a>
 						<h2>LOGIN</h2>
-						<input type="text" placeholder="Email" id="email"/> 
+						<input type="text" placeholder="id" id="id"/> 
 						<input type="password"placeholder="Password" id="pwd"/>
 						<button id="btnLogin" class="btn_login" onclick="cambiar_login()">LOGIN</button>
 					</div>
@@ -95,5 +94,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <!-- Latest compiled JavaScript -->
-<script src="assets/js/login.js"></script>
+<script src="./assets/js/login.js"></script>
 </html>
