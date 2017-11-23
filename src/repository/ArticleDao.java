@@ -17,6 +17,7 @@ public class ArticleDao {
 	
 	public int insertArticle(ArticleVO article) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		System.out.println("articleDAO ½ÇÇà!"+article.getContent());
 		return mapper.insertArticle(article);
 	}
 	

@@ -45,5 +45,10 @@ public class ArticleVO {
 	public void setPhoto_path(String photo_path) {
 		this.photo_path = photo_path;
 	}
+	@Override
+	public String toString() {
+		return "ArticleVO [article_num=" + article_num + ", id=" + id + ", write_time=" + write_time + ", content="
+				+ content + ", like_count=" + like_count + ", photo_path=" + photo_path + "]";
+	}
 
 }

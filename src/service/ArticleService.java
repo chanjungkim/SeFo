@@ -14,7 +14,11 @@ public class ArticleService {
 	private ArticleDao dao;
 	
 	public boolean writeArticle(ArticleVO article) {
-		if(dao.insertArticle(article) > 0) return true;
+		System.out.println("articleService ½ÇÇà!");
+		int result = dao.insertArticle(article);
+		System.out.println(result + " : "+article.getContent());
+		
+		if(result > 0) return true;
 		else return false;
 	}
 	

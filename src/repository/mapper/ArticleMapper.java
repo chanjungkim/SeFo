@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import vo.ArticleVO;
 
 public interface ArticleMapper {
-	public int insertArticle(@Param("article")ArticleVO article);
+	public int insertArticle(ArticleVO article);
 	public List<ArticleVO> selectAllArticle(String id);	
 }

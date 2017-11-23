@@ -3,7 +3,6 @@ package controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,14 +21,24 @@ public class ArticleController {
 	@RequestMapping("/writePost.do")
 	public String writePost(HttpSession session, String content) {
 		ArticleVO article = new ArticleVO();
-		String id = (String) session.getAttribute("id");
+		String id = (String) session.getAttribute("loginId");
 		
-//		
-//		Date now = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss").parse();
-//				
-//		article.setId(id);
-//		article.setContent(content);
-//		article.setWrite_time(now);
+		SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+		String timeStr = sdf.format(new Date());
+		Date now;
+		try {
+			now = sdf.parse(timeStr);
+			
+			article.setId(id);
+			article.setContent(content);
+			article.setWrite_time(now);
+			article.setPhoto_path(""); // modify...
+			
+			System.out.println(article.toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //		ModelAndView mv = new ModelAndView();
 //		mv.addObject("memberInfo", member);
