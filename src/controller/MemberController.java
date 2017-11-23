@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,22 +13,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-
+import service.ArticleService;
 import service.MemberService;
+import vo.ArticleVO;
 import vo.MemberVO;
 
 @Controller
 public class MemberController {
+	
 	@Autowired
 	private MemberService service;
 	
+	@Autowired
+	private ArticleService articleService;
+	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
-	public void login(String email, @RequestParam("password")String pwd, HttpSession session, HttpServletResponse response) {
-		if(service.login(email, pwd)) {
+	public void login(String id, @RequestParam("password")String pwd, HttpSession session, HttpServletResponse response) {
+		if(service.login(id, pwd)) {
 		    String personJson = "true";
 		    try {
-		    	session.setAttribute("loginEmail", email);
+		    	session.setAttribute("loginId", id);
 				response.getWriter().print(personJson);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -44,11 +49,16 @@ public class MemberController {
 	
 	@RequestMapping("/initMain.do")
 	public ModelAndView initMain(HttpSession session) {
-		String email = (String) session.getAttribute("loginEmail");
+		String id = (String) session.getAttribute("loginId");
 		ModelAndView mv = new ModelAndView();
-		MemberVO member = service.initMain(email);
+		MemberVO member = service.initMain(id);
+		List<ArticleVO> articleList = articleService.getArticleList(id);
+//		for(ArticleVO a : articleList) {
+//			System.out.print(a.getId()+" "+a.getWrite_time()+" "+a.getContent());
+//		}
+		mv.addObject("articleList", articleList);
 		mv.addObject("memberInfo", member);
-		mv.setViewName("main");
+		mv.setViewName("timeline");
 		return mv;
  	}
 	
