@@ -14,6 +14,8 @@
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 <link href="assets/css/facebook.css" rel="stylesheet">
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <style>
 .prifile {
 	border-radius: 50px 50px 50px 50px;
@@ -23,9 +25,11 @@
 }
 </style>
 <script>
-	$(function() {
-		$('#postBtn').click(function() {
+	$(function(){
+		$('#postBtn').on('click', function() {
 			var content = $('#content').val();
+			
+			alert(content)
 			
 			$.ajax({
 				type : 'post', // 요청 보내면 doPost가 실행됨
@@ -35,7 +39,46 @@
 				}, // 검색어 데이터
 				dataType : 'text',// 응답데이터 형식
 				success : function(resultData) {
-					$(".article-list").append("<p class='blue'>test</p>");
+					alert('글쓰기 완료');
+					$(".well").after(
+							'<div class="panel panel-default"><div class="panel-thumbnail"></div>'
+							+'<div class="panel-body">'
+							+'<a href="#">'
+							+'<p class="lead">'
+							+'<!--  profile -->'
+							+'<img class="prifile"'
+							+' src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
+							+'				height="40px" width="40px"> <span>${sessionScope.loginId}</span>'
+							+'			<!--  -->'
+							+'		</p>'
+							+'	</a>'
+							+'	<!--  if photo exists -->'
+							+'	<img src="${articleVO.photo_path}" class="img-responsive">'
+							+'		<!-- -->'
+							+'	<p>'+content+'</p>'
+							+'	<p>'
+							+'		<button type="button" class="btn btn-default btn-sm">'
+							+'			<i class="glyphicon glyphicon-thumbs-up"></i>'
+							+'		</button>'
+							+'		<!-- List of people who liked if more than 3, show number  otherwise id -->'
+							+'		<label>아이디 리스트</label>'
+							+'		<!-- EO liked list -->'
+							+'	</p>'
+							+'	<p>'
+							+'	<table>'
+							+'		<!-- Start Comment  -->'
+							+'		<tr>'
+							+'			<td><img'
+							+'				src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"'
+							+'				height="28px" width="28px"> <span>아이디</span></td>'
+							+'			<td>댓글 내용</td>'
+							+'		</tr>'
+							+'		<!--  EO Comment -->'
+							+'	</table>'
+							+'	</p>'
+							+'</div>'
+							+'</div>"'
+						);
 				},
 				error : function() {
 					alert('ajax 요청 실패');
