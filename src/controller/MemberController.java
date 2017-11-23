@@ -64,6 +64,6 @@ public class MemberController {
 	
 	@RequestMapping("/loginPageMove.do")
 	public String loginPageMove(HttpSession session) {
-		return "login";
+		return "login2";
  	}
 }
