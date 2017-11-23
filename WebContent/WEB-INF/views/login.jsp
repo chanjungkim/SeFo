@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <title>Login Box Concept</title>
   <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
-  <link rel="stylesheet" href="./assets/css/login2.css">
+  <link rel="stylesheet" href="./assets/css/login.css">
   <script type="text/javascript" src="./assets/js/jquery.js"></script>
 	<script type="text/javascript">
 	$(function(){
@@ -30,6 +30,10 @@
 					alert('ajax 요청 실패');
 				}
 			})
+		})
+		
+		$('#btnSignup').click(function(){
+			location.href="moveSignupForm.do";
 		})
 	})
 </script>  
@@ -67,7 +71,7 @@
     </div>
     <div class='login_fields__submit'>
       <input id="btnLogin" type='submit' value='로그인'>
-      <input style="margin-left: 8px"type='submit' value='회원가입'>
+      <input id="btnSignup" style="margin-left: 8px"type='submit' value='회원가입'>
       <div class='forgot'>
         <a href='#'>Forgotten password?</a>
       </div>
@@ -87,7 +91,7 @@
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 
-    <script  src="./assets/js/login2.js"></script>
+    <script  src="./assets/js/login.js"></script>
 
 </body>
 </html>
