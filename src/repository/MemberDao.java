@@ -21,4 +21,14 @@ public class MemberDao {
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
 		return mapper.initMain(id);
 	}
+	
+	public int insertMember(MemberVO member) {
+		MemberMapper mapper = session.getMapper(MemberMapper.class);
+		return mapper.insertMember(member);
+	}
+	
+	public int checkOverlabID(String id) {
+		MemberMapper mapper = session.getMapper(MemberMapper.class);
+		return mapper.checkOverlabID(id);
+	}
 }
