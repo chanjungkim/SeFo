@@ -25,6 +25,10 @@ body {
 h4 {
   color: #7ed321;
 }
+h2 {
+	color: #7ed321
+}
+
 input,
 input[type="radio"] + label,
 input[type="checkbox"] + label:before,
@@ -33,6 +37,7 @@ select {
   width: 100%;
   padding: 1em;
   line-height: 1.4;
+  display:inline-block;
   background-color: #f9f9f9;
   border: 1px solid #e5e5e5;
   border-radius: 3px;
@@ -42,6 +47,11 @@ select {
   transition: 0.35s ease-in-out;
   transition: all 0.35s ease-in-out;
 }
+
+input[type="button"], input[type="submit"] {
+	background-color: #7ed321;
+}
+
 input:focus {
   outline: 0;
   border-color: #64ac15;
@@ -222,4 +232,15 @@ select option {
     width: 100%;
     padding-right: 0;
   }
+}
+
+#input-half{
+	width:100%;
+}
+#input-id{
+	width:70%;
+	
+}
+#duplicate-check-button{
+	width:29%;
 }
