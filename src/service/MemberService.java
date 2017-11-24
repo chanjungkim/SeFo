@@ -20,4 +20,15 @@ public class MemberService {
 	public MemberVO initMain(String email) {
 		return dao.initMain(email);
 	}
+	
+	//회원가입 함슈
+	public boolean signup(MemberVO member) {
+		if(dao.insertMember(member) > 0) return true;
+		else return false;
+	}
+	
+	public boolean checkOverlabID(String id) {
+		if(dao.checkOverlabID(id) == 1) return false;
+		return true;
+	}
 }
