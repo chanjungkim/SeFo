@@ -72,6 +72,13 @@ public class MemberController {
 		return "login";
  	}
 	
+	@RequestMapping("/logout.do")
+	public void logout(HttpSession session) {
+		System.out.println("logout½ÇÇàµÊ");
+		session.invalidate();
+		loginPageMove(session);
+	}
+	
 	@RequestMapping("/moveSignupForm.do")
 	public String moveSignupForm() {
 		return "signup_form";

@@ -136,7 +136,7 @@ hr {
 												}
 											})
 								})
-<%long article_num = 0;%>
+			
 			$('.comment-write-area').on('keydown', function(e){
 				var article_num = $(this).attr("name");
 				var content = $(this).val()
@@ -166,12 +166,18 @@ hr {
 									+'X'+'</a></td>'
 									+'</tr>'
 							);
-							$('.comment-write-area').text("");
+							$('.comment-write-area').val("");
 						},
 						error : function() {
 							alert('댓글 ajax 요청 실패');
 						}
 					})
+				}
+			})
+			$('#logout').on('click',function(){
+				if(confirm("로그라웃 하시겠습니까?")){
+					alert("이동 중!")
+					window.location.replace("logout.do");
 				}
 			})
 })
@@ -311,7 +317,7 @@ function deleteNewComment(id, content){
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
 									data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i></a>
 									<ul class="dropdown-menu">
-										<li><a href="">More</a></li>
+										<li><a id="logout" href="">Log Out</a></li>
 										<li><a href="">More</a></li>
 										<li><a href="">More</a></li>
 										<li><a href="">More</a></li>
