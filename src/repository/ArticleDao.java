@@ -8,12 +8,13 @@ import org.springframework.stereotype.Component;
 
 import repository.mapper.ArticleMapper;
 import vo.ArticleVO;
+import vo.CommentVO;
 
 @Component
 public class ArticleDao {
+	
 	@Autowired
 	private SqlSessionTemplate session;
-	
 	
 	public int insertArticle(ArticleVO article) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
@@ -24,5 +25,34 @@ public class ArticleDao {
 	public List<ArticleVO> selectAllArticle(String id){
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectAllArticle(id);
+	}
+	
+	public List<CommentVO> selectAllComment(long article_num){
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.selectAllComment(article_num);
+	}
+
+	public int deleteComment(long comment_num) {
+//		System.out.println("deleteComment Dao 실행"+comment_num);
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		int result = mapper.deleteComment(comment_num);
+		System.out.println(result);
+		return result;
+	}
+
+	public int deleteNewComment(String id, String content) {
+		System.out.println("deleteNewComment Dao 실행"+id+":"+content);
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		int result = mapper.deleteNewComment(id, content);
+		System.out.println(result);
+		return result;
+	}
+
+	public int insertComment(CommentVO comment) {
+		System.out.println("insertComment Dao 실행");
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		int result = mapper.insertComment(comment);
+		System.out.println(result);
+		return result;
 	}
 }

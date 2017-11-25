@@ -1,6 +1,7 @@
 package vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class ArticleVO {
 	private long article_num;
@@ -9,6 +10,8 @@ public class ArticleVO {
 	private String content;
 	private int like_count;
 	private String photo_path;
+	private List<CommentVO> commentList;
+	
 	public long getArticle_num() {
 		return article_num;
 	}
@@ -44,6 +47,12 @@ public class ArticleVO {
 	}
 	public void setPhoto_path(String photo_path) {
 		this.photo_path = photo_path;
+	}
+	public List<CommentVO> getCommentList() {
+		return commentList;
+	}
+	public void setCommentList(List<CommentVO> commentList) {
+		this.commentList = commentList;
 	}
 	@Override
 	public String toString() {

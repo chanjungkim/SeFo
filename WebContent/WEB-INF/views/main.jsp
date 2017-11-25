@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html`>
+<html>
 	<head>
         <meta http-equiv="content-type" content="text/html; charset=EUC-KR"> 
         <meta charset="EUC-KR">
@@ -11,11 +11,11 @@
         <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <link href="favicon.ico" rel="icon" type="image/x-icon" />
         <link href="assets/css/facebook.css" rel="stylesheet">
     </head>
     
     <body>
-        
         <div class="wrapper">
 			<div class="box">
 				<div class="row row-offcanvas row-offcanvas-left">
