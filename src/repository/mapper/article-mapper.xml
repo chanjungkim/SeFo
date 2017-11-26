@@ -4,16 +4,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="repository.mapper.ArticleMapper">
 	<insert id="insertArticle" parameterType="ArticleVO">
-		INSERT INTO ARTICLE(ID,
-		WRITE_TIME, CONTENT, PHOTO_PATH)
-		VALUES(#{id}, #{write_time},
-		#{content}, #{photo_path})
+		INSERT INTO ARTICLE(ID, WRITE_TIME, CONTENT, PHOTO_PATH)
+		VALUES(#{id}, #{write_time}, #{content}, #{photo_path})
 	</insert>
 
 	<select id="selectAllArticle" resultType="ArticleVO">
 		SELECT * FROM ARTICLE
 		WHERE ID IN
-		(SELECT FOLLOWEE FROM FOLLOW WHERE ID = #{id}) OR ID = #{id}
+		(SELECT FOLLOWEE FROM FOLLOW WHERE ID = #{id}) OR ID =
+		#{id}
 		ORDER BY
 		WRITE_TIME DESC;
 	</select>
@@ -24,8 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<insert id="insertComment" parameterType="CommentVO">
-		INSERT INTO COMMENT(ARTICLE_NUM, ID, WRITE_TIME, CONTENT) 
-		VALUES(#{article_num}, #{id}, #{write_time}, #{content})	
+		INSERT INTO
+		COMMENT(ARTICLE_NUM, ID, WRITE_TIME, CONTENT)
+		VALUES(#{article_num}, #{id}, #{write_time}, #{content})
 	</insert>
 	<delete id="deleteComment" parameterType="long">
 		DELETE FROM COMMENT
@@ -34,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="deleteNewComment">
 		DELETE FROM COMMENT
-		WHERE ID = #{id}, CONTENT = #{content}
+		WHERE ID = #{id}, CONTENT =
+		#{content}
 	</delete>
 </mapper>

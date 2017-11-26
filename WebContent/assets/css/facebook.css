@@ -73,8 +73,8 @@ hr {
 
 .navbar-blue {
     border-width:0;
-	background-color:#FFF;
-    color:#ffffff;
+	background-color:fuchsia;
+    color:#FF0000;
     font-family:arial,sans-serif;
     top:0;
     position:fixed;
@@ -90,7 +90,7 @@ hr {
 
 .navbar-blue li>a:hover, .navbar-blue li>a:focus, .navbar-blue .open, .navbar-blue .open>a, .navbar-blue .open>a:hover, .navbar-blue .open>a:focus {
    background-color:#2A4888;
-   color:#fff;
+   color:fuchsia;
 }
 
 #main {
@@ -248,7 +248,7 @@ small.text-muted {
   }
 
   .navbar-blue {
-	background-color:#FFF;
+	background-color: #FF0000;
     top:0;
     width:100%;
     position:relative;

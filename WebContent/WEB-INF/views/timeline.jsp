@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=EUC-KR">
 <meta charset="UTF-8">
 <title>Welcome! ${sessionScope.loginId}</title>
 <meta name="viewport"
@@ -75,9 +75,50 @@ hr {
 	color: #CCC;
 	font-size: 5px;
 }
+
+.modal-body {
+	margin: 0px;
+}
+
+.modal-footer {
+	margin: 0px;
+}
+
+.form-group {
+	margin: 0px;
+}
+
+.form-group>textarea {
+	display: inline;
+}
+
+.upload-btn-wrapper {
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.upload-btn {
+	border: 2px solid gray;
+	color: gray;
+	background-color: white;
+	padding: 0px;
+	border-radius: 8px;
+	font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
+}
 </style>
 <script>
+	var uploadPhotoCount = 0;
+	var photoNum = 0;
 	$(function() {
+		
 		$('#postBtn').on('click', function() {
 			var content = $('#content').val();
 		// 							alert(content)
@@ -174,12 +215,16 @@ hr {
 					})
 				}
 			})
-			$('#logout').on('click',function(){
+			$('#logout').on('click', function(){
 				if(confirm("로그라웃 하시겠습니까?")){
-					alert("이동 중!")
+					alert("이동 중!");
 					window.location.replace("logout.do");
 				}
 			})
+			
+			$("#imgInp").on('change', function(){
+		        readURL(this);
+		    });
 })
 	
 function deleteComment(comment_num){
@@ -221,6 +266,37 @@ function deleteNewComment(id, content){
 		})
 	}
 }
+function makeFileContainer(uploadPhotoCount){
+	addMorePhoto(uploadPhotoCount);
+}
+
+function addMorePhoto(uploadPhotoCount){
+	++uploadPhotoCount;
+	++photoNum;
+	console.log(uploadPhotoCount);
+	$('#file-container').append('<span id="upload-btn-'+uploadPhotoCount+'"class="upload-btn-wrapper" style="width:10%"><form id="upload-form-'+uploadPhotoCount+'" runat="server"><input type="file" id="imgInp" class="upload-btn" name="myfile" style="width:10%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="업로드할 파일 선택"></form><a href="#" style="color:red;" onclick="removePhoto('+uploadPhotoCount+')">X</a><span>');	
+}
+
+function removePhoto(uploadNum){
+	console.log('선택 번호:'+uploadNum);
+	$("#upload-btn-"+uploadNum).remove();
+	--photoNum;
+	console.log('남은 사진 갯수:'+photoNum);
+}
+
+function readURL(input, id) {
+	console.log(input);
+	console.log(id);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#'+id+' > img').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 </script>
 
 </head>
@@ -337,7 +413,7 @@ function deleteNewComment(id, content){
 									<!-- main col left -->
 									<div class="col-sm-12 article-list">
 
-										<div class="well">
+										<div class="well" data-target="#modal" data-toggle="modal">
 											<form class="form-horizontal" role="form"
 												action="writePost.do" method="post">
 												<h4>What's New</h4>
@@ -346,10 +422,9 @@ function deleteNewComment(id, content){
 														placeholder="Update your status"></textarea>
 												</div>
 												<input class="btn btn-primary pull-right" id="postBtn"
-													type="button" value="POST">
+													type="submit" value="POST">
 												<ul class="list-inline">
-													<li><a href="#postModal"
-														class="glyphicon glyphicon-picture"></a></li>
+													<li><a href="#" class="glyphicon glyphicon-picture"></a></li>
 													<li><a href="#" class="fa fa-camera"></a></li>
 													<!-- <li><a href=""><i -->
 													<!-- class="glyphicon glyphicon-map-marker"></i></a></li> -->
@@ -594,35 +669,47 @@ function deleteNewComment(id, content){
 
 
 		<!--post modal-->
-		<div id="postModal" class="modal fade" tabindex="-1" role="dialog"
-			aria-hidden="true">
+		<div id="modal" class="modal fade media-center" tabindex="-1"
+			role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true"></button>
-						Update Status
+						What's New
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<!-- 						<button type="button" class="close" data-dismiss="modal" -->
+						<!-- 							aria-hidden="true">&times;</button> -->
 					</div>
-					<div class="modal-body">
-						<form class="form center-block">
-							<div class="form-group">
-								<textarea class="form-control input-lg" autofocus=""
-									placeholder="What do you want to share?"></textarea>
+					<form class="form center-block" role="form" action="writePost.do" method="post">
+						<div class="well modal-body">
+							<!--<h4>Update your status</h4> -->
+							<div class="form-group" style="padding: 14px;">
+								<textarea class="form-control form-group input-lg" id="content"
+									name="content" placeholder="Update your status"
+									data-target="#modal" data-toggle="modal" autofocus="true"></textarea>
 							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<div>
-							<button class="btn btn-primary btn-sm" data-dismiss="modal"
-								aria-hidden="true">Post</button>
-							<ul class="pull-left list-inline">
-								<li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li>
-								<li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li>
-								<li><a href=""><i
-										class="glyphicon glyphicon-map-marker"></i></a></li>
-							</ul>
+
+
+							<!-- 						<form class="form center-block"> -->
+							<!-- 							<div class="form-group"> -->
+							<!-- 								<textarea class="form-control input-lg" autofocus="true" -->
+							<!-- 									placeholder="?"></textarea> -->
+							<!-- 							</div> -->
+							<!-- 						</form> -->
 						</div>
-					</div>
+						<div id="file-container" style="background-color: gray;"></div>
+						<div class="modal-footer">
+							<div>
+								<input class="btn btn-primary pull-right btn-sm" id="postBtn"
+									type="submit" value="POST" aria-hidden="true"
+									data-dismiss="modal">
+								<ul class="pull-left list-inline">
+									<li><a href="#" class="glyphicon glyphicon-picture"
+										onclick="makeFileContainer(uploadPhotoCount++)"></a></li>
+									<li><a href="#" class="fa fa-camera"></a></li>
+								</ul>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
