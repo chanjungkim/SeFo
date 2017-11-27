@@ -26,6 +26,6 @@
 		<%
 			response.sendRedirect(request.getContextPath() + "/initMain.do");
 		%>
-	</c:if>
+	</c:if> 
 </body>
 </html>
