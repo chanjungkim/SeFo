@@ -9,7 +9,20 @@
   <link rel="stylesheet" href="./assets/css/login.css">
   <script type="text/javascript" src="./assets/js/jquery.js"></script>
 	<script type="text/javascript">
+	
 	$(function(){
+		
+		$('#id').focus();
+		
+		$('body').keypress(function(e){
+			if(e.keyCode!=13) return;
+			if(!$('input[id="id"]').val()) $('input[id="id"]').focus();
+			if(!$('input[id="pwd"]').val()) $('input[id="pwd"]').focus();
+			if($('input[id="pwd"]').val() && $('input[id="id"]').val()) {
+				$('#btnLogin').click();
+			}
+		})
+		
 		$('#btnLogin').click(function(){
 			var id = $('#id').val();
 			var pwd = $('#pwd').val();
@@ -64,7 +77,7 @@
       <div class='icon'>
         <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
       </div>
-      <input placeholder='Password' type='password' id="pwd">
+      <input placeholder='Password' type='password' id="pwd" onkeydown="onEnterSubmit()">
       <div class='validation'>
         <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
       </div>
