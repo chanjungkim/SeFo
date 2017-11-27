@@ -222,7 +222,7 @@ hr {
 				}
 			})
 			
-			$("#imgInp").on('change', function(){
+			$(document).on('change',"#imgInp", function(){
 		        readURL(this);
 		    });
 })
@@ -271,10 +271,10 @@ function makeFileContainer(uploadPhotoCount){
 }
 
 function addMorePhoto(uploadPhotoCount){
-	++uploadPhotoCount;
+	console.log('uploadPhotoCount:'+uploadPhotoCount);
 	++photoNum;
-	console.log(uploadPhotoCount);
-	$('#file-container').append('<span id="upload-btn-'+uploadPhotoCount+'"class="upload-btn-wrapper" style="width:10%"><form id="upload-form-'+uploadPhotoCount+'" runat="server"><input type="file" id="imgInp" class="upload-btn" name="myfile" style="width:10%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="업로드할 파일 선택"></form><a href="#" style="color:red;" onclick="removePhoto('+uploadPhotoCount+')">X</a><span>');	
+	++uploadPhotoCount;
+	$('#file-container').append('<span id="upload-btn-'+uploadPhotoCount+'"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" id="imgInp" class="upload-btn" name="myfile" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="업로드할 파일 선택"></a><a href="#" style="color:red;" onclick="removePhoto('+uploadPhotoCount+')" style="width:20%">X</a><span>');	
 }
 
 function removePhoto(uploadNum){
@@ -284,19 +284,21 @@ function removePhoto(uploadNum){
 	console.log('남은 사진 갯수:'+photoNum);
 }
 
-function readURL(input, id) {
-	console.log(input);
-	console.log(id);
-    if (input.files && input.files[0]) {
+function readURL(changeInput) {
+// 	console.log(id);
+    if (changeInput.files && changeInput.files[0]) {
       var reader = new FileReader();
 
-      reader.onload = function(e) {
-        $('#'+id+' > img').attr('src', e.target.result);
-      }
+      reader.readAsDataURL(changeInput.files[0]);
 
-      reader.readAsDataURL(input.files[0]);
+      reader.onload = function(e) {
+//     	console.log(e.target.result);
+//     	alert($(changeInput).siblings('img').attr('src'));
+    	$(changeInput).siblings('img').attr('src', reader.result);
+      }
+		addMorePhoto(++uploadPhotoCount);
     }
-  }
+}
 </script>
 
 </head>
@@ -679,7 +681,8 @@ function readURL(input, id) {
 						<!-- 						<button type="button" class="close" data-dismiss="modal" -->
 						<!-- 							aria-hidden="true">&times;</button> -->
 					</div>
-					<form class="form center-block" role="form" action="writePost.do" method="post">
+					<form class="form center-block" role="form" action="writePost.do"
+						method="post">
 						<div class="well modal-body">
 							<!--<h4>Update your status</h4> -->
 							<div class="form-group" style="padding: 14px;">
