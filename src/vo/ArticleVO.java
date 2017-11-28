@@ -9,7 +9,6 @@ public class ArticleVO {
 	private Date write_time;
 	private String content;
 	private int like_count;
-	private String photo_path;
 	private List<CommentVO> commentList;
 	
 	public long getArticle_num() {
@@ -42,12 +41,6 @@ public class ArticleVO {
 	public void setLike_count(int like_count) {
 		this.like_count = like_count;
 	}
-	public String getPhoto_path() {
-		return photo_path;
-	}
-	public void setPhoto_path(String photo_path) {
-		this.photo_path = photo_path;
-	}
 	public List<CommentVO> getCommentList() {
 		return commentList;
 	}
@@ -57,7 +50,7 @@ public class ArticleVO {
 	@Override
 	public String toString() {
 		return "ArticleVO [article_num=" + article_num + ", id=" + id + ", write_time=" + write_time + ", content="
-				+ content + ", like_count=" + like_count + ", photo_path=" + photo_path + "]";
+				+ content + ", like_count=" + like_count + "]";
 	}
 
 }
