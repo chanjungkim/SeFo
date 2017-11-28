@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import service.ArticleService;
 import vo.ArticleVO;
@@ -23,20 +25,24 @@ public class ArticleController {
 	private ArticleService service;
 
 	@RequestMapping(value = "/writePost.do", method = RequestMethod.POST)
-	public void login(HttpSession session, HttpServletResponse response, String content) {
-		ArticleVO article = new ArticleVO();
+	public void login(HttpSession session, HttpServletResponse response, ArticleVO article) {
+//		ArticleVO article = new ArticleVO();
+		
 		String id = (String) session.getAttribute("loginId");
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = sdf.format(new Date());
 		Date now;
+		if (article.getFileList() !=null && article.getFileList().size() != 0) {
+			for (MultipartFile m : article.getFileList()) {
+				System.out.println(m.getOriginalFilename());
+				System.out.println(m.getSize());
+			}
+		}
 		try {
 			now = sdf.parse(timeStr);
-
 			article.setId(id);
-			article.setContent(content);
 			article.setWrite_time(now);
-			article.setPhoto_path(""); // modify...
 			System.out.println(article.toString());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -44,12 +50,12 @@ public class ArticleController {
 		}
 		System.out.println("writePost.do ½ÇÇà");
 
-		try {
-			response.getWriter().print(service.writeArticle(article));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			response.getWriter().print(service.writeArticle(article));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	@RequestMapping(value="/writeComment.do", method = RequestMethod.POST)
