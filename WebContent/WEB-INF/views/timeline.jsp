@@ -78,10 +78,10 @@
 		});
 		
 		$(document).on('click', '#postBtn', function(e) {
-			$('#postBtn').attr('data-dismiss', 'modal');
-			
 			var content = $('#content').val();
-			// 							alert(content)
+			$('#content').val("");
+			$('#modalContent').val("");
+			// 	alert(content)
 			$.ajax({
 				type : 'post', // 요청 보내면 doPost가 실행됨
 				url : 'writePost.do', // 우리가 작성한 java 서블릿에게
@@ -262,7 +262,7 @@
 					<div class="column col-sm-10 col-xs-11" id="main">
 
 						<!-- top nav -->
-						<jsp:include page="${request.getContextPath()}/topNav.jsp"/>
+						<jsp:include page="${request.getContextPath()}/topNav.jsp" />
 						<!-- /top nav -->
 
 						<div class="padding">
@@ -417,7 +417,6 @@
 
 									<!-- <div class="panel panel-default"> -->
 									<!--	 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Stackoverflow</h4></div> -->
-									<!--	  <div class="panel-body"> -->
 									<!--		<img src="assets/img/150x150.gif" class="img-circle pull-right"> <a href="#">Keyword: Bootstrap</a> -->
 									<!--		<div class="clearfix"></div> -->
 									<!--		<hr> -->
@@ -501,33 +500,34 @@
 			role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-header">What's New
+					<div class="modal-header">
+						What's New
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
 					</div>
-					<form class="form center-block" role="form" action="writePost.do"
-						method="post" enctype="multipart/form-data">
-						<div class="well modal-body">
-							<!--<h4>Update your status</h4> -->
-							<div class="form-group" style="padding: 14px;">
-								<textarea class="form-control form-group input-lg"
-									id="modalContent" name="content"
-									placeholder="Update your status" data-target="#modal"
-									data-toggle="modal" autofocus="true"></textarea>
-							</div>
+					<!-- <form class="form center-block" role="form" action="writePost.do" method="post" enctype="multipart/form-data">
+					<div class="well modal-body">
+						<!--<h4>Update your status</h4> -->
+						<div class="form-group" style="padding: 14px;">
+							<textarea class="form-control form-group input-lg"
+								id="modalContent" name="content"
+								placeholder="Update your status" data-target="#modal"
+								data-toggle="modal" autofocus="true"></textarea>
 						</div>
-						<div id="file-container" style="background-color: gray;"></div>
-						<div class="modal-footer">
-							<div>
-								<input class="btn btn-primary pull-right btn-sm"  id="postBtn" value="POST" aria-hidden="true">
-								<ul class="pull-left list-inline">
-									<li><a href="#" class="glyphicon glyphicon-picture"
-										onclick="makeFileContainer(uploadPhotoCount++)"></a></li>
-									<li><a href="#" class="fa fa-camera"></a></li>
-								</ul>
-							</div>
+					</div>
+					<div id="file-container" style="background-color: gray;"></div>
+					<div class="modal-footer">
+						<div>
+							<input class="btn btn-primary pull-right btn-sm" id="postBtn"
+								value="POST" aria-hidden="true" data-dismiss="modal">
+							<ul class="pull-left list-inline">
+								<li><a href="#" class="glyphicon glyphicon-picture"
+									onclick="makeFileContainer(uploadPhotoCount++)"></a></li>
+								<li><a href="#" class="fa fa-camera"></a></li>
+							</ul>
 						</div>
-					</form>
+					</div>
+					<!-- 					</form> -->
 				</div>
 			</div>
 		</div>
