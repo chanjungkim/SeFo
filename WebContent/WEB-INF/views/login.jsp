@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en" >
 <head>
-  <meta charset="UTF-8">
+  <meta charset="EUC-KR">
   <title>Login Box Concept</title>
   <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
   <link rel="stylesheet" href="./assets/css/login.css">

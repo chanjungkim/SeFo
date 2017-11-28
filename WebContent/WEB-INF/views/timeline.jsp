@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -14,109 +14,19 @@
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 <link href="assets/css/facebook.css" rel="stylesheet">
+<link href="assets/css/timeline.css" rel="stylesheet">
 <script src="https://use.fontawesome.com/804ea8b780.js"></script>
 <script
 	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script
 	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
-<style>
-.profile {
-	border-radius: 50px 50px 50px 50px;
-	border-style: dotted;
-	border-color: fuchsia;
-	border-width: 3px;
-}
-
-.search-bar {
-	margin-bottom: 0px;
-	border-width: 0px;
-}
-
-.top-bar {
-	height: 46px;
-}
-
-.status {
-	
-}
-
-.profile-link {
-	height: 43px;
-}
-
-ul {
-	padding: 0px;
-}
-
-ul li {
-	list-style-type: none;
-}
-
-.write-time {
-	color: gray;
-	font-size: 8px;
-}
-
-hr {
-	margin-top: 15px;
-	margin-bottom: 15px;
-	margin-left: 0px;
-	margin-right: 0px;
-}
-
-.comment-write-area {
-	border-style: none;
-	border-color: #FFF;
-	width: 100%;
-	height: 100%;
-}
-
-#comment-delete {
-	color: #CCC;
-	font-size: 5px;
-}
-
-.modal-body {
-	margin: 0px;
-}
-
-.modal-footer {
-	margin: 0px;
-}
-
-.form-group {
-	margin: 0px;
-}
-
-.form-group>textarea {
-	display: inline;
-}
-
-.upload-btn-wrapper {
-	position: relative;
-	overflow: hidden;
-	display: inline-block;
-}
-
-.upload-btn {
-	border: 2px solid gray;
-	color: gray;
-	background-color: white;
-	padding: 0px;
-	border-radius: 8px;
-	font-weight: bold;
-}
-
-.upload-btn-wrapper input[type=file] {
-	position: absolute;
-	left: 0;
-	top: 0;
-	opacity: 0;
-}
-</style>
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="assets/js/facebook.js"></script>
 <script>
 	var uploadPhotoCount = 0;
 	var photoNum = 0;
+	
 	$(function() {
 
 		$('.comment-write-area').on('keydown', function(e) {
@@ -160,10 +70,16 @@ hr {
 		$(document).on('change', "#imgInp", function() {
 			readURL(this);
 		});
-
-		$(document).on('submit', '#postBtn', function(e) {
+		
+		$(document).on('keyup', '#modalContent', function(){
+			var modalContent = $('#modalContent').val();
+			$('#content').val(modalContent);
+			$("#content").val();
+		});
+		
+		$(document).on('click', '#postBtn', function(e) {
 			$('#postBtn').attr('data-dismiss', 'modal');
-
+			
 			var content = $('#content').val();
 			// 							alert(content)
 			$.ajax({
@@ -222,7 +138,7 @@ hr {
 			})
 		})
 		
-		$('#srch-term').on('keydown', function(){
+		$('#srch-term').on('keyup', function(){
 			var searchWord = $(this).val();
 			console.log(searchWord);
 			$.ajax({
@@ -339,101 +255,14 @@ hr {
 				<div class="row row-offcanvas row-offcanvas-left">
 
 					<!-- sidebar -->
-					<div class="column col-sm-2 col-xs-1 sidebar-offcanvas"
-						id="sidebar">
-
-						<ul class="nav">
-							<li><a href="#" data-toggle="offcanvas"
-								class="visible-xs text-center"><i
-									class="glyphicon glyphicon-chevron-right"></i></a></li>
-						</ul>
-
-						<ul class="nav hidden-xs" id="lg-menu">
-							<li class="active"><a href="#featured"><i
-									class="glyphicon glyphicon-list-alt"></i> Featured</a></li>
-							<li><a href="#stories"><i
-									class="glyphicon glyphicon-list"></i> Stories</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-paperclip"></i>
-									Saved</a></li>
-							<li><a href="initMain.do"><i
-									class="glyphicon glyphicon-refresh"></i> Refresh</a></li>
-						</ul>
-						<ul class="list-unstyled hidden-xs" id="sidebar-footer">
-							<li><a href="http://usebootstrap.com/theme/facebook"><h3>Bootstrap</h3>
-									<i class="glyphicon glyphicon-heart-empty"></i> Bootply</a></li>
-						</ul>
-
-						<!-- tiny only nav-->
-						<ul class="nav visible-xs" id="xs-menu">
-							<li><a href="#featured" class="text-center"><i
-									class="glyphicon glyphicon-list-alt"></i></a></li>
-							<li><a href="#stories" class="text-center"><i
-									class="glyphicon glyphicon-list"></i></a></li>
-							<li><a href="#" class="text-center"><i
-									class="glyphicon glyphicon-paperclip"></i></a></li>
-							<li><a href="initMain.do" class="text-center"><i
-									class="glyphicon glyphicon-refresh"></i></a></li>
-						</ul>
-
-					</div>
+					<jsp:include page="${request.getContextPath()}/sidebar.jsp" />
 					<!-- /sidebar -->
 
 					<!-- main right col -->
 					<div class="column col-sm-10 col-xs-11" id="main">
 
 						<!-- top nav -->
-						<div class="top-bar navbar navbar-blue navbar-static-top">
-							<div class="navbar-header">
-								<button class="navbar-toggle" type="button"
-									data-toggle="collapse" data-target=".navbar-collapse">
-									<span class="sr-only">Toggle</span> <span class="icon-bar"></span>
-									<span class="icon-bar"></span> <span class="icon-bar"></span>
-								</button>
-								<a href="initMain.do" class="navbar-brand logo">b</a>
-							</div>
-							<nav class="collapse navbar-collapse" role="navigation">
-							
-							<!-- Search Bar -->
-							<form class="search-bar navbar-form navbar-left">
-								<div class="input-group input-group-sm"
-									style="max-width: 360px;">
-									<input class="form-control"  placeholder="Search"
-										name="srch-term" id="srch-term" type="text"
-										list="search-data-list">
-									<datalist id="search-data-list"> </datalist>
-									<div class="input-group-btn">
-										<button class="btn btn-default" type="submit">
-											<i class="glyphicon glyphicon-search"></i>
-										</button>
-									</div>
-								</div>
-							</form>
-							<!-- EOF Search Bar -->
-
-							<ul class="nav navbar-nav">
-								<li><a class="profile-link" href="myProfile.do"><img
-										class="status"
-										src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"
-										width="20px" height="20px"> ${sessionScope.loginId}</a></li>
-								<li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
-								<li><a href="#" role="button" data-toggle="modal"><i
-										class="	glyphicon glyphicon-comment"></i></a></li>
-								<li><a href="#"><span
-										class="glyphicon glyphicon-heart-empty"></span></a></li>
-							</ul>
-							<ul class="nav navbar-nav navbar-right">
-								<li class="dropdown"><a href="#" class="dropdown-toggle"
-									data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i></a>
-									<ul class="dropdown-menu">
-										<li><a id="logout" href="logout.do">Log Out</a></li>
-										<li><a href="">More</a></li>
-										<li><a href="">More</a></li>
-										<li><a href="">More</a></li>
-										<li><a href="">More</a></li>
-									</ul></li>
-							</ul>
-							</nav>
-						</div>
+						<jsp:include page="${request.getContextPath()}/topNav.jsp"/>
 						<!-- /top nav -->
 
 						<div class="padding">
@@ -557,9 +386,6 @@ hr {
 										<!-- 		support for responsive layouts. With dozens of reusable components for  -->
 										<!-- 		navigation, pagination, labels, alerts etc..                          </div> -->
 										<!--</div> -->
-
-
-
 									</div>
 
 									<!-- main col right -->
@@ -648,36 +474,7 @@ hr {
 								<!--	</div> -->
 								<!--</div> -->
 								<hr>
-								<div class="row" id="footer footer-column">
-									<div>
-										<div class="col-sm-3">
-											<ul>
-												<li><a href="#">SeFo정보</a></li>
-												<li><a href="#">지원</a></li>
-											</ul>
-										</div>
-										<div class="col-sm-3">
-											<ul>
-												<li><a href="#">블로그</a></li>
-												<li><a href="#">홍보 센터</a></li>
-												<li><a href="#">채용 정보</a></li>
-											</ul>
-										</div>
-										<div class="col-sm-3">
-											<ul>
-												<li><a href="#">개인정보처리방침</a></li>
-												<li><a href="#">약관</a></li>
-												<li><a href="#">디렉터리</a></li>
-												<li><a href="#">언어</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<p>
-											<a href="#" class="pull-right">© 2017 SeFo</a>
-										</p>
-									</div>
-								</div>
+								<jsp:include page="${request.getContextPath()}/footer.jsp" />
 								<hr>
 								<!--<hr> -->
 
@@ -687,8 +484,6 @@ hr {
 								<!--</h4> -->
 
 								<!--<hr> -->
-
-
 							</div>
 							<!-- /col-9 -->
 						</div>
@@ -706,27 +501,25 @@ hr {
 			role="dialog" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-header">
-						What's New
+					<div class="modal-header">What's New
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<!-- 						<button type="button" class="close" data-dismiss="modal" -->
-						<!-- 							aria-hidden="true">&times;</button> -->
+						<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
 					</div>
 					<form class="form center-block" role="form" action="writePost.do"
 						method="post" enctype="multipart/form-data">
 						<div class="well modal-body">
 							<!--<h4>Update your status</h4> -->
 							<div class="form-group" style="padding: 14px;">
-								<textarea class="form-control form-group input-lg" id="content"
-									name="content" placeholder="Update your status"
-									data-target="#modal" data-toggle="modal" autofocus="true"></textarea>
+								<textarea class="form-control form-group input-lg"
+									id="modalContent" name="content"
+									placeholder="Update your status" data-target="#modal"
+									data-toggle="modal" autofocus="true"></textarea>
 							</div>
 						</div>
 						<div id="file-container" style="background-color: gray;"></div>
 						<div class="modal-footer">
 							<div>
-								<input class="btn btn-primary pull-right btn-sm" id="postBtn"
-									type="submit" value="POST" aria-hidden="true">
+								<input class="btn btn-primary pull-right btn-sm"  id="postBtn" value="POST" aria-hidden="true">
 								<ul class="pull-left list-inline">
 									<li><a href="#" class="glyphicon glyphicon-picture"
 										onclick="makeFileContainer(uploadPhotoCount++)"></a></li>
@@ -738,40 +531,6 @@ hr {
 				</div>
 			</div>
 		</div>
-
-		<script type="text/javascript" src="assets/js/jquery.js"></script>
-		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
-		<script type="text/javascript">
-			$(document)
-				.ready(
-					function() {
-						$('[data-toggle=offcanvas]')
-							.click(
-								function() {
-									$(this)
-										.toggleClass(
-											'visible-xs text-center');
-									$(this)
-										.find('i')
-										.toggleClass(
-											'glyphicon-chevron-right glyphicon-chevron-left');
-									$('.row-offcanvas')
-										.toggleClass(
-											'active');
-									$('#lg-menu')
-										.toggleClass(
-											'hidden-xs')
-										.toggleClass(
-											'visible-xs');
-									$('#xs-menu')
-										.toggleClass(
-											'visible-xs')
-										.toggleClass(
-											'hidden-xs');
-									$('#btnShow').toggle();
-								});
-					});
-		</script>
 	</c:if>
 </body>
 </html>

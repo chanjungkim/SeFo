@@ -57,7 +57,7 @@ public class MemberController {
  	}
 	
 	@RequestMapping("/initMain.do")
-	public ModelAndView initMain(HttpSession session) {
+	public ModelAndView initMain(HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {   	
 		String id = (String) session.getAttribute("loginId");
 		ModelAndView mv = new ModelAndView();
 		MemberVO member = service.initMain(id);
@@ -130,7 +130,6 @@ public class MemberController {
 	
     @RequestMapping("/search.do")
     public void searchUserId(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-    	request.setCharacterEncoding("utf8");
     	String searchWord = request.getParameter("searchWord");
     	
     	PrintWriter writer = response.getWriter();

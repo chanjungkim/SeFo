@@ -1,11 +1,12 @@
 package controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -25,11 +26,9 @@ public class ArticleController {
 	private ArticleService service;
 
 	@RequestMapping(value = "/writePost.do", method = RequestMethod.POST)
-	public void login(HttpSession session, HttpServletResponse response, ArticleVO article) {
-//		ArticleVO article = new ArticleVO();
-		
+	public void login(HttpSession session, HttpServletRequest request, HttpServletResponse response, ArticleVO article) throws UnsupportedEncodingException {		
 		String id = (String) session.getAttribute("loginId");
-
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = sdf.format(new Date());
 		Date now;
@@ -49,13 +48,6 @@ public class ArticleController {
 			e.printStackTrace();
 		}
 		System.out.println("writePost.do ½ÇÇà");
-
-//		try {
-//			response.getWriter().print(service.writeArticle(article));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 	
 	@RequestMapping(value="/writeComment.do", method = RequestMethod.POST)
