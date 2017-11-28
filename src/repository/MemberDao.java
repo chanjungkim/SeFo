@@ -1,5 +1,7 @@
 package repository;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,5 +32,10 @@ public class MemberDao {
 	public int checkOverlabID(String id) {
 		MemberMapper mapper = session.getMapper(MemberMapper.class);
 		return mapper.checkOverlabID(id);
+	}
+
+	public List<String> searchAllId(String searchWord) {
+		MemberMapper mapper = session.getMapper(MemberMapper.class);
+		return mapper.searchAllId(searchWord);
 	}
 }

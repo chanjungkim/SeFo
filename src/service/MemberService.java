@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,5 +32,9 @@ public class MemberService {
 	public boolean checkOverlabID(String id) {
 		if(dao.checkOverlabID(id) == 1) return false;
 		return true;
+	}
+
+	public List<String> searchId(String searchWord) {
+		return dao.searchAllId(searchWord);
 	}
 }

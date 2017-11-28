@@ -24,4 +24,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM MEMBER
 		WHERE id=#{id}
 	</select>
+	
+	<select id="searchAllId"  parameterType="String"  resultType="String">
+		SELECT ID FROM MEMBER WHERE ID LIKE CONCAT('%',#{searchWord},'%') OR EMAIL LIKE CONCAT('%',#{searchWord},'%') OR NAME LIKE CONCAT('%',#{searchWord},'%') OR PHONE LIKE CONCAT('%',#{searchWord},'%')
+	</select>
 </mapper>

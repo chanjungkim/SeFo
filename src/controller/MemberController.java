@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 import service.ArticleService;
 import service.MemberService;
@@ -124,4 +128,23 @@ public class MemberController {
         return "login";
     }
 	
+    @RequestMapping("/search.do")
+    public void searchUserId(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    	request.setCharacterEncoding("utf8");
+    	String searchWord = request.getParameter("searchWord");
+    	
+    	PrintWriter writer = response.getWriter();
+    	
+    	System.out.println("search.do 실행됨:"+searchWord);
+    	
+    	List<String> userIdList = service.searchId(searchWord);
+    	
+    	System.out.println("받아온 사이즈:"+userIdList.size());
+    	for(String str : userIdList) {
+    		System.out.println(str);
+    	}
+    	
+    	Gson gson = new Gson();
+    	writer.print(gson.toJson(userIdList));    	
+    }
 }
