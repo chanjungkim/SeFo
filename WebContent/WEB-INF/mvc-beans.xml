@@ -9,7 +9,7 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="controller" />
-	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
 	<mvc:view-resolvers>
 		<mvc:jsp prefix="/WEB-INF/views/" />
 	</mvc:view-resolvers>
