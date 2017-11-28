@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=EUC-KR">
-<meta charset="UTF-8">
+<!-- <meta charset="UTF-8"> -->
 <title>Welcome! ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -118,181 +118,184 @@ hr {
 	var uploadPhotoCount = 0;
 	var photoNum = 0;
 	$(function() {
-		
-		$('#postBtn').on('click', function() {
+
+		$('.comment-write-area').on('keydown', function(e) {
+			var article_num = $(this).attr("name");
+			var content = $(this).val()
+			if (e.which == 13 && content.length > 0) {
+				$.ajax({
+					type : 'post', // 요청 보내면 doPost가 실행됨
+					url : 'writeComment.do', // 우리가 작성한 java 서블릿에게
+					data : {
+						'article_num' : article_num,
+						'content' : content
+					}, // 검색어 데이터
+					dataType : 'text', // 응답데이터 형식
+					success : function(resultData) {
+						alert("댓글 작성 성공!");
+						$('.comment-area').append('<tr id="new-comment">'
+							+ '<td><div style="margin-bottom: 5px;">'
+							+ '		<img'
+							+ '			src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
+							+ '			height="20px" width="20px"> <span><b>${sessionScope.loginId}</b>'
+							+ content
+							+ '	</div></td>'
+							+ '	<td><input type="hidden" name="id"'
+							+ '		value="${sessionScope.loginId}">'
+							+ '      <input type="hidden" name="' + content + '">'
+							+ '  <a id="comment-delete"'
+							+ '		onclick="deleteNewComment(${sessionScope.loginId},' + content + ')">'
+							+ 'X' + '</a></td>'
+							+ '</tr>'
+						);
+						$('.comment-write-area').val("");
+					},
+					error : function() {
+						alert('댓글 ajax 요청 실패');
+					}
+				})
+			}
+		})
+
+		$(document).on('change', "#imgInp", function() {
+			readURL(this);
+		});
+
+		$(document).on('submit', '#postBtn', function(e) {
+			$('#postBtn').attr('data-dismiss', 'modal');
+
 			var content = $('#content').val();
-		// 							alert(content)
+			// 							alert(content)
 			$.ajax({
 				type : 'post', // 요청 보내면 doPost가 실행됨
 				url : 'writePost.do', // 우리가 작성한 java 서블릿에게
 				data : {
 					'content' : content
 				}, // 검색어 데이터
-				dataType : 'text',// 응답데이터 형식
+				dataType : 'text', // 응답데이터 형식
 				success : function(resultData) {
 					// alert('글쓰기 완료');
 					$(".well").after(
-					'<div class="panel panel-default"><div class="panel-thumbnail"></div>'
-					+ '<div class="panel-body">'
-					+ '<a href="#">'
-					+ '<p class="lead">'
-					+ '<!--  profile -->'
-					+ '<img class="profile"'
-					+' src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
-					+'				height="40px" width="40px"> <span>${sessionScope.loginId}</span>'
-					+ '			<!--  -->'
-					+ '		</p>'
-					+ '	</a>'
-					+ '	<!--  if photo exists -->'
-					+ '	<img src="${articleVO.photo_path}" class="img-responsive">'
-					+ '		<!-- -->'
-					+ '	<p>'
-					+ content
-					+ '</p>'
-					+ '	<p>'
-					+ '		<button type="button" class="btn btn-default btn-sm">'
-					+ '			<i class="glyphicon glyphicon-thumbs-up"></i>'
-					+ '		</button>'
-					+ '		<!-- List of people who liked if more than 3, show number  otherwise id -->'
-					+ '		<label>아이디 리스트</label>'
-					+ '		<!-- EO liked list -->'
-					+ '	</p>'
-					+ '	<p>'
-					+ '	<table>'
-					+ '		<!-- Start Comment  -->'
-					+ '		<tr>'
-					+ '			<td><img'
-							+'				src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"'
-							+'				height="28px" width="28px"> <span>아이디</span></td>'
-					+ '			<td>댓글 내용</td>'
-					+ '		</tr>'
-					+ '		<!--  EO Comment -->'
-					+ '	</table>'
-					+ '	</p>'
-					+ '</div>'
-					+ '</div>');
-												},
-												error : function() {
-													alert('ajax 요청 실패');
-												}
-											})
-								})
-			
-			$('.comment-write-area').on('keydown', function(e){
-				var article_num = $(this).attr("name");
-				var content = $(this).val()
-				if(e.which == 13 && content.length > 0 ){
-					$.ajax({
-						type : 'post', // 요청 보내면 doPost가 실행됨
-						url : 'writeComment.do', // 우리가 작성한 java 서블릿에게
-						data : {
-							'article_num' : article_num,
-							'content' : content
-						}, // 검색어 데이터
-						dataType : 'text',// 응답데이터 형식
-						success : function(resultData) {
-							alert("댓글 작성 성공!");
-							$('.comment-area').append('<tr id="new-comment">'
-									+'<td><div style="margin-bottom: 5px;">'
-									+'		<img'
-									+'			src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
-									+'			height="20px" width="20px"> <span><b>${sessionScope.loginId}</b>'
-									+ content
-									+'	</div></td>'
-									+'	<td><input type="hidden" name="id"'
-									+'		value="${sessionScope.loginId}">'
-									+'      <input type="hidden" name="'+content+'">'
-									+'  <a id="comment-delete"'
-									+'		onclick="deleteNewComment(${sessionScope.loginId},'+content+')">'
-									+'X'+'</a></td>'
-									+'</tr>'
-							);
-							$('.comment-write-area').val("");
-						},
-						error : function() {
-							alert('댓글 ajax 요청 실패');
-						}
-					})
+						'<div class="panel panel-default"><div class="panel-thumbnail"></div>'
+						+ '<div class="panel-body">'
+						+ '<a href="#">'
+						+ '<p class="lead">'
+						+ '<!--  profile -->'
+						+ '<img class="profile"'
+						+ ' src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
+						+ '				height="40px" width="40px"> <span>${sessionScope.loginId}</span>'
+						+ '			<!--  -->'
+						+ '		</p>'
+						+ '	</a>'
+						+ '	<!--  if photo exists -->'
+						//		 					+ '	<img src="${articleVO.photo_path}" class="img-responsive">'
+						+ '		<!-- -->'
+						+ '	<p>'
+						+ content
+						+ '</p>'
+						+ '	<p>'
+						+ '		<button type="button" class="btn btn-default btn-sm">'
+						+ '			<i class="glyphicon glyphicon-thumbs-up"></i>'
+						+ '		</button>'
+						+ '		<!-- List of people who liked if more than 3, show number  otherwise id -->'
+						+ '		<label>아이디 리스트</label>'
+						+ '		<!-- EO liked list -->'
+						+ '	</p>'
+						+ '	<p>'
+						+ '	<table>'
+						+ '		<!-- Start Comment  -->'
+						+ '		<tr>'
+						+ '			<td><img'
+						+ '				src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"'
+						+ '				height="28px" width="28px"> <span>아이디</span></td>'
+						+ '			<td>댓글 내용</td>'
+						+ '		</tr>'
+						+ '		<!--  EO Comment -->'
+						+ '	</table>'
+						+ '	</p>'
+						+ '</div>'
+						+ '</div>');
+				},
+				error : function() {
+					alert('ajax 요청 실패');
 				}
 			})
-			
-			$(document).on('change',"#imgInp", function(){
-		        readURL(this);
-		    });
-})
-	
-function deleteComment(comment_num){
-	if(confirm("댓글을 삭제하시겠습니까?")){
-		$.ajax({
-			type : 'post', // 요청 보내면 doPost가 실행됨
-			url : 'deleteComment.do', // 우리가 작성한 java 서블릿에게
-			data : {
-				'comment_num' : comment_num
-			}, // 검색어 데이터
-			dataType : 'text',// 응답데이터 형식
-			success : function(resultData) {
-				alert("삭제 성공!");
-				$('#comment-'+comment_num).remove();
-			},
-			error : function() {
-				alert('ajax 요청 실패');
-			}
+
 		})
+	})
+
+	function deleteComment(comment_num) {
+		if (confirm("댓글을 삭제하시겠습니까?")) {
+			$.ajax({
+				type : 'post', // 요청 보내면 doPost가 실행됨
+				url : 'deleteComment.do', // 우리가 작성한 java 서블릿에게
+				data : {
+					'comment_num' : comment_num
+				}, // 검색어 데이터
+				dataType : 'text', // 응답데이터 형식
+				success : function(resultData) {
+					alert("삭제 성공!");
+					$('#comment-' + comment_num).remove();
+				},
+				error : function() {
+					alert('ajax 요청 실패');
+				}
+			})
+		}
 	}
-}
-function deleteNewComment(id, content){
-	if(confirm("댓글을 삭제하시겠습니까?")){
-		$.ajax({
-			type : 'post', // 요청 보내면 doPost가 실행됨
-			url : 'deleteNewComment.do', // 우리가 작성한 java 서블릿에게
-			data : {
-				'id' : id,
-				'content' : content
-			}, // 검색어 데이터
-			dataType : 'text',// 응답데이터 형식
-			success : function(resultData) {
-				alert("삭제 성공!");
-				$('#new-comment').remove();
-			},
-			error : function() {
-				alert('ajax 요청 실패');
+	function deleteNewComment(id, content) {
+		if (confirm("댓글을 삭제하시겠습니까?")) {
+			$.ajax({
+				type : 'post', // 요청 보내면 doPost가 실행됨
+				url : 'deleteNewComment.do', // 우리가 작성한 java 서블릿에게
+				data : {
+					'id' : id,
+					'content' : content
+				}, // 검색어 데이터
+				dataType : 'text', // 응답데이터 형식
+				success : function(resultData) {
+					alert("삭제 성공!");
+					$('#new-comment').remove();
+				},
+				error : function() {
+					alert('ajax 요청 실패');
+				}
+			})
+		}
+	}
+	function makeFileContainer(uploadPhotoCount) {
+		addMorePhoto(uploadPhotoCount);
+	}
+
+	function addMorePhoto(uploadPhotoCount) {
+		console.log('uploadPhotoCount:' + uploadPhotoCount);
+		++photoNum;
+		++uploadPhotoCount;
+		$('#file-container').append('<span id="upload-btn-' + uploadPhotoCount + '"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" name="fileList" id="imgInp" class="upload-btn" name="myfile" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="업로드할 파일 선택"></a><a href="#" style="color:red;" onclick="removePhoto(' + uploadPhotoCount + ')" style="width:20%">X</a><span>');
+	}
+
+	function removePhoto(uploadNum) {
+		console.log('선택 번호:' + uploadNum);
+		$("#upload-btn-" + uploadNum).remove();
+		--photoNum;
+		console.log('남은 사진 갯수:' + photoNum);
+	}
+
+	function readURL(changeInput) {
+		// 	console.log(id);
+		if (changeInput.files && changeInput.files[0]) {
+			var reader = new FileReader();
+
+			reader.readAsDataURL(changeInput.files[0]);
+
+			reader.onload = function(e) {
+				//     	console.log(e.target.result);
+				//     	alert($(changeInput).siblings('img').attr('src'));
+				$(changeInput).siblings('img').attr('src', reader.result);
 			}
-		})
+			addMorePhoto(++uploadPhotoCount);
+		}
 	}
-}
-function makeFileContainer(uploadPhotoCount){
-	addMorePhoto(uploadPhotoCount);
-}
-
-function addMorePhoto(uploadPhotoCount){
-	console.log('uploadPhotoCount:'+uploadPhotoCount);
-	++photoNum;
-	++uploadPhotoCount;
-	$('#file-container').append('<span id="upload-btn-'+uploadPhotoCount+'"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" id="imgInp" class="upload-btn" name="myfile" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="업로드할 파일 선택"></a><a href="#" style="color:red;" onclick="removePhoto('+uploadPhotoCount+')" style="width:20%">X</a><span>');	
-}
-
-function removePhoto(uploadNum){
-	console.log('선택 번호:'+uploadNum);
-	$("#upload-btn-"+uploadNum).remove();
-	--photoNum;
-	console.log('남은 사진 갯수:'+photoNum);
-}
-
-function readURL(changeInput) {
-// 	console.log(id);
-    if (changeInput.files && changeInput.files[0]) {
-      var reader = new FileReader();
-
-      reader.readAsDataURL(changeInput.files[0]);
-
-      reader.onload = function(e) {
-//     	console.log(e.target.result);
-//     	alert($(changeInput).siblings('img').attr('src'));
-    	$(changeInput).siblings('img').attr('src', reader.result);
-      }
-		addMorePhoto(++uploadPhotoCount);
-    }
-}
 </script>
 
 </head>
@@ -405,11 +408,11 @@ function readURL(changeInput) {
 
 								<!-- content -->
 								<div class="row">
-			
+
 									<!-- main col left -->
 									<div style="margin: auto; max-width: 800px">
-<!-- 									<div class="col-sm-7 article-list"> -->
-	
+										<!-- 									<div class="col-sm-7 article-list"> -->
+
 										<div class="well" data-target="#modal" data-toggle="modal">
 											<form class="form-horizontal" role="form"
 												action="writePost.do" method="post">
@@ -442,7 +445,7 @@ function readURL(changeInput) {
 														</a>
 													</p>
 													<!--  if photo exists -->
-													<img src="${articleVO.photo_path}" class="img-responsive">
+													<%-- 													<img src="${articleVO.photo_path}" class="img-responsive"> --%>
 													<!-- -->
 													<p>${articleVO.content}</p>
 													<p>
@@ -677,7 +680,7 @@ function readURL(changeInput) {
 						<!-- 							aria-hidden="true">&times;</button> -->
 					</div>
 					<form class="form center-block" role="form" action="writePost.do"
-						method="post">
+						method="post" enctype="multipart/form-data">
 						<div class="well modal-body">
 							<!--<h4>Update your status</h4> -->
 							<div class="form-group" style="padding: 14px;">
@@ -685,21 +688,12 @@ function readURL(changeInput) {
 									name="content" placeholder="Update your status"
 									data-target="#modal" data-toggle="modal" autofocus="true"></textarea>
 							</div>
-
-
-							<!-- 						<form class="form center-block"> -->
-							<!-- 							<div class="form-group"> -->
-							<!-- 								<textarea class="form-control input-lg" autofocus="true" -->
-							<!-- 									placeholder="?"></textarea> -->
-							<!-- 							</div> -->
-							<!-- 						</form> -->
 						</div>
 						<div id="file-container" style="background-color: gray;"></div>
 						<div class="modal-footer">
 							<div>
 								<input class="btn btn-primary pull-right btn-sm" id="postBtn"
-									type="submit" value="POST" aria-hidden="true"
-									data-dismiss="modal">
+									type="submit" value="POST" aria-hidden="true">
 								<ul class="pull-left list-inline">
 									<li><a href="#" class="glyphicon glyphicon-picture"
 										onclick="makeFileContainer(uploadPhotoCount++)"></a></li>
@@ -716,34 +710,34 @@ function readURL(changeInput) {
 		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
 		<script type="text/javascript">
 			$(document)
-					.ready(
-							function() {
-								$('[data-toggle=offcanvas]')
-										.click(
-												function() {
-													$(this)
-															.toggleClass(
-																	'visible-xs text-center');
-													$(this)
-															.find('i')
-															.toggleClass(
-																	'glyphicon-chevron-right glyphicon-chevron-left');
-													$('.row-offcanvas')
-															.toggleClass(
-																	'active');
-													$('#lg-menu')
-															.toggleClass(
-																	'hidden-xs')
-															.toggleClass(
-																	'visible-xs');
-													$('#xs-menu')
-															.toggleClass(
-																	'visible-xs')
-															.toggleClass(
-																	'hidden-xs');
-													$('#btnShow').toggle();
-												});
-							});
+				.ready(
+					function() {
+						$('[data-toggle=offcanvas]')
+							.click(
+								function() {
+									$(this)
+										.toggleClass(
+											'visible-xs text-center');
+									$(this)
+										.find('i')
+										.toggleClass(
+											'glyphicon-chevron-right glyphicon-chevron-left');
+									$('.row-offcanvas')
+										.toggleClass(
+											'active');
+									$('#lg-menu')
+										.toggleClass(
+											'hidden-xs')
+										.toggleClass(
+											'visible-xs');
+									$('#xs-menu')
+										.toggleClass(
+											'visible-xs')
+										.toggleClass(
+											'hidden-xs');
+									$('#btnShow').toggle();
+								});
+					});
 		</script>
 	</c:if>
 </body>
