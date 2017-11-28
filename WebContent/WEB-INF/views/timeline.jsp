@@ -405,10 +405,11 @@ function readURL(changeInput) {
 
 								<!-- content -->
 								<div class="row">
-
+			
 									<!-- main col left -->
-									<div class="col-sm-12 article-list">
-
+									<div style="margin: auto; max-width: 800px">
+<!-- 									<div class="col-sm-7 article-list"> -->
+	
 										<div class="well" data-target="#modal" data-toggle="modal">
 											<form class="form-horizontal" role="form"
 												action="writePost.do" method="post">
@@ -746,5 +747,4 @@ function readURL(changeInput) {
 		</script>
 	</c:if>
 </body>
->>>>>>> 47343596c85a6b18773b81d15c8eb54be1f2ca2d
 </html>
