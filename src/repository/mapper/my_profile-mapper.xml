@@ -10,24 +10,6 @@
 			id = #{id}
 	</select>
 	
-	<select id="selectMyFollowCount" resultType="int">
-		select 
-			count(*)
-		from
-			follow
-		where 
-			id = #{id}
-	</select>
-	
-	<select id="selectMyFollowerCount" resultType="int">
-		select 
-			count(*)
-		from
-			follow
-		where 
-			followee = #{id}
-	</select>
-	
 	<select id="selectAllMyArticle" resultType="ArticleVO">
 		select
 			*
@@ -38,6 +20,10 @@
 		ORDER BY
 			WRITE_TIME
 		DESC
+	</select>
+	
+	<select id="selectMyInfo" resultType="MemberVO">
+		SELECT * FROM member WHERE id = #{id}
 	</select>
 	
 </mapper>
