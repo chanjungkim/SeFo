@@ -13,6 +13,7 @@ public class MemberVO {
 	private String phone;
 	private Character gender;
 	private int follow_count;
+	private int follower_count;
 	
 	/////////////////////////////////////////////////////////////
 
@@ -95,4 +96,14 @@ public class MemberVO {
 	public void setFollow_count(int follow_count) {
 		this.follow_count = follow_count;
 	}
+
+	public int getFollower_count() {
+		return follower_count;
+	}
+
+	public void setFollower_count(int follower_count) {
+		this.follower_count = follower_count;
+	}
+	
+	
 }
