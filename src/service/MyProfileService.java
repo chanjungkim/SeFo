@@ -17,12 +17,6 @@ public class MyProfileService {
 	public int getMyContentCount(String id) {
 		return dao.selectMyContentCount(id);
 	};
-	public int getMyFollowCount(String id){
-		return dao.selectMyFollowCount(id);
-	}; 
-	public int getMyFollowerCount(String id){
-		return dao.selectMyFollowerCount(id);
-	}; 
 	
 	public List<ArticleVO> getAllMyArticle(String id){
 		return dao.selectAllMyArticle(id);

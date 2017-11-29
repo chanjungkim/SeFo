@@ -26,13 +26,9 @@ public class MyProfileController {
 		String id = (String) session.getAttribute("loginId");
 		ModelAndView mv = new ModelAndView("my_profile");
 		List<ArticleVO> articleVO = service.getAllMyArticle(id);
-		int followCnt = service.getMyFollowCount(id);
-		int followerCnt = service.getMyFollowerCount(id);
 		int totalContentCnt = service.getMyContentCount(id);
 		
 		mv.addObject("articleVO", articleVO);
-		mv.addObject("followCnt", followCnt);
-		mv.addObject("followerCnt",followerCnt );
 		mv.addObject("totalContentCnt", totalContentCnt);
 		
 		return mv;
