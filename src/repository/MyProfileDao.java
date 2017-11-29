@@ -21,14 +21,6 @@ public class MyProfileDao {
 		MyProfileMapper mapper = session.getMapper(MyProfileMapper.class);
 		return mapper.selectMyContentCount(id);
 	};
-	public int selectMyFollowCount(String id){
-		MyProfileMapper mapper = session.getMapper(MyProfileMapper.class);
-		return mapper.selectMyFollowCount(id);
-	}; 
-	public int selectMyFollowerCount(String id){
-		MyProfileMapper mapper = session.getMapper(MyProfileMapper.class);
-		return mapper.selectMyFollowerCount(id);
-	}; 
 	
 	public List<ArticleVO> selectAllMyArticle(String id){
 		MyProfileMapper mapper = session.getMapper(MyProfileMapper.class);
