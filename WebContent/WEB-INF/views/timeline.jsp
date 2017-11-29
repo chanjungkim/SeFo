@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=EUC-KR">
-<!-- <meta charset="UTF-8"> -->
+<meta charset="UTF-8">
 <title>Welcome! ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -67,7 +67,7 @@
 			}
 		})
 
-		$(document).on('change', "#imgInp", function() {
+		$(document).on('change', "#fileList", function() {
 			readURL(this);
 		});
 		
@@ -78,20 +78,31 @@
 		});
 		
 		$(document).on('click', '#postBtn', function(e) {
-			var content = $('#content').val();
+			//폼객체를 불러와서
+			var form = $('#write_form')[0];
+			//FormData parameter에 담아줌
+			var formData = new FormData(form);
+			
 			$('#content').val("");
 			$('#modalContent').val("");
-			// 	alert(content)
+			$('#file-container').empty();
 			$.ajax({
 				type : 'post', // 요청 보내면 doPost가 실행됨
+				enctype: 'multipart/form-data',
 				url : 'writePost.do', // 우리가 작성한 java 서블릿에게
-				data : {
-					'content' : content
-				}, // 검색어 데이터
-				dataType : 'text', // 응답데이터 형식
+				processData : false,
+	            cache: false,
+				contentType : false,
+				data : formData,
+				dataType : 'json', // 응답데이터 형식
 				success : function(resultData) {
+					var photoList = resultData.photoList;
+// 					$.each(result, function(idx, value){
+// 							consol.log(idx+" " +value.article_num)
+// 					});
+					
 					// alert('글쓰기 완료');
-					$(".well").after(
+					$("#timeline").after(
 						'<div class="panel panel-default"><div class="panel-thumbnail"></div>'
 						+ '<div class="panel-body">'
 						+ '<a href="#">'
@@ -104,10 +115,12 @@
 						+ '		</p>'
 						+ '	</a>'
 						+ '	<!--  if photo exists -->'
-						//		 					+ '	<img src="${articleVO.photo_path}" class="img-responsive">'
+						+ '	<img src="'+ photoList[0].file_origiName+ '" class="img-responsive">'
 						+ '		<!-- -->'
 						+ '	<p>'
-						+ content
+						+ '<p>'
+						+ resultData.content
+						+ '</p>'
 						+ '</p>'
 						+ '	<p>'
 						+ '		<button type="button" class="btn btn-default btn-sm">'
@@ -214,7 +227,7 @@
 		console.log('uploadPhotoCount:' + uploadPhotoCount);
 		++photoNum;
 		++uploadPhotoCount;
-		$('#file-container').append('<span id="upload-btn-' + uploadPhotoCount + '"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" name="fileList" id="imgInp" class="upload-btn" name="myfile" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="업로드할 파일 선택"></a><a href="#" style="color:red;" onclick="removePhoto(' + uploadPhotoCount + ')" style="width:20%">X</a><span>');
+		$('#file-container').append('<span id="upload-btn-' + uploadPhotoCount + '"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" name="fileList" id="fileList" class="upload-btn" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="업로드할 파일 선택"></a><a href="#" style="color:red;" onclick="removePhoto(' + uploadPhotoCount + ')" style="width:20%">X</a><span>');
 	}
 
 	function removePhoto(uploadNum) {
@@ -272,26 +285,27 @@
 								<div class="row">
 
 									<!-- main col left -->
-									<div style="margin: auto; max-width: 800px">
+									<div style="margin: auto; max-width: 600px">
 										<!-- 									<div class="col-sm-7 article-list"> -->
 
-										<div class="well" data-target="#modal" data-toggle="modal">
-											<form class="form-horizontal" role="form"
-												action="writePost.do" method="post">
-												<h4>What's New</h4>
-												<div class="form-group" style="padding: 14px;">
-													<textarea class="form-control" id="content" name="content"
-														placeholder="Update your status"></textarea>
-												</div>
-												<input class="btn btn-primary pull-right" id="postBtn"
-													type="submit" value="POST">
-												<ul class="list-inline">
-													<li><a href="#" class="glyphicon glyphicon-picture"></a></li>
-													<li><a href="#" class="fa fa-camera"></a></li>
-													<!-- <li><a href=""><i -->
-													<!-- class="glyphicon glyphicon-map-marker"></i></a></li> -->
-												</ul>
-											</form>
+										<div id="timeline" class="well" data-target="#modal"
+											data-toggle="modal">
+											<!-- 											<form class="form-horizontal" role="form" enctype="multipart/form-data"  -->
+											<!-- 												action="writePost.do" method="post" id="write_form" name ="write_form"> -->
+											<h4>What's New</h4>
+											<div class="form-group" style="padding: 14px;">
+												<textarea class="form-control" id="content" name="content"
+													placeholder="Update your status"></textarea>
+											</div>
+											<input class="btn btn-primary pull-right" id="postBtn"
+												type="submit" value="POST">
+											<ul class="list-inline">
+												<li><a href="#" class="glyphicon glyphicon-picture"></a></li>
+												<li><a href="#" class="fa fa-camera"></a></li>
+												<!-- <li><a href=""><i -->
+												<!-- class="glyphicon glyphicon-map-marker"></i></a></li> -->
+											</ul>
+											<!-- 											</form> -->
 										</div>
 
 										<!-- Start For Loop  -->
@@ -307,7 +321,9 @@
 														</a>
 													</p>
 													<!--  if photo exists -->
-													<%-- 													<img src="${articleVO.photo_path}" class="img-responsive"> --%>
+													<img
+														src="${articleVO.getPhotoList().get(0).file_origiName}"
+														class="img-responsive">
 													<!-- -->
 													<p>${articleVO.content}</p>
 													<p>
@@ -505,29 +521,31 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
 					</div>
-					<!-- <form class="form center-block" role="form" action="writePost.do" method="post" enctype="multipart/form-data">
-					<div class="well modal-body">
-						<!--<h4>Update your status</h4> -->
-						<div class="form-group" style="padding: 14px;">
-							<textarea class="form-control form-group input-lg"
-								id="modalContent" name="content"
-								placeholder="Update your status" data-target="#modal"
-								data-toggle="modal" autofocus="true"></textarea>
+					<form class="form center-block" role="form" action="writePost.do"
+						method="post" enctype="multipart/form-data" id="write_form"
+						name="write_form">
+						<div class="well modal-body">
+							<!--<h4>Update your status</h4> -->
+							<div class="form-group" style="padding: 14px;">
+								<textarea class="form-control form-group input-lg"
+									id="modalContent" name="content"
+									placeholder="Update your status" data-target="#modal"
+									data-toggle="modal" autofocus="true"></textarea>
+							</div>
 						</div>
-					</div>
-					<div id="file-container" style="background-color: gray;"></div>
-					<div class="modal-footer">
-						<div>
-							<input class="btn btn-primary pull-right btn-sm" id="postBtn"
-								value="POST" aria-hidden="true" data-dismiss="modal">
-							<ul class="pull-left list-inline">
-								<li><a href="#" class="glyphicon glyphicon-picture"
-									onclick="makeFileContainer(uploadPhotoCount++)"></a></li>
-								<li><a href="#" class="fa fa-camera"></a></li>
-							</ul>
+						<div id="file-container" style="background-color: gray;"></div>
+						<div class="modal-footer">
+							<div>
+								<input class="btn btn-primary pull-right btn-sm" id="postBtn"
+									value="POST" aria-hidden="true" data-dismiss="modal">
+								<ul class="pull-left list-inline">
+									<li><a href="#" class="glyphicon glyphicon-picture"
+										onclick="makeFileContainer(uploadPhotoCount++)"></a></li>
+									<li><a href="#" class="fa fa-camera"></a></li>
+								</ul>
+							</div>
 						</div>
-					</div>
-					<!-- 					</form> -->
+					</form>
 				</div>
 			</div>
 		</div>
