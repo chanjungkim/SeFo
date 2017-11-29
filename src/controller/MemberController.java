@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import service.ArticleService;
 import service.MemberService;
 import vo.ArticleVO;
+import vo.FileVO;
 import vo.MemberVO;
 
 @Controller
@@ -62,9 +63,12 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		MemberVO member = service.initMain(id);
 		List<ArticleVO> articleList = articleService.getArticleList(id);
-//		for(ArticleVO a : articleList) {
-//			System.out.print(a.getId()+" "+a.getWrite_time()+" "+a.getContent());
-//		}
+		for(ArticleVO a : articleList) {
+			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
+			if (result != null && result.size() != 0) {
+				a.setPhotoList(result);
+			} 
+		}
 		mv.addObject("articleList", articleList);
 		mv.addObject("memberInfo", member);
 		mv.setViewName("timeline");
