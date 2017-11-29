@@ -13,7 +13,9 @@ public class ArticleVO {
 	private int like_count;
 	private List<CommentVO> commentList;
 	private List<MultipartFile> fileList;
-
+	private List<FileVO> photoList;
+	
+	///////////////////////////////////////////////////
 	public long getArticle_num() {
 		return article_num;
 	}
@@ -68,6 +70,14 @@ public class ArticleVO {
 
 	public void setFileList(List<MultipartFile> fileList) {
 		this.fileList = fileList;
+	}
+	
+	public List<FileVO> getPhotoList() {
+		return photoList;
+	}
+
+	public void setPhotoList(List<FileVO> photoList) {
+		this.photoList = photoList;
 	}
 
 	@Override

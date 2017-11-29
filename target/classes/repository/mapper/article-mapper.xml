@@ -3,11 +3,14 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="repository.mapper.ArticleMapper">
-	<insert id="insertArticle" parameterType="ArticleVO">
+	<insert id="insertArticle" parameterType="ArticleVO" useGeneratedKeys="true" keyProperty="article_num">
 		INSERT INTO ARTICLE(ID, WRITE_TIME, CONTENT)
 		VALUES(#{id}, #{write_time}, #{content})
 	</insert>
-
+	<insert id="insertArticlePhoto" parameterType="FileVO">
+		INSERT INTO article_photo(article_num, file_path, file_name, file_origiName)
+		VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName})
+	</insert>
 	<select id="selectAllArticle" resultType="ArticleVO">
 		SELECT * FROM ARTICLE
 		WHERE ID IN
@@ -16,7 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY
 		WRITE_TIME DESC;
 	</select>
-
+	<select id="selectArticlePhoto" resultType="FileVO">
+		SELECT * FROM article_photo 
+		WHERE article_num = #{article_num}
+	</select>
 	<select id="selectAllComment" resultType="CommentVO">
 		SELECT * FROM COMMENT
 		WHERE ARTICLE_NUM = #{article_num}

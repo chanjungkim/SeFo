@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import service.ArticleService;
 import vo.ArticleVO;
@@ -26,19 +26,15 @@ public class ArticleController {
 	private ArticleService service;
 
 	@RequestMapping(value = "/writePost.do", method = RequestMethod.POST)
-	public void login(HttpSession session, HttpServletRequest request, HttpServletResponse response, ArticleVO article) throws UnsupportedEncodingException {		
+	@ResponseBody
+	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response, ArticleVO article) throws UnsupportedEncodingException {
 		String id = (String) session.getAttribute("loginId");
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = sdf.format(new Date());
 		Date now;
-		if (article.getFileList() !=null && article.getFileList().size() != 0) {
-			for (MultipartFile m : article.getFileList()) {
-				System.out.println(m.getOriginalFilename());
-				System.out.println(m.getSize());
-			}
-		}
+		article.getFileList().remove(article.getFileList().size()-1);
 		try {
+		//////////////////////////////////
 			now = sdf.parse(timeStr);
 			article.setId(id);
 			article.setWrite_time(now);
@@ -48,6 +44,8 @@ public class ArticleController {
 			e.printStackTrace();
 		}
 		System.out.println("writePost.do ½ÇÇà");
+		article = service.writeArticle(article, request);
+		return article;
 	}
 	
 	@RequestMapping(value="/writeComment.do", method = RequestMethod.POST)

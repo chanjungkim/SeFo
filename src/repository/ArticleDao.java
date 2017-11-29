@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import repository.mapper.ArticleMapper;
 import vo.ArticleVO;
 import vo.CommentVO;
+import vo.FileVO;
 
 @Component
 public class ArticleDao {
@@ -54,5 +55,16 @@ public class ArticleDao {
 		int result = mapper.insertComment(comment);
 		System.out.println(result);
 		return result;
+	}
+	public int insertArticlePhoto(FileVO file) {
+		System.out.println("insertArticlePhoto ½ÇÇà");
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		int result = mapper.insertArticlePhoto(file);
+		System.out.println("insertArticlePhoto :" + result);
+		return result;
+	}
+	public List<FileVO> selectArticlePhoto(long article_num) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.selectArticlePhoto(article_num);
 	}
 }
