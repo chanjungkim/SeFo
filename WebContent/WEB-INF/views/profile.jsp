@@ -250,10 +250,10 @@ img {
 												style="font-size: 15px; color: black; font-weight: bold; margin-top: 10px;">${memberVO.self_info }</div>
 										</div>
 									</div>
-									<div class="gallery">
-										<c:forEach items=${articleList } val="articleVO">
+									<div class="gallery" style="margin-top: 15px">
+										<c:forEach items="${articleList}" var="articleVO">
 											<figure> <img
-												src=${articleVO. }> </figure>
+												src=${articleVO.getPhotoList().get(0).file_origiName }> </figure>
 										</c:forEach>
 									</div>
 								</div>
