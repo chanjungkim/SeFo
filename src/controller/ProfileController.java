@@ -35,6 +35,7 @@ public class ProfileController {
 		for(ArticleVO a : articleVO) {
 			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
 			if (result != null && result.size() != 0) {
+				System.out.println(result.get(0).getFile_origiName());
 				a.setPhotoList(result);
 			} 
 		}

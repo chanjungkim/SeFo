@@ -320,11 +320,15 @@
 															<!--  -->
 														</a>
 													</p>
+													
 													<!--  if photo exists -->
-													<img
-														src="${articleVO.getPhotoList().get(0).file_origiName}"
-														class="img-responsive">
-													<!-- -->
+													<c:if test="${articleVO.photoList != null}">
+															<c:forEach items="${articleVO.photoList}" var="photo">
+																<img src="${photo.file_origiName}" class="img-responsive">
+															</c:forEach>
+													</c:if>
+													<!--  EOF -->
+											
 													<p>${articleVO.content}</p>
 													<p>
 														<button type="button" class="btn btn-default btn-sm">
