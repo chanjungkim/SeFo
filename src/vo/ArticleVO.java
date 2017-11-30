@@ -14,7 +14,6 @@ public class ArticleVO {
 	private List<CommentVO> commentList;
 	private List<MultipartFile> fileList;
 	private List<FileVO> photoList;
-	
 	///////////////////////////////////////////////////
 	public long getArticle_num() {
 		return article_num;

@@ -14,6 +14,7 @@ public class MemberVO {
 	private Character gender;
 	private int follow_count;
 	private int follower_count;
+	private String self_info;
 	
 	/////////////////////////////////////////////////////////////
 
@@ -104,6 +105,20 @@ public class MemberVO {
 	public void setFollower_count(int follower_count) {
 		this.follower_count = follower_count;
 	}
-	
-	
+
+	public String getSelf_info() {
+		return self_info;
+	}
+
+	public void setSelf_info(String self_info) {
+		this.self_info = self_info;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberVO [member_num=" + member_num + ", id=" + id + ", password=" + password + ", name=" + name
+				+ ", email=" + email + ", birth=" + birth + ", photo_path=" + photo_path + ", phone=" + phone
+				+ ", gender=" + gender + ", follow_count=" + follow_count + ", follower_count=" + follower_count
+				+ ", self_info=" + self_info + "]";
+	}
 }
