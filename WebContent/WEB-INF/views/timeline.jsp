@@ -268,11 +268,11 @@
 				<div class="row row-offcanvas row-offcanvas-left">
 
 					<!-- sidebar -->
-					<jsp:include page="${request.getContextPath()}/sidebar.jsp" />
+<%-- 					<jsp:include page="${request.getContextPath()}/sidebar.jsp" /> --%>
 					<!-- /sidebar -->
 
 					<!-- main right col -->
-					<div class="column col-sm-10 col-xs-11" id="main">
+					<div class="column col-sm-12 col-xs-11" id="main">
 
 						<!-- top nav -->
 						<jsp:include page="${request.getContextPath()}/topNav.jsp" />
@@ -285,7 +285,7 @@
 								<div class="row">
 
 									<!-- main col left -->
-									<div style="margin: auto; max-width: 600px">
+									<div style="margin: auto; max-width: 800px">
 										<!-- 									<div class="col-sm-7 article-list"> -->
 
 										<div id="timeline" class="well" data-target="#modal"
