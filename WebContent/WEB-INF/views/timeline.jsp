@@ -163,7 +163,6 @@ margin: 1em 0;
 			var form = $('#write_form')[0];
 			//FormData parameter에 담아줌
 			var formData = new FormData(form);
-			
 			$('#content').val("");
 			$('#modalContent').val("");
 			$('#file-container').empty();
@@ -177,14 +176,11 @@ margin: 1em 0;
 				data : formData,
 				dataType : 'json', // 응답데이터 형식
 				success : function(resultData) {
+					var photoCount = resultData.photo_count;
 					var photoList = resultData.photoList;
-// 					$.each(result, function(idx, value){
-// 							consol.log(idx+" " +value.article_num)
-// 					});
-					
+					var content = resultData.content;
 					// alert('글쓰기 완료');
-					$("#timeline").after(
-						'<div class="panel panel-default"><div class="panel-thumbnail"></div>'
+					var newPost = '<div class="panel panel-default"><div class="panel-thumbnail"></div>'
 						+ '<div class="panel-body">'
 						+ '<a href="#">'
 						+ '<p class="lead">'
@@ -194,37 +190,40 @@ margin: 1em 0;
 						+ '				height="40px" width="40px"> <span>${sessionScope.loginId}</span>'
 						+ '			<!--  -->'
 						+ '		</p>'
-						+ '	</a>'
-						+ '	<!--  if photo exists -->'
-						+ '	<img src="'+ photoList[0].file_origiName+ '" class="img-responsive">'
-						+ '		<!-- -->'
-						+ '	<p>'
-						+ '<p>'
-						+ resultData.content
-						+ '</p>'
-						+ '</p>'
-						+ '	<p>'
-						+ '		<button type="button" class="btn btn-default btn-sm">'
-						+ '			<i class="glyphicon glyphicon-thumbs-up"></i>'
-						+ '		</button>'
-						+ '		<!-- List of people who liked if more than 3, show number  otherwise id -->'
-						+ '		<label>아이디 리스트</label>'
-						+ '		<!-- EO liked list -->'
-						+ '	</p>'
-						+ '	<p>'
-						+ '	<table>'
-						+ '		<!-- Start Comment  -->'
-						+ '		<tr>'
-						+ '			<td><img'
-						+ '				src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"'
-						+ '				height="28px" width="28px"> <span>아이디</span></td>'
-						+ '			<td>댓글 내용</td>'
-						+ '		</tr>'
-						+ '		<!--  EO Comment -->'
-						+ '	</table>'
-						+ '	</p>'
-						+ '</div>'
-						+ '</div>');
+						+ '	</a>';
+					
+					if(photoCount != 0){
+						newPost +=  '<img src="'+ photoList[0].file_origiName+ '" class="img-responsive">';
+					}
+					newPost +=
+					'<p>'
+					+ '<p>'
+					+ content
+					+ '</p>'
+					+ '</p>'
+					+ '	<p>'
+					+ '		<button type="button" class="btn btn-default btn-sm">'
+					+ '			<i class="glyphicon glyphicon-thumbs-up"></i>'
+					+ '		</button>'
+					+ '		<!-- List of people who liked if more than 3, show number  otherwise id -->'
+					+ '		<label>아이디 리스트</label>'
+					+ '		<!-- EO liked list -->'
+					+ '	</p>'
+					+ '	<p>'
+					+ '	<table>'
+					+ '		<!-- Start Comment  -->'
+					+ '		<tr>'
+					+ '			<td><img'
+					+ '				src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"'
+					+ '				height="28px" width="28px"> <span>아이디</span></td>'
+					+ '			<td>댓글 내용</td>'
+					+ '		</tr>'
+					+ '		<!--  EO Comment -->'
+					+ '	</table>'
+					+ '	</p>'
+					+ '</div>'
+					+ '</div>';
+					$("#timeline").after(newPost);
 				},
 				error : function() {
 					alert('ajax 요청 실패');

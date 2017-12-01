@@ -39,6 +39,7 @@ public class ArticleService {
 				if (article.getFileList() != null && article.getFileList().size() != 0) {
 					//사진 리스트
 					article.setPhotoList(new ArrayList<FileVO>());
+					article.setPhoto_count(article.getFileList().size());
 					for (MultipartFile m : article.getFileList()) {
 						FileVO fileVO = new FileVO();
 						String savedName = new Random().nextInt(1000000) + m.getOriginalFilename();
@@ -115,5 +116,13 @@ public class ArticleService {
 
 	public List<FileVO> getArticlePhoto(long article_num) {
 		return dao.selectArticlePhoto(article_num);
+	}
+	
+	public boolean updatePhotoCount(long article_num, int count) {
+		int result = dao.updatePhotoCount(article_num, count);
+		if (result > 0)
+			return true;
+		else
+			return false;
 	}
 }

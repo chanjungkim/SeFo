@@ -43,4 +43,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ID = #{id}, CONTENT =
 		#{content}
 	</delete>
+	
+	<update id="updatePhotoCount">
+		UPDATE article
+		SET photo_count = #{count}
+		WHERE article_num = #{article_num} 
+	</update>
 </mapper>

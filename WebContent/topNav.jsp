@@ -32,7 +32,7 @@
 		<!-- EOF Search Bar -->
 
 		<ul class="nav navbar-nav">
-			<li><a class="profile-link" href="myProfile.do"><img
+			<li><a class="profile-link" href="profile.do"><img
 					class="status"
 					src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"
 					width="20px" height="20px"> ${sessionScope.loginId}</a></li>

@@ -27,14 +27,17 @@ public class ArticleController {
 
 	@RequestMapping(value = "/writePost.do", method = RequestMethod.POST)
 	@ResponseBody
-	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response, ArticleVO article) throws UnsupportedEncodingException {
+	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+			ArticleVO article) throws UnsupportedEncodingException {
 		String id = (String) session.getAttribute("loginId");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = sdf.format(new Date());
 		Date now;
-		article.getFileList().remove(article.getFileList().size()-1);
+		if (article.getFileList() != null && article.getFileList().size() > 0) {
+			article.getFileList().remove(article.getFileList().size() - 1);
+		}
 		try {
-		//////////////////////////////////
+			//////////////////////////////////
 			now = sdf.parse(timeStr);
 			article.setId(id);
 			article.setWrite_time(now);
@@ -45,16 +48,18 @@ public class ArticleController {
 		}
 		System.out.println("writePost.do 실행");
 		article = service.writeArticle(article, request);
+		if (article.getPhotoList() != null && article.getPhotoList().size() > 0)
+			service.updatePhotoCount(article.getArticle_num(), article.getPhotoList().size());
 		return article;
 	}
-	
-	@RequestMapping(value="/writeComment.do", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/writeComment.do", method = RequestMethod.POST)
 	public void writeComment(HttpSession session, HttpServletResponse response, String content, long article_num) {
-		System.out.println("writeComment 컨틀롤러 실행"+content);
+		System.out.println("writeComment 컨틀롤러 실행" + content);
 		CommentVO comment = new CommentVO();
 
-		String id = (String)session.getAttribute("loginId");
-		
+		String id = (String) session.getAttribute("loginId");
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = sdf.format(new Date());
 		Date now;
@@ -69,7 +74,7 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-			
+
 		boolean result = service.writeComment(comment);
 		try {
 			response.getWriter().println(result);
@@ -78,10 +83,10 @@ public class ArticleController {
 			e.printStackTrace();
 		}
 	}
-	
-	@RequestMapping(value="/deleteComment.do", method= RequestMethod.POST)
+
+	@RequestMapping(value = "/deleteComment.do", method = RequestMethod.POST)
 	public void deleteComment(HttpSession session, HttpServletResponse response, long comment_num) {
-		System.out.println("deleteComment컨트롤러 실행: "+comment_num);
+		System.out.println("deleteComment컨트롤러 실행: " + comment_num);
 		boolean result = service.deleteComment(comment_num);
 		try {
 			response.getWriter().println(result);
@@ -91,9 +96,9 @@ public class ArticleController {
 		}
 	}
 
-	@RequestMapping(value="/deleteNewComment.do", method= RequestMethod.POST)
+	@RequestMapping(value = "/deleteNewComment.do", method = RequestMethod.POST)
 	public void deleteComment(HttpSession session, HttpServletResponse response, String id, String content) {
-		System.out.println("deleteNewComment컨트롤러 실행: "+id+":"+content);
+		System.out.println("deleteNewComment컨트롤러 실행: " + id + ":" + content);
 		boolean result = service.deleteNewComment(id, content);
 		try {
 			response.getWriter().println(result);

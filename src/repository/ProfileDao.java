@@ -24,9 +24,20 @@ public class ProfileDao {
 		ProfileMapper mapper = session.getMapper(ProfileMapper.class);
 		return mapper.selectInfo(id);
 	}
-	public List<ArticleVO> selectArticleList(String id){
+	public List<ArticleVO> selectFisrtArticleList(String id){
 		ProfileMapper mapper = session.getMapper(ProfileMapper.class);
-		return mapper.selectArticleList(id);
+		return mapper.selectFisrtArticleList(id);
 	};
-
+	public List<ArticleVO> selectMoreArticleList(String id, int articleNum) {
+		ProfileMapper mapper = session.getMapper(ProfileMapper.class);
+		return mapper.selectMoreArticleList(id, articleNum);
+	};
+	public int update(MemberVO member){
+		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
+		return mapper.update(member);
+	}
+	public int updatePw(String pw) {
+		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
+		return mapper.updatePw(pw);
+	}
 }
