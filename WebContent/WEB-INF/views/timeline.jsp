@@ -27,6 +27,18 @@
 <script type="text/javascript" src="assets/js/jquery.js"></script>
 <script type="text/javascript" src="assets/js/bootstrap.js"></script>
 <script type="text/javascript" src="assets/js/facebook.js"></script>
+<style type="text/css">
+
+.item img {
+    vertical-align: middle;
+}
+
+.item{
+text-align: center; 
+margin: 1em 0;
+}
+    
+</style>
 <script>
 	var uploadPhotoCount = 0;
 	var photoNum = 0;
@@ -70,7 +82,72 @@
 				})
 			}
 		})
+		
+		// timeline item (image container)
+		$(".item").width("100%");
+		$(".item").height($(".item").width());
+		
+		// image
+		$(".item img").each(function(){
+// 			$(this).load(function(){
+				var width = this.naturalWidth;
+				var height = this.naturalHeight;
+				
+				var parentHeight = $(this).parent().height();
+				var parentWidth = $(this).parent().width()
+				if(width < height){
+					var w =width * (parentHeight/height);
+					$(this).css({width: w, height:parentHeight})
+				}else{
+					var h = height * (parentWidth/width);
+					$(this).css({width: parentWidth, height:h})
+				}
+				
+// 				if(width < height){
+// 					$(this).width("auto");
+// 					$(this).height($(this).parent().height());
+// 				}else{
+// 					$(this).width($(this).parent().width());
+// 					$(this).height("auto");					
+// 				}
+// 				$(this).width('auto');
+// 				$(this).height('auto');
+				console.log('original size:'+width+"/"+height)
+				console.log('src:'+$(this).attr('src'))
+				console.log("부모 사이즈: " + $(this).parent().width()+", "+$(this).parent().height());
+				console.log("이미지 사이즈: " + $(this).width() +", " + $(this).height());
 
+				var diffWidth = $(this).parent().width()-$(this).width();
+				var diffHeight = $(this).parent().height()-$(this).height();
+					
+				console.log("diffWidth: "+diffWidth+", diffHeight: "+diffHeight);
+					
+// 				$(this).attr('style', 'vertical-align:middle');
+// 				$(this).parent().attr('style','text-align:center')
+// 				$(this).css('margin','30px 10px');
+// 			})
+		})
+		//
+		// if window size changes...
+		$(window).on('resize', function(){
+			$(".item").width("100%");
+			$(".item").height($(".item").width());
+			console.log($(".item").width()+", "+$(".item").height());
+				
+				// image
+			$(".item img").each(function(){	
+					console.log("부모 사이즈: " + $(this).parent().width()+", "+$(this).parent().height());
+					console.log("이미지 사이즈: " + $(this).width() +", " + $(this).height());
+
+					var diffWidth = $(this).parent().width()-$(this).width();
+					var diffHeight = $(this).parent().height()-$(this).height();
+						
+					console.log("diffWidth: "+diffWidth+", diffHeight: "+diffHeight);
+						
+					$(this).attr('style', 'margin: '+(diffHeight/2)+'px '+(diffWidth/2)+'px');
+			})
+		})
+		
 		$(document).on('change', "#fileList", function() {
 			readURL(this);
 		});
@@ -256,6 +333,8 @@
 		}
 	}
 </script>
+<style>
+</style>
 </head>
 <body>
 	<c:if test="${empty sessionScope.loginId}">
@@ -317,7 +396,7 @@
 												<div class="panel-thumbnail"></div>
 												<div class="panel-body">
 													<p class="lead">
-														<a href="#"> <!--  profile --> <img class="profile"
+														<a href="showProfile.do/${articleVO.id}"> <!--  profile --> <img class="profile"
 															src="assets/img/profile_pictures/${articleVO.id}.JPG"
 															height="40px" width="40px"> <span>${articleVO.id}</span>
 															<!--  -->
@@ -349,34 +428,10 @@
 																<c:forEach items="${articleVO.photoList}" var="photo"
 																	begin="1" end="${articleVO.photoList.size()-1}"
 																	step="1" varStatus="j">
-																	<c:set var="fileContext" value="${photo.file_path}" />
-																	<%
-																		String fileContext = (String) pageContext.getAttribute("fileContext");
-																						System.out.println(fileContext);
-																						String height = "";
-																						String width = "";
-																						try {
-																							File file = new File(fileContext);
-																							BufferedImage bi = ImageIO.read(file);
-
-																							if (bi.getWidth() < bi.getHeight()) {
-																								height = "100%";
-																								width = "auto";
-																							} else {
-																								width = "100%";
-																								height = "auto";
-																							}
-																							System.out.println(bi.getWidth() + "," + bi.getHeight());
-																						} catch (Exception e) {
-																							System.out.println("이미지 파일이 아닙니다.");
-																						}
-																	%>
-																	<c:set var="width" value="${pageScope.width}" />
-																	<c:set var="height" value="${pageScope.height}" />
-																		<div class="item" style="overflow: hidden; width:100%; height:auto; background-color:black;">
+																	<div class="item"
+																		style="overflow: hidden; background-color: black;">
 																		<img src="${photo.file_origiName}"
-																			class="img-responsive"
-																			style="width:${width}; height=${height}; margin-top:auto; margin-left:auto; margin-right:auto; margin-bottom:auto;">
+																			class="img-responsive">
 																	</div>
 																</c:forEach>
 															</div>
@@ -411,12 +466,13 @@
 														<c:forEach var="commentVO"
 															items="${articleVO.commentList}">
 															<tr id="comment-${commentVO.comment_num}">
-																<td><div style="margin-bottom: 5px;">
+																<td><div style="margin-bottom: 5px;"><a href="showProfile.do/${articleVO.id}">
 																		<img
 																			src="assets/img/profile_pictures/${commentVO.id}.JPG"
 																			height="20px" width="20px"> <span><b>${commentVO.id}</b>
-																			${commentVO.content}</span>
-																	</div></td>
+																			${commentVO.content}</span></a>
+																	</div>
+																</td>
 																<c:if test="${sessionScope.loginId==commentVO.id}">
 																	<td><input id="comment-delete" type="hidden"
 																		name="comment_num" value="${commentVO.comment_num}">
@@ -595,7 +651,7 @@
 					</div>
 					<form class="form center-block" role="form" action="writePost.do"
 						method="post" enctype="multipart/form-data" id="write_form"
-						name="write_form">
+						name="write_form" accept-charset="utf-8">
 						<div class="well modal-body">
 							<!--<h4>Update your status</h4> -->
 							<div class="form-group" style="padding: 14px;">
