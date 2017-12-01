@@ -13,28 +13,28 @@ import vo.FileVO;
 
 @Component
 public class ArticleDao {
-	
+
 	@Autowired
 	private SqlSessionTemplate session;
-	
+
 	public int insertArticle(ArticleVO article) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
-		System.out.println("articleDAO 角青!"+article.getContent());
+		System.out.println("articleDAO 角青!" + article.getContent());
 		return mapper.insertArticle(article);
 	}
-	
-	public List<ArticleVO> selectAllArticle(String id){
+
+	public List<ArticleVO> selectAllArticle(String id) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectAllArticle(id);
 	}
-	
-	public List<CommentVO> selectAllComment(long article_num){
+
+	public List<CommentVO> selectAllComment(long article_num) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectAllComment(article_num);
 	}
 
 	public int deleteComment(long comment_num) {
-//		System.out.println("deleteComment Dao 角青"+comment_num);
+		// System.out.println("deleteComment Dao 角青"+comment_num);
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		int result = mapper.deleteComment(comment_num);
 		System.out.println(result);
@@ -42,7 +42,7 @@ public class ArticleDao {
 	}
 
 	public int deleteNewComment(String id, String content) {
-		System.out.println("deleteNewComment Dao 角青"+id+":"+content);
+		System.out.println("deleteNewComment Dao 角青" + id + ":" + content);
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		int result = mapper.deleteNewComment(id, content);
 		System.out.println(result);
@@ -56,6 +56,7 @@ public class ArticleDao {
 		System.out.println(result);
 		return result;
 	}
+
 	public int insertArticlePhoto(FileVO file) {
 		System.out.println("insertArticlePhoto 角青");
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
@@ -63,8 +64,13 @@ public class ArticleDao {
 		System.out.println("insertArticlePhoto :" + result);
 		return result;
 	}
+
 	public List<FileVO> selectArticlePhoto(long article_num) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectArticlePhoto(article_num);
 	}
-}
+	public int updatePhotoCount(long article_num, int count) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.updatePhotoCount(count, article_num);
+	}
+} 

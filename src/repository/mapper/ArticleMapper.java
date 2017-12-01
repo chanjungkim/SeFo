@@ -17,4 +17,5 @@ public interface ArticleMapper {
 	public int insertComment(CommentVO comment);
 	public int insertArticlePhoto(FileVO vo);
 	public List<FileVO> selectArticlePhoto(long article_num);
+	public int updatePhotoCount(@Param("count")int count, @Param("article_num") long article_num);
 }

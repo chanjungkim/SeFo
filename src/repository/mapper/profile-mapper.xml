@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="repository.mapper.ProfileMapper">
-	<select id="selectContentCount" resultType ="int">
+	<select id="selectContentCount" resultType="int">
 		SELECT count(*)
-		FROM article
+		FROM
+		article
+		WHERE id = #{id}
+	</select>
+	<select id="selectInfo" resultType="MemberVO">
+		SELECT *
+		FROM member
 		WHERE id = #{id}
 	</select>
 	
-	<select id="selectArticleList" resultType="ArticleVO">
+	<select id="selectFisrtArticleList" resultType="ArticleVO">
 		SELECT *
 		FROM article
 		WHERE id = #{id}
+		AND article_num &lt;= (SELECT MAX(article_num)
+								FROM article
+								WHERE id= #{id} AND photo_count &gt; 0)
+<!-- 		&gt == '>' , &lt == '<' -->
+		AND photo_count &gt; 0
 		ORDER BY write_time DESC
+		LIMIT 12
 	</select>
-	
-	<select id="selectInfo" resultType="MemberVO">
-		SELECT * 
-		FROM member 
-		WHERE id = #{id}
+
+	<select id="selectMoreArticleList" resultType="ArticleVO">
+		SELECT *
+		FROM article
+		WHERE id = #{id} AND article_num &lt; #{articleNum}
+		AND photo_count &gt; 0
+		ORDER BY write_time DESC
+		LIMIT 12
 	</select>
-	
+
 </mapper>

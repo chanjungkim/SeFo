@@ -21,17 +21,44 @@
 <script
 	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <script type="text/javascript">
+	var article_last_index = ${articleList.get(articleList.size()-1).article_num};
 	$(function() {
 		$(window).scroll(function() {
-			// 			alert('test2');
 			maxHeight = $(document).height();
 
 			currentScroll = $(window).scrollTop() + $(window).height();
-			console.log("currentScroll:" + currentScroll);
-			console.log("scrollTop:" + $(window).scrollTop());
-			console.log("window height:" + $(window).height());
 			if (maxHeight <= currentScroll) {
-				alert("asd")
+				//ajax 요청
+				$.ajax({
+					type : 'post', //요청 보내면 doPost가 실행됨
+					url : 'profileMoreArticle.do',
+					data : {
+						'articleNum' : article_last_index
+					},
+					dataType : 'json',
+					success : function (resultData) {
+						var loader = '<div id ="loader" class="col-md-3">';
+						loader += '<div class="panel panel-default"  style="background-color:rgba(204,204,204,1);">'; 
+				        loader += '<div class="adjust">'; 
+				        loader += '<div class="loader2"></div>';
+				        loader += '</div>';
+				        loader += '</div>';
+				        loader += '</div>';
+				        
+				        var addImage = "";
+				        $.each(resultData, function(){
+				        	article_last_index = this.article_num;
+							addImage += '<figure> <img src="'+this.photoList[0].file_origiName+'"';
+					        addImage += 'style="z-index: 0;"> </figure>';
+				        })
+						$("#gallery").append(
+							addImage
+						)
+					},
+					error : function() {
+						alert('더보기 ajax 요청 실패');
+					}
+				})
 			}
 		})
 	});
@@ -57,7 +84,7 @@
 					<div class="column col-sm-12" id="main">
 
 						<!-- top nav -->
-							<jsp:include page="${request.getContextPath()}/topNav.jsp" />
+						<jsp:include page="${request.getContextPath()}/topNav.jsp" />
 						<!-- /top nav -->
 
 						<div class="padding">
@@ -71,7 +98,7 @@
 												src="assets/img/profile_pictures/test.JPG"
 												style="width: 160px; height: 160px; margin: 0px">
 										</div>
-										
+
 										<div class="col-md-8"
 											style="margin: auto; width: auto; max-height: 100%;">
 											<div class="row"
@@ -99,11 +126,13 @@
 												style="font-size: 15px; color: black; font-weight: bold; margin-top: 10px;">${memberVO.self_info }</div>
 										</div>
 									</div>
-									<div class="gallery" style="margin-top: 15px">
+									<div id="gallery" class="gallery" style="margin-top: 15px">
 										<c:forEach items="${articleList}" var="articleVO">
-											<figure> <img
-												src=${articleVO.getPhotoList().get(0).file_origiName }
-												style="z-index: 0;"> </figure>
+											<c:if test="${!empty articleVO.getPhotoList() }">
+												<figure> <img
+													src=${articleVO.getPhotoList().get(0).file_origiName }
+													style="z-index: 0;"> </figure>
+											</c:if>
 										</c:forEach>
 									</div>
 								</div>

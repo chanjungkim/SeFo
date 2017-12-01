@@ -92,8 +92,10 @@ public class ArticleVO {
 	public String toString() {
 		return "ArticleVO [article_num=" + article_num + ", id=" + id + ", write_time=" + write_time + ", content="
 				+ content + ", like_count=" + like_count + ", commentList=" + commentList + ", fileList=" + fileList
-				+ "]";
+				+ ", photoList=" + photoList + ", photo_count=" + photo_count + "]";
 	}
+
+	
 
 
 }
