@@ -111,8 +111,9 @@ public class ArticleController {
 		}
 	}
 	
-	@RequestMapping("/react.do")
-	public void saveReact(HttpSession session, HttpServletResponse response, long article_num, String id, String expression) {
+	@RequestMapping(value = "/react.do", method = RequestMethod.POST)
+	public void saveReact(HttpSession session, HttpServletResponse response, String id, long article_num, String expression) {
+		System.out.println("react 컨틀롤러 실행: "+article_num+" "+id+" "+expression);
 		service.saveReact(article_num, id, expression);
 	}
 	

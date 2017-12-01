@@ -244,7 +244,7 @@
 				type : 'post', // 요청 보내면 doPost가 실행됨
 				url : 'search.do', // 우리가 작성한 java 서블릿에게
 				data : {
-					'searchWord' : searchWord, // 검색어 데이터	
+					'searchWord' : searchWord // 검색어 데이터	
 				},
 				dataType : 'json',// 응답데이터 형식
 				success : function(resultData) {
@@ -336,6 +336,27 @@
 			}
 			addMorePhoto(++uploadPhotoCount);
 		}
+	}
+	
+	function reactListener(id, article_num, expression){
+		alert(id+" "+article_num+" "+ expression);
+		$.ajax({
+			type : 'post', // 요청 보내면 doPost가 실행됨
+			url : 'react.do', // 우리가 작성한 java 서블릿에게
+			data : {
+				'article_num' : article_num,
+				'id' : id,
+				'expression' : expression
+			}, // 검색어 데이터
+			dataType : 'text', // 응답데이터 형식
+			success : function(resultData) {
+				alert("리액션 달기 설공!");
+				$('#like-indicator-'+article_num).append("+");
+			},
+			error : function() {
+				alert('ajax 요청 실패');
+			}
+		})
 	}
 </script>
 <style>
@@ -498,14 +519,14 @@
 													<p>${articleVO.content}</p>
 													<div class="react-button dropdown btn btn-default btn-sm">
 														<ul class="dropdown-menu">
-															<li><img src="assets\img\icon\like.gif" width="40px" height="40px"></li>
-															<li><img src="assets\img\icon\love.gif" width="40px" height="40px"></li>
-															<li><img src="assets\img\icon\angry.gif" width="40px" height="40px"></li>
+															<li><img onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'like')" src="assets\img\icon\like.gif" width="40px" height="40px"></li>
+															<li><img onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'love')" src="assets\img\icon\love.gif" width="40px" height="40px"></li>
+															<li><img onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'angry')" src="assets\img\icon\angry.gif" width="40px" height="40px"></li>
 														</ul>
 														<i class="glyphicon glyphicon-thumbs-up"></i>
 													</div>
 													<!-- List of people who liked if more than 3, show number  otherwise id -->
-													<label>아이디 리스트</label>
+													<label id="like-indicator-${articleVO.article_num}">아이디 리스트</label>
 													<!-- EO liked list -->
 													<table class="comment-area">
 														<!-- Start Comment  -->

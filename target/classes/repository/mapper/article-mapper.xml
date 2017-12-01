@@ -3,14 +3,20 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="repository.mapper.ArticleMapper">
-	<insert id="insertArticle" parameterType="ArticleVO" useGeneratedKeys="true" keyProperty="article_num">
-		INSERT INTO ARTICLE(ID, WRITE_TIME, CONTENT)
+
+	<insert id="insertArticle" parameterType="ArticleVO"
+		useGeneratedKeys="true" keyProperty="article_num">
+		INSERT INTO ARTICLE(ID,
+		WRITE_TIME, CONTENT)
 		VALUES(#{id}, #{write_time}, #{content})
 	</insert>
+
 	<insert id="insertArticlePhoto" parameterType="FileVO">
-		INSERT INTO article_photo(article_num, file_path, file_name, file_origiName)
+		INSERT INTO
+		article_photo(article_num, file_path, file_name, file_origiName)
 		VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName})
 	</insert>
+
 	<select id="selectAllArticle" resultType="ArticleVO">
 		SELECT * FROM ARTICLE
 		WHERE ID IN
@@ -20,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WRITE_TIME DESC;
 	</select>
 	<select id="selectArticlePhoto" resultType="FileVO">
-		SELECT * FROM article_photo 
+		SELECT * FROM
+		article_photo
 		WHERE article_num = #{article_num}
 	</select>
 	<select id="selectAllComment" resultType="CommentVO">
@@ -31,7 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertComment" parameterType="CommentVO">
 		INSERT INTO
 		COMMENT(ARTICLE_NUM, ID, WRITE_TIME, CONTENT)
-		VALUES(#{article_num}, #{id}, #{write_time}, #{content})
+		VALUES(#{article_num},
+		#{id}, #{write_time}, #{content})
 	</insert>
 	<delete id="deleteComment" parameterType="long">
 		DELETE FROM COMMENT
@@ -40,17 +48,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="deleteNewComment">
 		DELETE FROM COMMENT
-		WHERE ID = #{id}, CONTENT =
+		WHERE ID = #{id} AND CONTENT =
 		#{content}
 	</delete>
-	
+
 	<update id="updatePhotoCount">
 		UPDATE article
 		SET photo_count = #{count}
-		WHERE article_num = #{article_num} 
+		WHERE
+		article_num = #{article_num}
 	</update>
-	
-	<insert id="updateReact">
-		UPDATE REACT SET #{expression} = 1, id = ${id} WHERE article_num = #{article_num} 	
+
+	<insert id="insertReact">
+		<if test='expression == &quot;like&quot;'>
+			INSERT INTO REACT(ARTICLE_NUM, ID, LIKE) VALUES(#{article_num},
+			#{id}, 1)
+		</if>
+		<if test='expression == &quot;love&quot;'>
+			INSERT INTO REACT(ARTICLE_NUM, ID, LOVE) VALUES(#{article_num},
+			#{id}, 1)
+
+		</if>
+		<if test='expression == &quot;angry&quot;'>
+			INSERT INTO REACT(ARTICLE_NUM, ID, ANGRY) VALUES(#{article_num},
+			#{id}, 1)
+		</if>
 	</insert>
 </mapper>

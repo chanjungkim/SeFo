@@ -10,6 +10,9 @@ public class ArticleVO {
 	private String id;
 	private Date write_time;
 	private String content;
+	private int like_count;
+	private int love_count;
+	private int angry_count;
 	private List<ReactVO> reactList;
 	private List<CommentVO> commentList;
 	private List<MultipartFile> fileList;
@@ -38,6 +41,24 @@ public class ArticleVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public int getLike_count() {
+		return like_count;
+	}
+	public void setLike_count(int like_count) {
+		this.like_count = like_count;
+	}
+	public int getLove_count() {
+		return love_count;
+	}
+	public void setLove_count(int love_count) {
+		this.love_count = love_count;
+	}
+	public int getAngry_count() {
+		return angry_count;
+	}
+	public void setAngry_count(int angry_count) {
+		this.angry_count = angry_count;
 	}
 	public List<ReactVO> getReactList() {
 		return reactList;
@@ -72,7 +93,9 @@ public class ArticleVO {
 	@Override
 	public String toString() {
 		return "ArticleVO [article_num=" + article_num + ", id=" + id + ", write_time=" + write_time + ", content="
-				+ content + ", reactList=" + reactList + ", commentList=" + commentList + ", fileList=" + fileList
+				+ content + ", like_count=" + like_count + ", love_count=" + love_count + ", angry_count=" + angry_count
+				+ ", reactList=" + reactList + ", commentList=" + commentList + ", fileList=" + fileList
 				+ ", photoList=" + photoList + ", photo_count=" + photo_count + "]";
 	}
+	
 }
