@@ -67,6 +67,29 @@ public class ProfileController {
 		}
 		return articleList;
 	}
-	
+	@RequestMapping("myPage.do")
+	public ModelAndView mypage(MemberVO member,HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		ModelAndView mv = new ModelAndView();
+		member = profileService.getProfileInfo(loginId);
+		mv.addObject("original", member);
+		mv.setViewName("myPage");
+		return mv;
+	}
+	@RequestMapping(value="updateProfile.do",method=RequestMethod.POST)
+	public ModelAndView update(MemberVO member, HttpSession session) {
+		String loginId=(String)session.getAttribute("loginId");
+		boolean result=profileService.update(member);
+		ModelAndView mv=new ModelAndView();
+		
+		if(result) {
+			mv.addObject("original",member);
+			mv.setViewName("profile");
+			System.out.println("디비 확인:"+member);
+		}else {
+			 mv.setViewName("updateProfile");
+		}
+		return mv;
+	}
 	
 }

@@ -10,17 +10,19 @@
 	<select id="selectInfo" resultType="MemberVO">
 		SELECT *
 		FROM member
-		WHERE id = #{id}
+		WHERE id =
+		#{id}
 	</select>
-	
+
 	<select id="selectFisrtArticleList" resultType="ArticleVO">
 		SELECT *
 		FROM article
 		WHERE id = #{id}
-		AND article_num &lt;= (SELECT MAX(article_num)
-								FROM article
-								WHERE id= #{id} AND photo_count &gt; 0)
-<!-- 		&gt == '>' , &lt == '<' -->
+		AND article_num &lt;= (SELECT
+		MAX(article_num)
+		FROM article
+		WHERE id= #{id} AND photo_count &gt; 0)
+		<!-- &gt == '>' , &lt == '<' -->
 		AND photo_count &gt; 0
 		ORDER BY write_time DESC
 		LIMIT 12
@@ -28,11 +30,21 @@
 
 	<select id="selectMoreArticleList" resultType="ArticleVO">
 		SELECT *
-		FROM article
+		FROM
+		article
 		WHERE id = #{id} AND article_num &lt; #{articleNum}
-		AND photo_count &gt; 0
+		AND
+		photo_count &gt; 0
 		ORDER BY write_time DESC
 		LIMIT 12
 	</select>
+	<update id="update" parameterType="MemberVO">
+		update member set name=#{name},
+		self_info=#{self_info},email=#{email},phone=#{phone},gender=#{gender}
+		where id=#{id}
+	</update>
 
+	<update id="updatePw" parameterType="MemberVO">
+		update member set password=#{password} where password=#{password}
+	</update>
 </mapper>

@@ -108,7 +108,7 @@
 
 												<div class="row"
 													style="float: left; display: flex; align-items: center;">
-													<button id="profile-edit" style="float: left;">프로필편집</button>
+													<button id="profile-edit" style="float: left;"><a href="myPage.do">프로필편집</a></button>
 													<a href="#"><img src="assets/img/profile_settiong.png"
 														style="width: 30px; height: 30px; float: left; vertical-align: bottom;"></a>
 												</div>

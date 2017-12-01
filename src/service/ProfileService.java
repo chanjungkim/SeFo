@@ -29,4 +29,14 @@ public class ProfileService {
 	public List<ArticleVO> getProfileMoreArticleList(String id, int articleNum) {
 		return dao.selectMoreArticleList(id, articleNum);
 	};
+	public boolean update(MemberVO member) {
+		int original = dao.update(member);
+		if(original > 0) {
+			return true;
+		}
+		return false;
+	}
+	public int getUpdatePw(String pw) {
+		return dao.updatePw(pw);
+	}
 }
