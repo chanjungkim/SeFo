@@ -10,6 +10,7 @@ import repository.mapper.ArticleMapper;
 import vo.ArticleVO;
 import vo.CommentVO;
 import vo.FileVO;
+import vo.ReactVO;
 
 @Component
 public class ArticleDao {
@@ -72,5 +73,15 @@ public class ArticleDao {
 	public int updatePhotoCount(long article_num, int count) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.updatePhotoCount(count, article_num);
+	}
+
+	public int insertReact(long article_num, String id, String expression) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.insertReact(article_num, id, expression);
+	}
+
+	public List<ReactVO> selectAllReact(long article_num) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.selectAllReact(article_num);
 	}
 } 

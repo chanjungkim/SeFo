@@ -28,16 +28,14 @@
 <script type="text/javascript" src="assets/js/bootstrap.js"></script>
 <script type="text/javascript" src="assets/js/facebook.js"></script>
 <style type="text/css">
-
 .item img {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
-.item{
-text-align: center; 
-margin: 1em 0;
+.item {
+	text-align: center;
+	margin: 1em 0;
 }
-    
 </style>
 <script>
 	var uploadPhotoCount = 0;
@@ -122,9 +120,9 @@ margin: 1em 0;
 					
 				console.log("diffWidth: "+diffWidth+", diffHeight: "+diffHeight);
 					
-// 				$(this).attr('style', 'vertical-align:middle');
-// 				$(this).parent().attr('style','text-align:center')
-// 				$(this).css('margin','30px 10px');
+				$(this).attr('style', 'vertical-align:middle');
+				$(this).parent().attr('style','text-align:center')
+				$(this).css('margin','30px 10px');
 // 			})
 		})
 		//
@@ -143,8 +141,9 @@ margin: 1em 0;
 					var diffHeight = $(this).parent().height()-$(this).height();
 						
 					console.log("diffWidth: "+diffWidth+", diffHeight: "+diffHeight);
-						
-					$(this).attr('style', 'margin: '+(diffHeight/2)+'px '+(diffWidth/2)+'px');
+
+					$(this).css('margin-top', (diffHeight/2)+'px ');
+					$(this).css('margin-left', (diffWidth/2)+'px');	
 			})
 		})
 		
@@ -230,6 +229,13 @@ margin: 1em 0;
 				}
 			})
 		})
+		
+// 		$(document).on('hover', '.react-button', function()){
+// 			$(this).after('<button>좋아요</button><button>화나요</button><button>슬퍼요</button>');
+// 		}
+// 		$(document).on('mouseout', '.react-button', function()){
+// 			$(this).after("");
+// 		}
 		
 		$('#srch-term').on('keyup', function(){
 			var searchWord = $(this).val();
@@ -333,6 +339,42 @@ margin: 1em 0;
 	}
 </script>
 <style>
+.react-button:hover{
+	background-color: yellow;
+}
+.dropdown {
+    position: relative;
+
+    /** Make it fit tightly around it's children */
+    display: inline-block;
+}
+
+.dropdown .dropdown-menu {
+    position: absolute;
+
+    /**
+     * Set the top of the dropdown menu to be positioned 100%
+     * from the top of the container, and aligned to the left.
+     */
+    top: 100%;
+    left: 0;
+
+    /** Allow no empty space between this and .dropdown */
+    margin: 0;
+}
+
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu > li{
+	display: inline;
+}
+
+.dropdown-menu > *:hover{
+	background-color: yellow;
+}
 </style>
 </head>
 <body>
@@ -389,17 +431,19 @@ margin: 1em 0;
 										</div>
 
 										<!-- Start For Loop  -->
+										<c:if test = "${not empty articleList}">
 										<c:forEach items="${articleList}" var="articleVO" begin="0"
 											end="${articleList.size()-1}" step="1" varStatus="i">
 											<div class="panel panel-default">
 												<div class="panel-thumbnail"></div>
 												<div class="panel-body">
 													<p class="lead">
-														<a href="showProfile.do/${articleVO.id}"> <!--  profile --> <img class="profile"
+														<a href="showProfile.do/${articleVO.id}"> <!--  profile -->
+															<img class="profile"
 															src="assets/img/profile_pictures/${articleVO.id}.JPG"
 															height="40px" width="40px"> <span>${articleVO.id}</span>
 															<!--  -->
-														</a>
+														</a> <i class="glyphicon glyphicon-menu-down"></i>
 													</p>
 
 													<!--  if photo exists -->
@@ -452,26 +496,28 @@ margin: 1em 0;
 													<!--  EOF -->
 
 													<p>${articleVO.content}</p>
-													<p>
-														<button type="button" class="btn btn-default btn-sm">
-															<i class="glyphicon glyphicon-thumbs-up"></i>
-														</button>
-														<!-- List of people who liked if more than 3, show number  otherwise id -->
-														<label>아이디 리스트</label>
-														<!-- EO liked list -->
-													</p>
+													<div class="react-button dropdown btn btn-default btn-sm">
+														<ul class="dropdown-menu">
+															<li><img src="assets\img\icon\like.gif" width="40px" height="40px"></li>
+															<li><img src="assets\img\icon\love.gif" width="40px" height="40px"></li>
+															<li><img src="assets\img\icon\angry.gif" width="40px" height="40px"></li>
+														</ul>
+														<i class="glyphicon glyphicon-thumbs-up"></i>
+													</div>
+													<!-- List of people who liked if more than 3, show number  otherwise id -->
+													<label>아이디 리스트</label>
+													<!-- EO liked list -->
 													<table class="comment-area">
 														<!-- Start Comment  -->
 														<c:forEach var="commentVO"
 															items="${articleVO.commentList}">
 															<tr id="comment-${commentVO.comment_num}">
-																<td><div style="margin-bottom: 5px;"><a href="showProfile.do/${articleVO.id}">
-																		<img
+																<td><div style="margin-bottom: 5px;">
+																		<a href="showProfile.do/${articleVO.id}"> <img
 																			src="assets/img/profile_pictures/${commentVO.id}.JPG"
 																			height="20px" width="20px"> <span><b>${commentVO.id}</b>
-																			${commentVO.content}</span></a>
-																	</div>
-																</td>
+																				${commentVO.content}</span></a>
+																	</div></td>
 																<c:if test="${sessionScope.loginId==commentVO.id}">
 																	<td><input id="comment-delete" type="hidden"
 																		name="comment_num" value="${commentVO.comment_num}">
@@ -492,6 +538,7 @@ margin: 1em 0;
 												</div>
 											</div>
 										</c:forEach>
+										</c:if>
 										<!-- End of For loop -->
 
 										<!--<div class="panel panel-default"> -->

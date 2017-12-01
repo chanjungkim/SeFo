@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.ArticleService;
 import vo.ArticleVO;
 import vo.CommentVO;
+import vo.ReactVO;
 
 @Controller
 public class ArticleController {
@@ -28,7 +30,7 @@ public class ArticleController {
 	@RequestMapping(value = "/writePost.do", method = RequestMethod.POST)
 	@ResponseBody
 	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			ArticleVO article) throws UnsupportedEncodingException {
+		ArticleVO article) throws UnsupportedEncodingException {
 		String id = (String) session.getAttribute("loginId");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = sdf.format(new Date());
@@ -48,6 +50,7 @@ public class ArticleController {
 		}
 		System.out.println("writePost.do ½ÇÇà");
 		article = service.writeArticle(article, request);
+		
 		if (article.getPhotoList() != null && article.getPhotoList().size() > 0)
 			service.updatePhotoCount(article.getArticle_num(), article.getPhotoList().size());
 		return article;
@@ -106,5 +109,15 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("/react.do")
+	public void saveReact(HttpSession session, HttpServletResponse response, long article_num, String id, String expression) {
+		service.saveReact(article_num, id, expression);
+	}
+	
+	@RequestMapping("/showReactList.do")
+	public List<ReactVO> getReactList(long article_num){
+		return service.getReactList(article_num);
 	}
 }

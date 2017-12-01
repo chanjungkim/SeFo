@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import vo.ArticleVO;
 import vo.CommentVO;
 import vo.FileVO;
+import vo.ReactVO;
 
 public interface ArticleMapper {
 	public int insertArticle(ArticleVO article);
@@ -18,4 +19,6 @@ public interface ArticleMapper {
 	public int insertArticlePhoto(FileVO vo);
 	public List<FileVO> selectArticlePhoto(long article_num);
 	public int updatePhotoCount(@Param("count")int count, @Param("article_num") long article_num);
+	public int insertReact(long article_num, String id, String result);
+	public List<ReactVO> selectAllReact(long article_num);
 }

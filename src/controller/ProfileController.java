@@ -91,5 +91,4 @@ public class ProfileController {
 		}
 		return mv;
 	}
-	
 }

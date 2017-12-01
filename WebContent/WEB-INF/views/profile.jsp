@@ -24,7 +24,7 @@
 	var article_last_index = ${articleList.get(articleList.size()-1).article_num};
 	$(function() {
 		$(window).scroll(function() {
-			maxHeight = $(document).height();
+			var maxHeight = $(document).height();
 
 			currentScroll = $(window).scrollTop() + $(window).height();
 			if (maxHeight <= currentScroll) {

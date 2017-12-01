@@ -49,4 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET photo_count = #{count}
 		WHERE article_num = #{article_num} 
 	</update>
+	
+	<insert id="updateReact">
+		UPDATE REACT SET #{expression} = 1, id = ${id} WHERE article_num = #{article_num} 	
+	</insert>
 </mapper>

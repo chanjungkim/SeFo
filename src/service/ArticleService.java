@@ -16,6 +16,7 @@ import repository.ArticleDao;
 import vo.ArticleVO;
 import vo.CommentVO;
 import vo.FileVO;
+import vo.ReactVO;
 
 @Component
 public class ArticleService {
@@ -124,5 +125,15 @@ public class ArticleService {
 			return true;
 		else
 			return false;
+	}
+
+	public boolean saveReact(long article_num, String id, String expression) {
+		int result = dao.insertReact(article_num, id, expression);
+		if( result > 0) return true;
+		else return false;
+	}
+
+	public List<ReactVO> getReactList(long article_num) {
+		return dao.selectAllReact(article_num);
 	}
 }
