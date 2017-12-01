@@ -14,6 +14,7 @@ public class ArticleVO {
 	private List<CommentVO> commentList;
 	private List<MultipartFile> fileList;
 	private List<FileVO> photoList;
+	private int photo_count;
 	///////////////////////////////////////////////////
 	public long getArticle_num() {
 		return article_num;
@@ -77,6 +78,14 @@ public class ArticleVO {
 
 	public void setPhotoList(List<FileVO> photoList) {
 		this.photoList = photoList;
+	}
+	
+	public int getPhoto_count() {
+		return photo_count;
+	}
+
+	public void setPhoto_count(int photo_count) {
+		this.photo_count = photo_count;
 	}
 
 	@Override
