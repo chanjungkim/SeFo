@@ -1,3 +1,7 @@
+<%@page import="java.awt.image.BufferedImage"%>
+<%@page import="java.io.File"%>
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="java.awt.Image"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -179,7 +183,6 @@
 			})
 		})
 	})
-
 	function deleteComment(comment_num) {
 		if (confirm("댓글을 삭제하시겠습니까?")) {
 			$.ajax({
@@ -253,7 +256,6 @@
 		}
 	}
 </script>
-
 </head>
 <body>
 	<c:if test="${empty sessionScope.loginId}">
@@ -268,7 +270,7 @@
 				<div class="row row-offcanvas row-offcanvas-left">
 
 					<!-- sidebar -->
-<%-- 					<jsp:include page="${request.getContextPath()}/sidebar.jsp" /> --%>
+					<%-- 					<jsp:include page="${request.getContextPath()}/sidebar.jsp" /> --%>
 					<!-- /sidebar -->
 
 					<!-- main right col -->
@@ -309,7 +311,8 @@
 										</div>
 
 										<!-- Start For Loop  -->
-										<c:forEach items="${articleList}" var="articleVO">
+										<c:forEach items="${articleList}" var="articleVO" begin="0"
+											end="${articleList.size()-1}" step="1" varStatus="i">
 											<div class="panel panel-default">
 												<div class="panel-thumbnail"></div>
 												<div class="panel-body">
@@ -320,15 +323,80 @@
 															<!--  -->
 														</a>
 													</p>
-													
+
 													<!--  if photo exists -->
-													<c:if test="${articleVO.photoList != null}">
-															<c:forEach items="${articleVO.photoList}" var="photo">
-																<img src="${photo.file_origiName}" class="img-responsive">
-															</c:forEach>
+													<c:if test="${not empty articleVO.photoList}">
+														<div id="myCarousel-${i.count}"
+															class="carousel
+															data-ride="carousel">
+															<!-- Indicators -->
+															<ol class="carousel-indicators">
+																<li data-target="#myCarousel-${i.count}"
+																	data-slide-to="0" class="active"></li>
+																<c:forEach items="${articleVO.photoList}" var="photo"
+																	begin="1" end="${articleVO.photoList.size()-1}"
+																	step="1" varStatus="j">
+																	<li data-target="#myCarousel-${i.count}"
+																		data-slide-to="${j.count}"></li>
+																</c:forEach>
+															</ol>
+															<!-- Wrapper for slides -->
+															<div class="carousel-inner">
+																<div class="item active">
+																	<img
+																		src="${articleVO.photoList.get(0).file_origiName }">
+																</div>
+																<c:forEach items="${articleVO.photoList}" var="photo"
+																	begin="1" end="${articleVO.photoList.size()-1}"
+																	step="1" varStatus="j">
+																	<c:set var="fileContext" value="${photo.file_path}" />
+																	<%
+																		String fileContext = (String) pageContext.getAttribute("fileContext");
+																						System.out.println(fileContext);
+																						String height = "";
+																						String width = "";
+																						try {
+																							File file = new File(fileContext);
+																							BufferedImage bi = ImageIO.read(file);
+
+																							if (bi.getWidth() < bi.getHeight()) {
+																								height = "100%";
+																								width = "auto";
+																							} else {
+																								width = "100%";
+																								height = "auto";
+																							}
+																							System.out.println(bi.getWidth() + "," + bi.getHeight());
+																						} catch (Exception e) {
+																							System.out.println("이미지 파일이 아닙니다.");
+																						}
+																	%>
+																	<c:set var="width" value="${pageScope.width}" />
+																	<c:set var="height" value="${pageScope.height}" />
+																		<div class="item" style="overflow: hidden; width:100%; height:auto; background-color:black;">
+																		<img src="${photo.file_origiName}"
+																			class="img-responsive"
+																			style="width:${width}; height=${height}; margin-top:auto; margin-left:auto; margin-right:auto; margin-bottom:auto;">
+																	</div>
+																</c:forEach>
+															</div>
+															<!-- Left and right controls -->
+															<c:if test="${articleVO.photoList.size()>=2}">
+																<a class="left carousel-control"
+																	href="#myCarousel-${i.count}" data-slide="prev"> <span
+																	class="glyphicon glyphicon-chevron-left"></span> <span
+																	class="sr-only">Previous</span>
+																</a>
+																<a class="right carousel-control"
+																	href="#myCarousel-${i.count}" data-slide="next"> <span
+																	class="glyphicon glyphicon-chevron-right"></span> <span
+																	class="sr-only">Next</span>
+																</a>
+															</c:if>
+														</div>
 													</c:if>
 													<!--  EOF -->
-											
+
 													<p>${articleVO.content}</p>
 													<p>
 														<button type="button" class="btn btn-default btn-sm">
