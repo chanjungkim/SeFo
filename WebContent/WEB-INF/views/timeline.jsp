@@ -17,7 +17,7 @@
 <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-<link href="assets/css/facebook.css" rel="stylesheet">
+<link href="assets/css/sefo.css" rel="stylesheet">
 <link href="assets/css/timeline.css" rel="stylesheet">
 <script src="https://use.fontawesome.com/804ea8b780.js"></script>
 <script
@@ -267,27 +267,27 @@
 
 		<div class="wrapper">
 			<div class="box">
-				<div class="row row-offcanvas row-offcanvas-left">
+				<div class="row row-offcanvas">
 
 					<!-- sidebar -->
 					<%-- 					<jsp:include page="${request.getContextPath()}/sidebar.jsp" /> --%>
 					<!-- /sidebar -->
 
 					<!-- main right col -->
-					<div class="column col-sm-12 col-xs-11" id="main">
+					<div class="column col-sm-12" id="main">
 
 						<!-- top nav -->
 						<jsp:include page="${request.getContextPath()}/topNav.jsp" />
 						<!-- /top nav -->
 
-						<div class="padding">
-							<div class="full col-sm-9">
+						<div class="padding timeline-main">
+							<div>
 
 								<!-- content -->
 								<div class="row">
 
 									<!-- main col left -->
-									<div style="margin: auto; max-width: 800px">
+									<div class="timeline-container">
 										<!-- 									<div class="col-sm-7 article-list"> -->
 
 										<div id="timeline" class="well" data-target="#modal"

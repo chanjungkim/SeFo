@@ -1,0 +1,21 @@
+#nav-container {
+	background-color: black; position : sticky;
+	top: 0px;
+	left: 0px;
+	z-index: 990;
+	position: sticky;
+}
+
+#main {
+	padding: 0 auto;
+}
+
+.timeline-container {
+	margin:auto;
+	max-width:800px;
+}
+
+.profile-container{
+	margin:auto;
+	max-width:1000px;
+}
