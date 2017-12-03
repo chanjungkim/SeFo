@@ -4,33 +4,39 @@ import java.util.Date;
 
 public class ReactVO {
 	private String member_id;
-	private int love;
-	private int angry;
-	private int sad;
+	private long likeit;
+	private long love;
+	private long angry;
+	private long sad;
 	private Date react_time;
-	
 	public String getMember_id() {
 		return member_id;
 	}
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public int getLove() {
+	public long getLikeit() {
+		return likeit;
+	}
+	public void setLikeit(long likeit) {
+		this.likeit = likeit;
+	}
+	public long getLove() {
 		return love;
 	}
-	public void setLove(int love) {
+	public void setLove(long love) {
 		this.love = love;
 	}
-	public int getAngry() {
+	public long getAngry() {
 		return angry;
 	}
-	public void setAngry(int angry) {
+	public void setAngry(long angry) {
 		this.angry = angry;
 	}
-	public int getSad() {
+	public long getSad() {
 		return sad;
 	}
-	public void setSad(int sad) {
+	public void setSad(long sad) {
 		this.sad = sad;
 	}
 	public Date getReact_time() {
@@ -41,7 +47,7 @@ public class ReactVO {
 	}
 	@Override
 	public String toString() {
-		return "ReactVO [member_id=" + member_id + ", love=" + love + ", angry=" + angry + ", sad=" + sad
-				+ ", react_time=" + react_time + "]";
-	}	
+		return "ReactVO [member_id=" + member_id + ", likeit=" + likeit + ", love=" + love + ", angry=" + angry
+				+ ", sad=" + sad + ", react_time=" + react_time + "]";
+	}
 }

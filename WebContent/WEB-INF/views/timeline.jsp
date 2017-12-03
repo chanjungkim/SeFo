@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="vo.ReactVO"%>
+<%@page import="java.util.List"%>
 <%@page import="java.awt.image.BufferedImage"%>
 <%@page import="java.io.File"%>
 <%@page import="javax.imageio.ImageIO"%>
@@ -360,40 +363,37 @@
 	}
 </script>
 <style>
-.react-button:hover{
+.react-button:hover {
 	background-color: yellow;
 }
-.dropdown {
-    position: relative;
 
-    /** Make it fit tightly around it's children */
-    display: inline-block;
+.dropdown {
+	position: relative;
+	/** Make it fit tightly around it's children */
+	display: inline-block;
 }
 
 .dropdown .dropdown-menu {
-    position: absolute;
-
-    /**
+	position: absolute;
+	/**
      * Set the top of the dropdown menu to be positioned 100%
      * from the top of the container, and aligned to the left.
      */
-    top: 100%;
-    left: 0;
-
-    /** Allow no empty space between this and .dropdown */
-    margin: 0;
+	top: 100%;
+	left: 0;
+	/** Allow no empty space between this and .dropdown */
+	margin: 0;
 }
-
 
 .dropdown:hover .dropdown-menu {
-    display: block;
+	display: block;
 }
 
-.dropdown-menu > li{
+.dropdown-menu>li {
 	display: inline;
 }
 
-.dropdown-menu > *:hover{
+.dropdown-menu>*:hover {
 	background-color: yellow;
 }
 </style>
@@ -452,113 +452,128 @@
 										</div>
 
 										<!-- Start For Loop  -->
-										<c:if test = "${not empty articleList}">
-										<c:forEach items="${articleList}" var="articleVO" begin="0"
-											end="${articleList.size()-1}" step="1" varStatus="i">
-											<div class="panel panel-default">
-												<div class="panel-thumbnail"></div>
-												<div class="panel-body">
-													<p class="lead">
-														<a href="showProfile.do/${articleVO.id}"> <!--  profile -->
-															<img class="profile"
-															src="assets/img/profile_pictures/${articleVO.id}.JPG"
-															height="40px" width="40px"> <span>${articleVO.id}</span>
-															<!--  -->
-														</a> <i class="glyphicon glyphicon-menu-down"></i>
-													</p>
+										<c:if test="${not empty articleList}">
+											<c:forEach items="${articleList}" var="articleVO" begin="0"
+												end="${articleList.size()-1}" step="1" varStatus="i">
+												<div class="panel panel-default">
+													<div class="panel-thumbnail"></div>
+													<div class="panel-body">
+														<p class="lead">
+															<a href="showProfile.do/${articleVO.id}"> <!--  profile -->
+																<img class="profile"
+																src="assets/img/profile_pictures/${articleVO.id}.JPG"
+																height="40px" width="40px"> <span>${articleVO.id}</span>
+																<!--  -->
+															</a> <i class="glyphicon glyphicon-menu-down"></i>
+														</p>
 
-													<!--  if photo exists -->
-													<c:if test="${not empty articleVO.photoList}">
-														<div id="myCarousel-${i.count}"
-															class="carousel
+														<!--  if photo exists -->
+														<c:if test="${not empty articleVO.photoList}">
+															<div id="myCarousel-${i.count}"
+																class="carousel
 															data-ride="carousel">
-															<!-- Indicators -->
-															<ol class="carousel-indicators">
-																<li data-target="#myCarousel-${i.count}"
-																	data-slide-to="0" class="active"></li>
-																<c:forEach items="${articleVO.photoList}" var="photo"
-																	begin="1" end="${articleVO.photoList.size()-1}"
-																	step="1" varStatus="j">
+																<!-- Indicators -->
+																<ol class="carousel-indicators">
 																	<li data-target="#myCarousel-${i.count}"
-																		data-slide-to="${j.count}"></li>
-																</c:forEach>
-															</ol>
-															<!-- Wrapper for slides -->
-															<div class="carousel-inner">
-																<div class="item active">
-																	<img
-																		src="${articleVO.photoList.get(0).file_origiName }">
-																</div>
-																<c:forEach items="${articleVO.photoList}" var="photo"
-																	begin="1" end="${articleVO.photoList.size()-1}"
-																	step="1" varStatus="j">
-																	<div class="item"
-																		style="overflow: hidden; background-color: black;">
-																		<img src="${photo.file_origiName}"
-																			class="img-responsive">
+																		data-slide-to="0" class="active"></li>
+																	<c:forEach items="${articleVO.photoList}" var="photo"
+																		begin="1" end="${articleVO.photoList.size()-1}"
+																		step="1" varStatus="j">
+																		<li data-target="#myCarousel-${i.count}"
+																			data-slide-to="${j.count}"></li>
+																	</c:forEach>
+																</ol>
+																<!-- Wrapper for slides -->
+																<div class="carousel-inner">
+																	<div class="item active">
+																		<img
+																			src="${articleVO.photoList.get(0).file_origiName }">
 																	</div>
-																</c:forEach>
-															</div>
-															<!-- Left and right controls -->
-															<c:if test="${articleVO.photoList.size()>=2}">
-																<a class="left carousel-control"
-																	href="#myCarousel-${i.count}" data-slide="prev"> <span
-																	class="glyphicon glyphicon-chevron-left"></span> <span
-																	class="sr-only">Previous</span>
-																</a>
-																<a class="right carousel-control"
-																	href="#myCarousel-${i.count}" data-slide="next"> <span
-																	class="glyphicon glyphicon-chevron-right"></span> <span
-																	class="sr-only">Next</span>
-																</a>
-															</c:if>
-														</div>
-													</c:if>
-													<!--  EOF -->
-
-													<p>${articleVO.content}</p>
-													<div class="react-button dropdown btn btn-default btn-sm">
-														<ul class="dropdown-menu">
-															<li><img onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'like')" src="assets\img\icon\like.gif" width="40px" height="40px"></li>
-															<li><img onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'love')" src="assets\img\icon\love.gif" width="40px" height="40px"></li>
-															<li><img onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'angry')" src="assets\img\icon\angry.gif" width="40px" height="40px"></li>
-														</ul>
-														<i class="glyphicon glyphicon-thumbs-up"></i>
-													</div>
-													<!-- List of people who liked if more than 3, show number  otherwise id -->
-													<label id="like-indicator-${articleVO.article_num}">아이디 리스트</label>
-													<!-- EO liked list -->
-													<table class="comment-area">
-														<!-- Start Comment  -->
-														<c:forEach var="commentVO"
-															items="${articleVO.commentList}">
-															<tr id="comment-${commentVO.comment_num}">
-																<td><div style="margin-bottom: 5px;">
-																		<a href="showProfile.do/${articleVO.id}"> <img
-																			src="assets/img/profile_pictures/${commentVO.id}.JPG"
-																			height="20px" width="20px"> <span><b>${commentVO.id}</b>
-																				${commentVO.content}</span></a>
-																	</div></td>
-																<c:if test="${sessionScope.loginId==commentVO.id}">
-																	<td><input id="comment-delete" type="hidden"
-																		name="comment_num" value="${commentVO.comment_num}">
-																		<a onclick="deleteComment(${commentVO.comment_num})"
-																		style="color: #CCC; font-size: 5px;">X</a></td>
+																	<c:forEach items="${articleVO.photoList}" var="photo"
+																		begin="1" end="${articleVO.photoList.size()-1}"
+																		step="1" varStatus="j">
+																		<div class="item"
+																			style="overflow: hidden; background-color: black;">
+																			<img src="${photo.file_origiName}"
+																				class="img-responsive">
+																		</div>
+																	</c:forEach>
+																</div>
+																<!-- Left and right controls -->
+																<c:if test="${articleVO.photoList.size()>=2}">
+																	<a class="left carousel-control"
+																		href="#myCarousel-${i.count}" data-slide="prev"> <span
+																		class="glyphicon glyphicon-chevron-left"></span> <span
+																		class="sr-only">Previous</span>
+																	</a>
+																	<a class="right carousel-control"
+																		href="#myCarousel-${i.count}" data-slide="next"> <span
+																		class="glyphicon glyphicon-chevron-right"></span> <span
+																		class="sr-only">Next</span>
+																	</a>
 																</c:if>
-															</tr>
-														</c:forEach>
-														<!--  EO Comment -->
-													</table>
-													<a class="write-time">${articleVO.write_time}</a>
-													<hr>
-													<span> <input type="hidden" class="article-num"
-														value="${articleVO.article_num}"> <textarea
-															class="comment-write-area" placeholder="댓글달기..."
-															name="${articleVO.article_num}"></textarea>
-													</span>
+															</div>
+														</c:if>
+														<!--  EOF -->
+
+														<p>${articleVO.content}</p>
+														<div class="react-button dropdown btn btn-default btn-sm">
+															<ul class="dropdown-menu">
+																<li><img
+																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'LIKEIT')"
+																	src="assets\img\icon\like.gif" width="40px"
+																	height="40px"></li>
+																<li><img
+																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'LOVE')"
+																	src="assets\img\icon\love.gif" width="40px"
+																	height="40px"></li>
+																<li><img
+																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'ANGRY')"
+																	src="assets\img\icon\angry.gif" width="40px"
+																	height="40px"></li>
+																<li><img
+																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, 'SAD')"
+																	src="assets\img\icon\sad.gif" width="40px"
+																	height="40px"></li>
+															</ul>
+															<i class="glyphicon glyphicon-thumbs-up"></i>
+														</div>
+														<!-- List of people who liked if more than 3, show number  otherwise id -->
+														<a id="like-indicator-${articleVO.article_num}">
+														
+														</a>
+														<!-- EO liked list -->
+														<table class="comment-area">
+															<!-- Start Comment  -->
+															<c:forEach var="commentVO"
+																items="${articleVO.commentList}">
+																<tr id="comment-${commentVO.comment_num}">
+																	<td><div style="margin-bottom: 5px;">
+																			<a href="showProfile.do/${articleVO.id}"> <img
+																				src="assets/img/profile_pictures/${commentVO.id}.JPG"
+																				height="20px" width="20px"> <span><b>${commentVO.id}</b>
+																					${commentVO.content}</span></a>
+																		</div></td>
+																	<c:if test="${sessionScope.loginId==commentVO.id}">
+																		<td><input id="comment-delete" type="hidden"
+																			name="comment_num" value="${commentVO.comment_num}">
+																			<a onclick="deleteComment(${commentVO.comment_num})"
+																			style="color: #CCC; font-size: 5px;">X</a></td>
+																	</c:if>
+																</tr>
+															</c:forEach>
+															<!--  EO Comment -->
+														</table>
+														<a class="write-time">${articleVO.write_time}</a>
+														<hr>
+														<span> <input type="hidden" class="article-num"
+															value="${articleVO.article_num}"> <textarea
+																class="comment-write-area" placeholder="댓글달기..."
+																name="${articleVO.article_num}"></textarea>
+														</span>
+													</div>
 												</div>
-											</div>
-										</c:forEach>
+											</c:forEach>
 										</c:if>
 										<!-- End of For loop -->
 

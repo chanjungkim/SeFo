@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -58,8 +59,15 @@ public class MemberController {
  	}
 	
 	@RequestMapping("/initMain.do")
-	public ModelAndView initMain(HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {   	
+	public ModelAndView initMain(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {   	
 		String id = (String) session.getAttribute("loginId");
+	
+		Cookie cookie = new Cookie("sefoId", id);
+		cookie.setComment("last id");
+		cookie.setMaxAge(60*60*24*3);
+		cookie.setValue(id);
+		response.addCookie(cookie);
+		
 		ModelAndView mv = new ModelAndView();
 		MemberVO member = service.initMain(id);
 		List<ArticleVO> articleList = articleService.getArticleList(id);

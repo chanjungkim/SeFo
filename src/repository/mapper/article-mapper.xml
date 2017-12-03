@@ -3,7 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="repository.mapper.ArticleMapper">
-
 	<insert id="insertArticle" parameterType="ArticleVO"
 		useGeneratedKeys="true" keyProperty="article_num">
 		INSERT INTO ARTICLE(ID,
@@ -60,18 +59,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<insert id="insertReact">
-		<if test='expression == &quot;like&quot;'>
-			INSERT INTO REACT(ARTICLE_NUM, ID, LIKE) VALUES(#{article_num},
-			#{id}, 1)
-		</if>
-		<if test='expression == &quot;love&quot;'>
-			INSERT INTO REACT(ARTICLE_NUM, ID, LOVE) VALUES(#{article_num},
-			#{id}, 1)
-
-		</if>
-		<if test='expression == &quot;angry&quot;'>
-			INSERT INTO REACT(ARTICLE_NUM, ID, ANGRY) VALUES(#{article_num},
-			#{id}, 1)
-		</if>
+		INSERT INTO REACT(ARTICLE_NUM, ID, ${expression}) VALUES(#{article_num}, #{id}, 1)
 	</insert>
+	
+	<select id="selectAllReact" resultType="ReactVO">
+		SELECT * FROM REACT;
+	</select>
 </mapper>

@@ -70,6 +70,7 @@ public class ArticleService {
 				}
 			}
 		}
+		article.setReactList(getReactList(article.getArticle_num()));
 		return article;
 	}
 
