@@ -109,8 +109,6 @@ table {
 											class="glyphicon glyphicon-user"></i>Profile</a></li>
 									<li><a href="" data-target-id="change-password"><i
 											class="glyphicon glyphicon-lock"></i>Change Password</a></li>
-									<li><a href="" data-target-id="settings"><i
-											class="glyphicon glyphicon-cog"></i>Settings</a></li>
 									<li><a href="" data-toggle="modal" data-target=".bs-example-modal-sm"
 										data-target=".bs-example-modal-sm"><i
 											class="glyphicon glyphicon-log-out"></i>Logout</a></li>
