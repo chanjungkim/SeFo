@@ -75,7 +75,6 @@ public class ArticleVO {
 	public void setCommentList(List<CommentVO> commentList) {
 		this.commentList = commentList;
 		this.commentCount = commentList.size();
-		System.out.println("commentCount : "+ commentCount);
 	}
 	
 	public int getCommentCount() {

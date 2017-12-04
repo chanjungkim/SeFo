@@ -543,13 +543,13 @@
 														
 														</a>
 														<!-- EO liked list -->
-														<table class="comment-area">
+														<table class="comment-area" style="margin-top: 10px;">
 															<!-- Start Comment  -->
 															<c:forEach var="commentVO"
 																items="${articleVO.commentList}">
 																<tr id="comment-${commentVO.comment_num}">
 																	<td><div style="margin-bottom: 5px;">
-																			<a href="showProfile.do/${articleVO.id}"> <img id="comment-img"
+																			<a href="showProfile.do/${articleVO.id}" style="color: black"> <img id="comment-img"
 																				src="assets/img/profile_pictures/${commentVO.id}.JPG"> <b>${commentVO.id} </b></a>
 																					<span>${commentVO.content}</span>
 																		</div></td>
