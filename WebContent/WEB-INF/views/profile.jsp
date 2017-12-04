@@ -21,13 +21,17 @@
 <script
 	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <script type="text/javascript">
-	var article_last_index = ${articleList.get(articleList.size()-1).article_num};
+	
+
 	$(function() {
+	var article_last_index = $('#article_last_index').val();
+	var article_count = 12;
 		$(window).scroll(function() {
 			var maxHeight = $(document).height();
 
 			currentScroll = $(window).scrollTop() + $(window).height();
-			if (maxHeight <= currentScroll) {
+			if ((maxHeight <= currentScroll) && article_count == 12) {
+				
 				//ajax 요청
 				$.ajax({
 					type : 'post', //요청 보내면 doPost가 실행됨
@@ -46,11 +50,14 @@
 				        loader += '</div>';
 				        
 				        var addImage = "";
+				        var article_count_sum = 0;
 				        $.each(resultData, function(){
 				        	article_last_index = this.article_num;
 							addImage += '<figure><div><img id="article_img" name ="article_img" src="'+this.photoList[0].file_origiName+'"';
 					        addImage += 'style="z-index: 0;"><div class="photo-info">'+this.commentCount+'개</div></div> </figure>';
+					        article_count_sum += 1;
 				        })
+				        article_count = article_count_sum; 
 						$("#gallery").append(
 							addImage
 						)
@@ -80,7 +87,7 @@ figure {
 	position: relative;
 }
 
-figure > div > .photo-info {
+figure>div>.photo-info {
 	position: absolute;
 	color: white;
 	opacity: 0;
@@ -94,6 +101,13 @@ figure > div > .photo-info {
 </style>
 </head>
 <body>
+	<c:if test="${empty articleList}">
+		<input type="hidden" id="article_last_index" value="0">
+	</c:if>
+	<c:if test="${not empty articleList}">
+		<input type="hidden" id="article_last_index" value="${articleList.get(articleList.size()-1).article_num}">
+	</c:if>
+
 	<c:if test="${empty sessionScope.loginId}">
 		<%
 			response.sendRedirect(request.getContextPath() + "/loginPageMove.do");
@@ -136,23 +150,38 @@ figure > div > .photo-info {
 
 												<div class="row"
 													style="float: left; display: flex; align-items: center;">
-													<c:if test="${accessAut} == 'self'">
-														<button id="profile-edit" style="float: left;"><a href="myPage.do">프로필편집</a></button>
-														<a href="#"><img src="assets/img/profile_settiong.png"
-															style="width: 30px; height: 30px; float: left; vertical-align: bottom;"></a>
-													</c:if>
-													<button id="profile-edit" style="float: left;"><a href="#">채팅하기</a></button>
+													<c:choose>
+														<c:when test="${sessionScope.loginId == memberVO.id}">
+															<button id="profile-edit" style="float: left;">
+																<a href="myPage.do" style="color: black">
+																	<strong>프로필편집</strong>
+																</a>
+															</button>
+															<a href="#"><img
+																src="assets/img/profile_settiong.png"
+																style="width: 30px; height: 30px; float: left; vertical-align: bottom;"></a>
+														</c:when>
+														<c:otherwise>
+															<button id="profile-edit" style="float: left;">
+													<a href="#">채팅하기</a>
+													</button>
+														</c:otherwise>
+													</c:choose>
 												</div>
 											</div>
 											<div class="row" style="margin-top: 10px;">
 												<span class="profile-span-margin-3px">게시물 </span> <strong><span
 													class="profile-span-margin-10px" id="span_profile_article">${totalContentCnt}
-												</span></strong> 
-												<button class="profile-span-margin-3px" id="span_profile_follower" style="font-size: 16px; background-color: transparent; border-style: none">팔로워<strong>
-													${memberVO.follower_count}</strong></button>
+												</span></strong>
+												<button class="profile-span-margin-3px"
+													id="span_profile_follower"
+													style="font-size: 16px; background-color: transparent; border-style: none">
+													팔로워<strong> ${memberVO.follower_count}</strong>
+												</button>
 												<button id="btn_profile_follow"
-													style="font-size: 16px; background-color: transparent; border-style: none">팔로우
-													<strong> ${memberVO.follow_count}</strong></button>
+													style="font-size: 16px; background-color: transparent; border-style: none">
+													팔로우 <strong> ${memberVO.follow_count}</strong>
+												</button>
 											</div>
 											<div
 												style="font-size: 15px; color: black; font-weight: bold; margin-top: 10px;">${memberVO.self_info }</div>
@@ -165,9 +194,10 @@ figure > div > .photo-info {
 												<div>
 													<img id="article_img" name="article_img"
 														src=${articleVO.getPhotoList().get(0).file_origiName }
-														style="z-index: 0; " >
+														style="z-index: 0;">
 													<div class="photo-info" style="">
-														<img src="assets/img/icon/chat.png" style="width: 15px; height: 15px; display: inline-block;">
+														<img src="assets/img/icon/chat.png"
+															style="width: 15px; height: 15px; display: inline-block;">
 														${articleVO.commentCount }개
 													</div>
 												</div>

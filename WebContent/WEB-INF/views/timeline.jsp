@@ -59,7 +59,6 @@
 					}, // 검색어 데이터
 					dataType : 'text', // 응답데이터 형식
 					success : function(resultData) {
-						alert("댓글 작성 성공!");
 						$('.comment-area').append('<tr id="new-comment">'
 							+ '<td><div style="margin-bottom: 5px;">'
 							+ '		<img id="comment-img"'

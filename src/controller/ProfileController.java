@@ -71,7 +71,6 @@ public class ProfileController {
 		mv.addObject("totalContentCnt", totalContentCnt);
 		mv.addObject("memberVO", memberVO);
 		mv.addObject("accessAut", "other");
-		System.out.println(articleList.size());
 		return mv;
 	}
 	
@@ -83,7 +82,7 @@ public class ProfileController {
 	public List<ArticleVO> getMoreArticle(HttpSession session, int articleNum){
 		String id = (String) session.getAttribute("loginId");
 		List<ArticleVO> articleList = profileService.getProfileMoreArticleList(id, articleNum);
-		System.out.println("a size" + articleList.size());
+		System.out.println("profileMoreArticle : " + articleList);
 		for(ArticleVO a : articleList) {
 			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
 			if (result != null && result.size() != 0) {
@@ -92,6 +91,7 @@ public class ProfileController {
 		}
 		return articleList;
 	}
+	
 	@RequestMapping("myPage.do")
 	public ModelAndView mypage(MemberVO member,HttpSession session) {
 		String loginId = (String)session.getAttribute("loginId");
