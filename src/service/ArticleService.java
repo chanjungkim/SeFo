@@ -78,7 +78,9 @@ public class ArticleService {
 		List<ArticleVO> articleList = dao.selectAllArticle(id);
 		for (ArticleVO article : articleList) {
 			article.setCommentList(dao.selectAllComment(article.getArticle_num()));
+			article.setReactList(dao.selectAllReact(article.getArticle_num()));
 			// System.out.println(article.getArticle_num()+"/"+article.getCommentList().size());
+			article.toString();
 		}
 		return articleList;
 	}
@@ -136,5 +138,17 @@ public class ArticleService {
 
 	public List<ReactVO> getReactList(long article_num) {
 		return dao.selectAllReact(article_num);
+	}
+
+	public boolean updateReact(long article_num, String id, String expression) {
+		int result1 = dao.deleteReact(article_num, id);
+		int result2 = 0;
+		if(result1 > 0) {
+			result2 = dao.insertReact(article_num, id, expression);
+			if(result2 > 0) return true;
+			else return false;
+		}else{
+			return false;
+		}
 	}
 }

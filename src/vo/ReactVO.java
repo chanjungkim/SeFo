@@ -3,17 +3,24 @@ package vo;
 import java.util.Date;
 
 public class ReactVO {
-	private String member_id;
+	private String id;
+	private long article_num;
 	private long likeit;
 	private long love;
 	private long angry;
 	private long sad;
 	private Date react_time;
-	public String getMember_id() {
-		return member_id;
+	public String getId() {
+		return id;
 	}
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
+	public void setId(String id) {
+		this.id = id;
+	}
+	public long getArticle_num() {
+		return article_num;
+	}
+	public void setArticle_num(long article_num) {
+		this.article_num = article_num;
 	}
 	public long getLikeit() {
 		return likeit;
@@ -47,7 +54,7 @@ public class ReactVO {
 	}
 	@Override
 	public String toString() {
-		return "ReactVO [member_id=" + member_id + ", likeit=" + likeit + ", love=" + love + ", angry=" + angry
-				+ ", sad=" + sad + ", react_time=" + react_time + "]";
+		return "ReactVO [id=" + id + ", article_num=" + article_num + ", likeit=" + likeit + ", love=" + love
+				+ ", angry=" + angry + ", sad=" + sad + ", react_time=" + react_time + "]";
 	}
 }

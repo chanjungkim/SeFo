@@ -59,10 +59,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<insert id="insertReact">
-		INSERT INTO REACT(ARTICLE_NUM, ID, ${expression}) VALUES(#{article_num}, #{id}, 1)
+		INSERT INTO REACT(ARTICLE_NUM, ID, TYPE_NUM, REACT_TIME)
+		VALUES(#{article_num}, #{id}, ${expression}, now())
+		ON DUPLICATE KEY UPDATE ID=#{id} AND ID=#{id},TYPE_NUM=${expression};
 	</insert>
-	
-	<select id="selectAllReact" resultType="ReactVO">
-		SELECT * FROM REACT;
+
+	<select id="selectAllReact"   parameterType="long" resultType="ReactVO">
+		SELECT * FROM REACT WHERE ARTICLE_NUM = #{article_num};
 	</select>
+
+	<delete id="deleteReact">
+		DELETE FROM REACT WHERE ID = #{id} AND ARTICLE_NUM = #{article_num}
+	</delete>
+	
 </mapper>

@@ -21,5 +21,5 @@ public interface ArticleMapper {
 	public int updatePhotoCount(@Param("count")int count, @Param("article_num") long article_num);
 	public int insertReact(@Param("article_num") long article_num, @Param("id") String id, @Param("expression") String expression);
 	public List<ReactVO> selectAllReact(long article_num);
-
+	public int deleteReact(@Param("article_num") long article_num, @Param("id") String id);
 }

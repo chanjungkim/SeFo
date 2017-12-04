@@ -30,7 +30,7 @@ public class ArticleController {
 	@RequestMapping(value = "/writePost.do", method = RequestMethod.POST)
 	@ResponseBody
 	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-		ArticleVO article) throws UnsupportedEncodingException {
+			ArticleVO article) throws UnsupportedEncodingException {
 		String id = (String) session.getAttribute("loginId");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = sdf.format(new Date());
@@ -50,7 +50,7 @@ public class ArticleController {
 		}
 		System.out.println("writePost.do 실행");
 		article = service.writeArticle(article, request);
-		
+
 		if (article.getPhotoList() != null && article.getPhotoList().size() > 0)
 			service.updatePhotoCount(article.getArticle_num(), article.getPhotoList().size());
 		return article;
@@ -110,15 +110,22 @@ public class ArticleController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@RequestMapping(value = "/react.do", method = RequestMethod.POST)
-	public void saveReact(HttpSession session, HttpServletResponse response, String id, long article_num, String expression) {
-		System.out.println("react 컨틀롤러 실행: "+article_num+" "+id+" "+expression);
-		service.saveReact(article_num, id, expression);
+	public void saveReact(HttpSession session, HttpServletResponse response, String id, long article_num,
+			String expression) {
+		System.out.println("react 컨틀롤러 실행: " + article_num + " " + id + " " + expression);
+		service.saveReact(article_num,id, expression);
 	}
-	
+
+	@RequestMapping(value = "/reactUpdate.do", method = RequestMethod.POST)
+	public void updateReact(HttpSession session, HttpServletResponse response, String id, long article_num, String expression) {
+		System.out.println("react 컨틀롤러 실행: "+article_num+" "+id+" "+expression);
+		service.updateReact(article_num, id, expression);
+	}
+
 	@RequestMapping("/showReactList.do")
-	public List<ReactVO> getReactList(long article_num){
+	public List<ReactVO> getReactList(long article_num) {
 		return service.getReactList(article_num);
 	}
 }

@@ -84,4 +84,9 @@ public class ArticleDao {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectAllReact(article_num);
 	}
+
+	public int deleteReact(long article_num, String id) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.deleteReact(article_num, id);
+	}
 } 
