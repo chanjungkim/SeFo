@@ -96,7 +96,7 @@
 											style="margin: auto; width: auto; max-height: 100%; margin-left: 80px; margin-right: 80px;">
 											<img id="profile_img"
 												src="assets/img/profile_pictures/test.JPG"
-												style="width: 160px; height: 160px; margin: 0px">
+												>
 										</div>
 
 										<div class="col-md-8"

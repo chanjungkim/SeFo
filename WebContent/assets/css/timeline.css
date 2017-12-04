@@ -53,6 +53,12 @@ hr {
 	color: #CCC;
 	font-size: 5px;
 }
+#comment-img {
+	border-radius: 50%;
+	border: 0.5px solid #aaa;
+	width: 20px; 
+	height: 20px;
+}
 
 .modal-body {
 	margin: 0px;
