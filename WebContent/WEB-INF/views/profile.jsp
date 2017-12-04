@@ -165,8 +165,11 @@ figure > div > .photo-info {
 												<div>
 													<img id="article_img" name="article_img"
 														src=${articleVO.getPhotoList().get(0).file_origiName }
-														style="z-index: 0;">
-													<div class="photo-info">${articleVO.commentCount }개</div>
+														style="z-index: 0; " >
+													<div class="photo-info" style="">
+														<img src="assets/img/icon/chat.png" style="width: 15px; height: 15px; display: inline-block;">
+														${articleVO.commentCount }개
+													</div>
 												</div>
 												</figure>
 											</c:if>
