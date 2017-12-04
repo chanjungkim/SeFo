@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,28 @@ public class ProfileController {
 		mv.addObject("articleList", articleList);
 		mv.addObject("totalContentCnt", totalContentCnt);
 		mv.addObject("memberVO", memberVO);
+		mv.addObject("accessAut", "self");
+		System.out.println(articleList.size());
+		return mv;
+	}
+	
+	@RequestMapping(value = "/other_profile.do", method=RequestMethod.GET)
+	public ModelAndView otherProfilePage(HttpServletRequest httpServletRequest) {
+		String id = httpServletRequest.getParameter("srch-term");
+		ModelAndView mv = new ModelAndView("profile");
+		List<ArticleVO> articleList = profileService.getProfileFistArticleList(id);
+		for(ArticleVO a : articleList) {
+			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
+			if (result != null && result.size() != 0) {
+				a.setPhotoList(result);
+			} 
+		}
+		int totalContentCnt = profileService.getProfileContentCount(id);
+		MemberVO memberVO = profileService.getProfileInfo(id);
+		mv.addObject("articleList", articleList);
+		mv.addObject("totalContentCnt", totalContentCnt);
+		mv.addObject("memberVO", memberVO);
+		mv.addObject("accessAut", "other");
 		System.out.println(articleList.size());
 		return mv;
 	}
