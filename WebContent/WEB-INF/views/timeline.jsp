@@ -45,7 +45,15 @@
 	var photoNum = 0;
 	
 	$(function() {
-
+		var profileImg = new Image;
+		var memberId = '${sessionScope.loginId}';
+		profileImg.src = "assets/img/profile_pictures/" + memberId + ".JPG";
+		var profileImgPath = "assets/img/profile_pictures/" + memberId + ".JPG";
+		if (!profileImg.complete) {
+			profileImgPath = "assets/img/profile_pictures/default_profile.JPG";
+		}
+		$('#profile_img').attr('src', profileImgPath);
+		//////////////////////////////////////////////////
 		$('.comment-write-area').on('keydown', function(e) {
 			var article_num = $(this).attr("name");
 			var content = $(this).val()
@@ -62,7 +70,7 @@
 						$('.comment-area').append('<tr id="new-comment">'
 							+ '<td><div style="margin-bottom: 5px;">'
 							+ '		<img id="comment-img"'
-							+ '			src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
+							+ '			src="'+profileImgPath+'.JPG"'
 							+ '			> <span><b>${sessionScope.loginId} </b>'
 							+ content
 							+ '	</div></td>'
@@ -187,7 +195,7 @@
 						+ '<p class="lead">'
 						+ '<!--  profile -->'
 						+ '<img class="profile"'
-						+ ' src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
+						+ ' src="'+profileImgPath+'"'
 						+ '				height="40px" width="40px"> <span>${sessionScope.loginId}</span>'
 						+ '			<!--  -->'
 						+ '		</p>'
@@ -239,32 +247,7 @@
 // 			$(this).after("");
 // 		}
 		
-		$('#srch-term').on('keyup', function(){
-			var searchWord = $(this).val();
-			console.log(searchWord);
-			$.ajax({
-				type : 'post', // 요청 보내면 doPost가 실행됨
-				url : 'search.do', // 우리가 작성한 java 서블릿에게
-				data : {
-					'searchWord' : searchWord // 검색어 데이터	
-				},
-				dataType : 'json',// 응답데이터 형식
-				success : function(resultData) {
-					console.log(resultData);
-					$('.search-option').remove();
-					var bookData='';
-					for(var i=0; i<resultData.length; i++){
-						bookData += '<option class="search-option" value="' +resultData[i]+ '">';
-					}
-// 					$.each(resultData, function(index, item) {
-// 						bookData += '<option class="search-option" value="'+item+'">';
-					console.log(bookData);
-					$('#search-data-list').append(bookData);
-				},
-				error : function() {
-					console.log('검색 ajax 요청 실패');
-				}
-			})
+
 		})
 	})
 	function deleteComment(comment_num) {
@@ -459,8 +442,7 @@
 													<div class="panel-body">
 														<p class="lead">
 															<a href="showProfile.do/${articleVO.id}"> <!--  profile -->
-																<img class="profile"
-																src="assets/img/profile_pictures/${articleVO.id}.JPG"
+																<img id="profile_other_img" class="profile"
 																height="40px" width="40px"> <span>${articleVO.id}</span>
 																<!--  -->
 															</a> <i class="glyphicon glyphicon-menu-down"></i>
@@ -548,9 +530,9 @@
 																items="${articleVO.commentList}">
 																<tr id="comment-${commentVO.comment_num}">
 																	<td><div style="margin-bottom: 5px;">
-																			<a href="showProfile.do/${articleVO.id}" style="color: black"> <img id="comment-img"
+																			<a href="showProfile.do/${articleVO.id}" style="color: black; font-size:small"> <img id="comment-img"
 																				src="assets/img/profile_pictures/${commentVO.id}.JPG"> <b>${commentVO.id} </b></a>
-																					<span>${commentVO.content}</span>
+																					<span style="font-size:small;">${commentVO.content}</span>
 																		</div></td>
 																	<c:if test="${sessionScope.loginId==commentVO.id}">
 																		<td><input id="comment-delete" type="hidden"
@@ -573,140 +555,11 @@
 												</div>
 											</c:forEach>
 										</c:if>
-										<!-- End of For loop -->
-
-										<!--<div class="panel panel-default"> -->
-										<!--	<div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Bootstrap Examples</h4></div> -->
-										<!--	  <div class="panel-body"> -->
-										<!--		<div class="list-group"> -->
-										<!--		  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Modal / Dialog</a> -->
-										<!--		  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Datetime Examples</a> -->
-										<!--		  <a href="http://usebootstrap.com/theme/facebook" class="list-group-item">Data Grids</a> -->
-										<!--		</div> -->
-										<!--	  </div> -->
-										<!--</div> -->
-
-
-										<!--<div class="panel panel-default"> -->
-										<!--	 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>More Templates</h4></div> -->
-										<!--	  <div class="panel-body"> -->
-										<!--		<img src="assets/img/150x150.gif" class="img-circle pull-right"> <a href="#">Free @Bootply</a> -->
-										<!--		<div class="clearfix"></div> -->
-										<!--		There a load of new free Bootstrap 3 -->
-										<!-- 		 ready templates at Bootply. All of these templates are free and don't  -->
-										<!-- 		require extensive customization to the Bootstrap baseline. -->
-										<!--		<hr> -->
-										<!--		<ul class="list-unstyled"><li><a href="http://usebootstrap.com/theme/facebook">Dashboard</a></li><li><a href="http://usebootstrap.com/theme/facebook">Darkside</a></li><li><a href="http://usebootstrap.com/theme/facebook">Greenfield</a></li></ul> -->
-										<!--	  </div> -->
-										<!--</div> -->
-
-										<!--<div class="panel panel-default"> -->
-										<!--	<div class="panel-heading"><h4>What Is Bootstrap?</h4></div> -->
-										<!--	<div class="panel-body"> -->
-										<!--		Bootstrap is front end frameworkto  -->
-										<!-- 		build custom web applications that are fast, responsive &amp; intuitive. -->
-										<!-- 		 It consist of CSS and HTML for typography, forms, buttons, tables,  -->
-										<!-- 		grids, and navigation along with custom-built jQuery plug-ins and  -->
-										<!-- 		support for responsive layouts. With dozens of reusable components for  -->
-										<!-- 		navigation, pagination, labels, alerts etc..                          </div> -->
-										<!--</div> -->
 									</div>
-
-									<!-- main col right -->
-									<!--<div class="col-sm-3"> -->
-
-									<!--	<div class="well">  -->
-									<!--	   <form class="form"> -->
-									<!--		<h4>Sign-up</h4> -->
-									<!--		<div class="input-group text-center"> -->
-									<!--		<input class="form-control input-lg" placeholder="Enter your email address" type="text"> -->
-									<!--		  <span class="input-group-btn"><button class="btn btn-lg btn-primary" type="button">OK</button></span> -->
-									<!--		</div> -->
-									<!--	  </form> -->
-									<!--	</div> -->
-
-									<!-- <div class="panel panel-default"> -->
-									<!--	 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Bootply Editor &amp; Code Library</h4></div> -->
-									<!--	  <div class="panel-body"> -->
-									<!--		<p><img src="assets/img/150x150.gif" class="img-circle pull-right"> <a href="#">The Bootstrap Playground</a></p> -->
-									<!--		<div class="clearfix"></div> -->
-									<!--		<hr> -->
-									<!--		Design, build, test, and prototype  -->
-									<!-- 		using Bootstrap in real-time from your Web browser. Bootply combines the -->
-									<!-- 		 power of hand-coded HTML, CSS and JavaScript with the benefits of  -->
-									<!-- 		responsive design using Bootstrap. Find and showcase Bootstrap-ready  -->
-									<!-- 		snippets in the 100% free Bootply.com code repository. -->
-									<!--	  </div> -->
-									<!-- </div> -->
-
-									<!-- <div class="panel panel-default"> -->
-									<!--	 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Stackoverflow</h4></div> -->
-									<!--		<img src="assets/img/150x150.gif" class="img-circle pull-right"> <a href="#">Keyword: Bootstrap</a> -->
-									<!--		<div class="clearfix"></div> -->
-									<!--		<hr> -->
-
-									<!--		<p>If you're looking for help with Bootstrap code, the <code>twitter-bootstrap</code> tag at <a href="http://stackoverflow.com/questions/tagged/twitter-bootstrap">Stackoverflow</a> is a good place to find answers.</p> -->
-
-									<!--		<hr> -->
-									<!--		<form> -->
-									<!--		<div class="input-group"> -->
-									<!--		  <div class="input-group-btn"> -->
-									<!--		  <button class="btn btn-default">+1</button><button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button> -->
-									<!--		  </div> -->
-									<!--		  <input class="form-control" placeholder="Add a comment.." type="text"> -->
-									<!--		</div> -->
-									<!--		</form> -->
-
-									<!--	  </div> -->
-									<!-- </div> -->
-
-									<!-- <div class="panel panel-default"> -->
-									<!--	 <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Portlet Heading</h4></div> -->
-									<!--	  <div class="panel-body"> -->
-									<!--		<ul class="list-group"> -->
-									<!--		<li class="list-group-item">Modals</li> -->
-									<!--		<li class="list-group-item">Sliders / Carousel</li> -->
-									<!--		<li class="list-group-item">Thumbnails</li> -->
-									<!--		</ul> -->
-									<!--	  </div> -->
-									<!-- </div> -->
-
-									<!-- <div class="panel panel-default"> -->
-									<!--	<div class="panel-thumbnail"><img src="assets/img/bg_4.jpg" class="img-responsive"></div> -->
-									<!--	<div class="panel-body"> -->
-									<!--	  <p class="lead">Social Good</p> -->
-									<!--	  <p>1,200 Followers, 83 Posts</p> -->
-
-									<!--	  <p> -->
-									<!--		<img src="assets/img/photo.jpg" height="28px" width="28px"> -->
-									<!--		<img src="assets/img/photo.png" height="28px" width="28px"> -->
-									<!--		<img src="assets/img/photo_002.jpg" height="28px" width="28px"> -->
-									<!--	  </p> -->
-									<!--	</div> -->
-									<!--</div> -->
-
-									<!--</div> -->
 								</div>
-								<!--/row-->
-
-								<!--<div class="row"> -->
-								<!--	<div class="col-sm-6"> -->
-								<!--<a href="#">Twitter</a> <small class="text-muted">|</small> <a -->
-								<!--	href="#">Facebook</a> <small class="text-muted">|</small> <a -->
-								<!--	href="#">Google+</a> -->
-								<!--	</div> -->
-								<!--</div> -->
 								<hr>
 								<jsp:include page="${request.getContextPath()}/footer.jsp" />
 								<hr>
-								<!--<hr> -->
-
-								<!--<h4 class="text-center"> -->
-								<!--	<a href="http://usebootstrap.com/theme/facebook" target="ext">Download -->
-								<!--this Template @Bootply</a> -->
-								<!--</h4> -->
-
-								<!--<hr> -->
 							</div>
 							<!-- /col-9 -->
 						</div>

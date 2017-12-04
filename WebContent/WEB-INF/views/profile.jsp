@@ -9,55 +9,64 @@
 <title>Welcome! ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="assets/css/bootstrap.css" rel="stylesheet">
-<link href="assets/css/profile.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/assets/css/bootstrap.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/assets/css/profile.css" rel="stylesheet">
 <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-<link href="assets/css/sefo.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/assets/css/sefo.css" rel="stylesheet">
 <script src="https://use.fontawesome.com/804ea8b780.js"></script>
 <script
 	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script
 	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <script type="text/javascript">
-	
 
 	$(function() {
-	var article_last_index = $('#article_last_index').val();
-	var article_count = 12;
+		var profileImg = new Image;
+		var memberId = '${MemberVO.id}';
+		profileImg.src = "<%=request.getContextPath()%>/assets/img/profile_pictures/" + memberId + ".JPG";
+
+		if (!profileImg.complete) {
+			profileImg.src = "<%=request.getContextPath()%>/assets/img/profile_pictures/default_profile.JPG";
+		}
+		$('#profile_img').attr('src', profileImg.src);
+		///////////////////////////////////////	
+		var article_last_index = $('#article_last_index').val();
+		var article_count = 12;
 		$(window).scroll(function() {
 			var maxHeight = $(document).height();
 
 			currentScroll = $(window).scrollTop() + $(window).height();
 			if ((maxHeight <= currentScroll) && article_count == 12) {
-				
+
 				//ajax 요청
 				$.ajax({
 					type : 'post', //요청 보내면 doPost가 실행됨
-					url : 'profileMoreArticle.do',
+					url : '<%=request.getContextPath()%>/profileMoreArticle.do',
 					data : {
 						'articleNum' : article_last_index
 					},
 					dataType : 'json',
-					success : function (resultData) {
+					success : function(resultData) {
 						var loader = '<div id ="loader" class="col-md-3">';
-						loader += '<div class="panel panel-default"  style="background-color:rgba(204,204,204,1);">'; 
-				        loader += '<div class="adjust">'; 
-				        loader += '<div class="loader2"></div>';
-				        loader += '</div>';
-				        loader += '</div>';
-				        loader += '</div>';
-				        
-				        var addImage = "";
-				        var article_count_sum = 0;
-				        $.each(resultData, function(){
-				        	article_last_index = this.article_num;
-							addImage += '<figure><div><img id="article_img" name ="article_img" src="'+this.photoList[0].file_origiName+'"';
-					        addImage += 'style="z-index: 0;"><div class="photo-info">'+this.commentCount+'개</div></div> </figure>';
-					        article_count_sum += 1;
-				        })
-				        article_count = article_count_sum; 
+						loader += '<div class="panel panel-default"  style="background-color:rgba(204,204,204,1);">';
+						loader += '<div class="adjust">';
+						loader += '<div class="loader2"></div>';
+						loader += '</div>';
+						loader += '</div>';
+						loader += '</div>';
+
+						var addImage = "";
+						var article_count_sum = 0;
+						$.each(resultData, function() {
+							var myContext = "<%=request.getContextPath()%>";
+							article_last_index = this.article_num;
+							addImage += '<figure><div><img id="article_img" name ="article_img" src="'+ myContext +'/'+this.photoList[0].file_origiName + '"';
+							addImage += 'style="z-index: 0;"><div class="photo-info">' + this.commentCount + '개</div></div> </figure>';
+							article_count_sum += 1;
+						})
+						article_count = article_count_sum;
 						$("#gallery").append(
 							addImage
 						)
@@ -68,14 +77,14 @@
 				})
 			}
 		})
-		
-		$(document).on('mouseenter', "#article_img", function(){
+
+		$(document).on('mouseenter', "#article_img", function() {
 			$(this).parent().attr('style', 'background-color:black;')
 			$(this).attr('style', 'opacity: 0.6');
 			$(this).siblings().attr('style', 'opacity: 1');
 		});
-		
-		$(document).on('mouseleave', "#article_img", function(){
+
+		$(document).on('mouseleave', "#article_img", function() {
 			$(this).parent().attr('style', 'background-color:none')
 			$(this).attr('style', 'background-color: none; opacity:1');
 			$(this).siblings().attr('style', 'opacity: 0');
@@ -105,7 +114,8 @@ figure>div>.photo-info {
 		<input type="hidden" id="article_last_index" value="0">
 	</c:if>
 	<c:if test="${not empty articleList}">
-		<input type="hidden" id="article_last_index" value="${articleList.get(articleList.size()-1).article_num}">
+		<input type="hidden" id="article_last_index"
+			value="${articleList.get(articleList.size()-1).article_num}">
 	</c:if>
 
 	<c:if test="${empty sessionScope.loginId}">
@@ -137,8 +147,7 @@ figure>div>.photo-info {
 									<div class="row">
 										<div class="my_profile_img col-md-4 img-fluid"
 											style="margin: auto; width: auto; max-height: 100%; margin-left: 80px; margin-right: 80px;">
-											<img id="profile_img"
-												src="assets/img/profile_pictures/test.JPG">
+											<img id="profile_img">
 										</div>
 
 										<div class="col-md-8"
@@ -146,25 +155,25 @@ figure>div>.photo-info {
 											<div class="row"
 												style="display: flex; align-items: center; align-self: center; margin-top: 10px;">
 												<div
-													style="font-size: 30px; margin-right: 25px; float: left;">${memberVO.id }</div>
+													style="font-size: 30px; margin-right: 25px; float: left; font-weight: 100;">${memberVO.id }</div>
 
 												<div class="row"
 													style="float: left; display: flex; align-items: center;">
 													<c:choose>
 														<c:when test="${sessionScope.loginId == memberVO.id}">
 															<button id="profile-edit" style="float: left;">
-																<a href="myPage.do" style="color: black">
-																	<strong>프로필편집</strong>
+																<a href="<%=request.getContextPath()%>/myPage.do"
+																	style="color: black; font-weight: lighter;"> <strong>프로필편집</strong>
 																</a>
 															</button>
 															<a href="#"><img
-																src="assets/img/profile_settiong.png"
+																src="<%=request.getContextPath()%>/assets/img/profile_settiong.png"
 																style="width: 30px; height: 30px; float: left; vertical-align: bottom;"></a>
 														</c:when>
 														<c:otherwise>
 															<button id="profile-edit" style="float: left;">
-													<a href="#">채팅하기</a>
-													</button>
+																<a href="#">채팅하기</a>
+															</button>
 														</c:otherwise>
 													</c:choose>
 												</div>
@@ -193,7 +202,7 @@ figure>div>.photo-info {
 												<figure>
 												<div>
 													<img id="article_img" name="article_img"
-														src=${articleVO.getPhotoList().get(0).file_origiName }
+														src=<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName }
 														style="z-index: 0;">
 													<div class="photo-info" style="">
 														<img src="assets/img/icon/chat.png"
@@ -229,8 +238,8 @@ figure>div>.photo-info {
 			</div>
 		</div>
 
-		<script type="text/javascript" src="assets/js/jquery.js"></script>
-		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
+		<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/bootstrap.js"></script>
 		<script type="text/javascript">
 			$(document)
 				.ready(

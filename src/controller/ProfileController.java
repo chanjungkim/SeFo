@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,11 +35,10 @@ public class ProfileController {
 	/*
 	 * myProfile 첫 페이지
 	 * */
-	@RequestMapping("/profile.do")
-	public ModelAndView myprofilePage(HttpSession session) {
-		String id = (String) session.getAttribute("loginId");
+	@RequestMapping(value = "/profile.do/{userId}", method=RequestMethod.GET)
+	public ModelAndView myprofilePage(HttpSession session, HttpServletRequest httpServletRequest, @PathVariable String userId) {
 		ModelAndView mv = new ModelAndView("profile");
-		List<ArticleVO> articleList = profileService.getProfileFistArticleList(id);
+		List<ArticleVO> articleList = profileService.getProfileFistArticleList(userId);
 		for(ArticleVO a : articleList) {
 			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
 			if (result != null && result.size() != 0) {
@@ -46,8 +46,8 @@ public class ProfileController {
 				a.setCommentList(articleService.getCommentList(a.getArticle_num()));
 			} 
 		}
-		int totalContentCnt = profileService.getProfileContentCount(id);
-		MemberVO memberVO = profileService.getProfileInfo(id);
+		int totalContentCnt = profileService.getProfileContentCount(userId);
+		MemberVO memberVO = profileService.getProfileInfo(userId);
 		mv.addObject("articleList", articleList);
 		mv.addObject("totalContentCnt", totalContentCnt);
 		mv.addObject("memberVO", memberVO);
@@ -56,25 +56,25 @@ public class ProfileController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/other_profile.do", method=RequestMethod.GET)
-	public ModelAndView otherProfilePage(HttpServletRequest httpServletRequest) {
-		String id = httpServletRequest.getParameter("srch-term");
-		ModelAndView mv = new ModelAndView("profile");
-		List<ArticleVO> articleList = profileService.getProfileFistArticleList(id);
-		for(ArticleVO a : articleList) {
-			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
-			if (result != null && result.size() != 0) {
-				a.setPhotoList(result);
-			} 
-		}
-		int totalContentCnt = profileService.getProfileContentCount(id);
-		MemberVO memberVO = profileService.getProfileInfo(id);
-		mv.addObject("articleList", articleList);
-		mv.addObject("totalContentCnt", totalContentCnt);
-		mv.addObject("memberVO", memberVO);
-		mv.addObject("accessAut", "other");
-		return mv;
-	}
+//	@RequestMapping(value = "/other_profile.do", method=RequestMethod.GET)
+//	public ModelAndView otherProfilePage(HttpServletRequest httpServletRequest) {
+//		String id = httpServletRequest.getParameter("srch-term");
+//		ModelAndView mv = new ModelAndView("profile");
+//		List<ArticleVO> articleList = profileService.getProfileFistArticleList(id);
+//		for(ArticleVO a : articleList) {
+//			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
+//			if (result != null && result.size() != 0) {
+//				a.setPhotoList(result);
+//			} 
+//		}
+//		int totalContentCnt = profileService.getProfileContentCount(id);
+//		MemberVO memberVO = profileService.getProfileInfo(id);
+//		mv.addObject("articleList", articleList);
+//		mv.addObject("totalContentCnt", totalContentCnt);
+//		mv.addObject("memberVO", memberVO);
+//		mv.addObject("accessAut", "other");
+//		return mv;
+//	}
 	
 	/*
 	 *	사진 정보 추가 요청 ajax 처리
