@@ -1,9 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,5 +117,15 @@ public class ProfileController {
 			 mv.setViewName("updateProfile");
 		}
 		return mv;
+	}
+	@RequestMapping(value="updatePw.do",method=RequestMethod.POST)
+	public void updatePw(String id, String newPw,HttpSession session,HttpServletResponse response) {
+		boolean result=profileService.getUpdatePw(id, newPw);
+		try {
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

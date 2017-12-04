@@ -36,8 +36,8 @@ public class ProfileDao {
 		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
 		return mapper.update(member);
 	}
-	public int updatePw(String pw) {
+	public int updatePw(String id,String pw) {
 		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
-		return mapper.updatePw(pw);
+		return mapper.updatePw(id,pw);
 	}
 }
