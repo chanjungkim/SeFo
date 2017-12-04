@@ -30,8 +30,15 @@
 	<!-- needed for ContextLoaderListener -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/model-beans.xml</param-value>
+		<param-value>/WEB-INF/model-beans.xml;/WEB-INF/ws-config.xml</param-value>
 	</context-param>
+	
+		<!-- Map all requests to the DispatcherServlet for handling -->
+	<servlet-mapping>
+		<servlet-name>springDispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
 
 	<!-- Bootstraps the root web application context before servlet initialization -->
     <listener>

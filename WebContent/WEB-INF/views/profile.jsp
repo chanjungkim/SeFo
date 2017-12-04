@@ -113,6 +113,7 @@
 														<a href="#"><img src="assets/img/profile_settiong.png"
 															style="width: 30px; height: 30px; float: left; vertical-align: bottom;"></a>
 													</c:if>
+													<button id="profile-edit" style="float: left;"><a href="#">채팅하기</a></button>
 												</div>
 											</div>
 											<div class="row" style="margin-top: 10px;">
