@@ -39,6 +39,7 @@ public class ProfileController {
 			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
 			if (result != null && result.size() != 0) {
 				a.setPhotoList(result);
+				a.setCommentList(articleService.getCommentList(a.getArticle_num()));
 			} 
 		}
 		int totalContentCnt = profileService.getProfileContentCount(id);

@@ -18,6 +18,9 @@ public class ArticleVO {
 	private List<MultipartFile> fileList;
 	private List<FileVO> photoList;
 	private int photo_count;
+	private int commentCount;
+	////////////////////////////////////
+	
 	public long getArticle_num() {
 		return article_num;
 	}
@@ -71,6 +74,12 @@ public class ArticleVO {
 	}
 	public void setCommentList(List<CommentVO> commentList) {
 		this.commentList = commentList;
+		this.commentCount = commentList.size();
+		System.out.println("commentCount : "+ commentCount);
+	}
+	
+	public int getCommentCount() {
+		return commentCount;
 	}
 	public List<MultipartFile> getFileList() {
 		return fileList;

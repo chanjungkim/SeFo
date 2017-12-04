@@ -48,8 +48,8 @@
 				        var addImage = "";
 				        $.each(resultData, function(){
 				        	article_last_index = this.article_num;
-							addImage += '<figure> <img src="'+this.photoList[0].file_origiName+'"';
-					        addImage += 'style="z-index: 0;"> </figure>';
+							addImage += '<figure><div><img id="article_img" name ="article_img" src="'+this.photoList[0].file_origiName+'"';
+					        addImage += 'style="z-index: 0;"><div class="photo-info">'+this.commentCount+'개</div></div> </figure>';
 				        })
 						$("#gallery").append(
 							addImage
@@ -61,8 +61,37 @@
 				})
 			}
 		})
+		
+		$(document).on('mouseenter', "#article_img", function(){
+			$(this).parent().attr('style', 'background-color:black;')
+			$(this).attr('style', 'opacity: 0.6');
+			$(this).siblings().attr('style', 'opacity: 1');
+		});
+		
+		$(document).on('mouseleave', "#article_img", function(){
+			$(this).parent().attr('style', 'background-color:none')
+			$(this).attr('style', 'background-color: none; opacity:1');
+			$(this).siblings().attr('style', 'opacity: 0');
+		});
 	});
 </script>
+<style type="text/css">
+figure {
+	position: relative;
+}
+
+figure > div > .photo-info {
+	position: absolute;
+	color: white;
+	opacity: 0;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle;
+	top: 50%;
+	left: 50%;
+	font-size: 16px;
+}
+</style>
 </head>
 <body>
 	<c:if test="${empty sessionScope.loginId}">
@@ -95,8 +124,7 @@
 										<div class="my_profile_img col-md-4 img-fluid"
 											style="margin: auto; width: auto; max-height: 100%; margin-left: 80px; margin-right: 80px;">
 											<img id="profile_img"
-												src="assets/img/profile_pictures/test.JPG"
-												>
+												src="assets/img/profile_pictures/test.JPG">
 										</div>
 
 										<div class="col-md-8"
@@ -108,19 +136,22 @@
 
 												<div class="row"
 													style="float: left; display: flex; align-items: center;">
-													<button id="profile-edit" style="float: left;"><a href="myPage.do">프로필편집</a></button>
+													<button id="profile-edit" style="float: left;">
+														<a href="myPage.do">프로필편집</a>
+													</button>
 													<a href="#"><img src="assets/img/profile_settiong.png"
 														style="width: 30px; height: 30px; float: left; vertical-align: bottom;"></a>
 												</div>
 											</div>
 											<div class="row" style="margin-top: 10px;">
-												<span class="profile-span-margin-3px">게시물 </span> <span
+												<span class="profile-span-margin-3px">게시물 </span> <strong><span
 													class="profile-span-margin-10px" id="span_profile_article">${totalContentCnt}
-												</span> <span class="profile-span-margin-3px">팔로워</span> <span
-													class="profile-span-margin-10px" id="span_profile_follower">${memberVO.follower_count}</span>
+												</span></strong> 
+												<button class="profile-span-margin-3px" id="span_profile_follower" style="font-size: 16px; background-color: transparent; border-style: none">팔로워<strong>
+													${memberVO.follower_count}</strong></button>
 												<button id="btn_profile_follow"
 													style="font-size: 16px; background-color: transparent; border-style: none">팔로우
-													${memberVO.follow_count}</button>
+													<strong> ${memberVO.follow_count}</strong></button>
 											</div>
 											<div
 												style="font-size: 15px; color: black; font-weight: bold; margin-top: 10px;">${memberVO.self_info }</div>
@@ -129,9 +160,14 @@
 									<div id="gallery" class="gallery" style="margin-top: 15px">
 										<c:forEach items="${articleList}" var="articleVO">
 											<c:if test="${!empty articleVO.getPhotoList() }">
-												<figure> <img
-													src=${articleVO.getPhotoList().get(0).file_origiName }
-													style="z-index: 0;"> </figure>
+												<figure>
+												<div>
+													<img id="article_img" name="article_img"
+														src=${articleVO.getPhotoList().get(0).file_origiName }
+														style="z-index: 0;">
+													<div class="photo-info">${articleVO.commentCount }개</div>
+												</div>
+												</figure>
 											</c:if>
 										</c:forEach>
 									</div>
