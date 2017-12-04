@@ -62,9 +62,9 @@
 						alert("댓글 작성 성공!");
 						$('.comment-area').append('<tr id="new-comment">'
 							+ '<td><div style="margin-bottom: 5px;">'
-							+ '		<img'
+							+ '		<img id="comment-img"'
 							+ '			src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
-							+ '			height="20px" width="20px"> <span><b>${sessionScope.loginId}</b>'
+							+ '			> <span><b>${sessionScope.loginId} </b>'
 							+ content
 							+ '	</div></td>'
 							+ '	<td><input type="hidden" name="id"'
@@ -549,10 +549,9 @@
 																items="${articleVO.commentList}">
 																<tr id="comment-${commentVO.comment_num}">
 																	<td><div style="margin-bottom: 5px;">
-																			<a href="showProfile.do/${articleVO.id}"> <img
-																				src="assets/img/profile_pictures/${commentVO.id}.JPG"
-																				height="20px" width="20px"> <span><b>${commentVO.id}</b>
-																					${commentVO.content}</span></a>
+																			<a href="showProfile.do/${articleVO.id}"> <img id="comment-img"
+																				src="assets/img/profile_pictures/${commentVO.id}.JPG"> <b>${commentVO.id} </b></a>
+																					<span>${commentVO.content}</span>
 																		</div></td>
 																	<c:if test="${sessionScope.loginId==commentVO.id}">
 																		<td><input id="comment-delete" type="hidden"
