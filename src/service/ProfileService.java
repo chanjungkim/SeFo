@@ -36,7 +36,12 @@ public class ProfileService {
 		}
 		return false;
 	}
-	public int getUpdatePw(String pw) {
-		return dao.updatePw(pw);
+	public boolean getUpdatePw(String id,String pw) {
+		int original =dao.updatePw(id, pw);
+		if(original>0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 }

@@ -13,5 +13,5 @@ public interface ProfileMapper {
 	public List<ArticleVO> selectFisrtArticleList(String id);
 	public List<ArticleVO> selectMoreArticleList(@Param("id") String id, @Param("articleNum") int articleNum);
 	public int update(MemberVO member);
-	public int updatePw(String pw);
+	public int updatePw(@Param("id")String id,@Param("password")String pw);
 }

@@ -44,7 +44,7 @@
 		where id=#{id}
 	</update>
 
-	<update id="updatePw" parameterType="MemberVO">
-		update member set password=#{password} where password=#{password}
+	<update id="updatePw" >
+		update member set password=#{password} where id=#{id}
 	</update>
 </mapper>

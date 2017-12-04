@@ -31,8 +31,39 @@
 			var target = $(this).attr('data-target-id');
 			$('#' + target).show();
 		});
-
-
+		$('#submit').on('click',function(){
+			if(${original.password} == $('#now_password').val()){
+				alert($('#new_password').val()+" "+$('#confirm_password').val());
+				
+				if($('#new_password').val() == $('#confirm_password').val()){
+					var id = '${original.id}';
+					var newPw= $('#new_password').val();
+					alert(id+" "+newPw);
+					
+					$.ajax({
+						type : 'post', // 요청 보내면 doPost가 실행됨
+						url : 'updatePw.do', // 우리가 작성한 java 서블릿에게
+						data : {
+							'id' : id,
+							'newPw' : newPw
+						}, // 검색어 데이터
+						dataType : 'text', // 응답데이터 형식
+						success : function(resultData) {
+							alert("비밀번호 변경 완료");
+							window.location.href="profile.do"
+						},
+						error : function() {
+							alert('비밀번호 변경 ajax 요청 실패');
+						}
+					});
+				}
+			}else{
+				alert("현재 비밀번호가 틀렸습니다.");
+			}
+		});
+		$('logoutBtn').on('click',function(){
+			alert("로그아웃되었습니다.")
+		})
 	});
 </script>
 <style type="text/css">
@@ -41,7 +72,8 @@ table {
 	height: 100%;
 	border-color: #FFF;
 }
-.panel-info{
+
+.panel-info {
 	border-color: #FFF;
 }
 
@@ -57,7 +89,6 @@ table {
 	border-color: grey;
 	padding: 20px;
 }
-
 </style>
 </head>
 <body>
@@ -78,9 +109,8 @@ table {
 											class="glyphicon glyphicon-user"></i>Profile</a></li>
 									<li><a href="" data-target-id="change-password"><i
 											class="glyphicon glyphicon-lock"></i>Change Password</a></li>
-									<li><a href="" data-target-id="settings"><i
-											class="glyphicon glyphicon-cog"></i>Settings</a></li>
-									<li><a href="" data-target-id="logout"><i
+									<li><a href="" data-toggle="modal" data-target=".bs-example-modal-sm"
+										data-target=".bs-example-modal-sm"><i
 											class="glyphicon glyphicon-log-out"></i>Logout</a></li>
 								</ul>
 							</div>
@@ -126,130 +156,96 @@ table {
 									</form>
 								</div>
 							</div>
-							<div class="col-md-9  admin-content" id="settings">
-								<div class="panel panel-info">
-									<div class="panel-heading">
-										<h3 class="panel-title">Notification</h3>
-									</div>
-									<div class="panel-body">
-										<div class="label label-success">allowed</div>
-									</div>
-								</div>
-								<div class="panel panel-info" >
-									<div class="panel-heading">
-										<h3 class="panel-title">Newsletter</h3>
-									</div>
-									<div class="panel-body">
-										<div class="badge">Monthly</div>
-									</div>
-								</div>
-								<div class="panel panel-info" >
-									<div class="panel-heading">
-										<h3 class="panel-title">Admin</h3>
-
-									</div>
-									<div class="panel-body">
-										<div class="label label-success">yes</div>
-									</div>
-								</div>
-
-							</div>
 
 							<div class="col-md-9  admin-content" id="change-password">
-								<form action="/password" method="post">
-
-
-									<div class="panel panel-info" style="margin: 1em;">
-										<div class="panel-heading">
-											<h3 class="panel-title">
-												<label for="new_password" class="control-label panel-title">현재
-													비밀번호</label>
-											</h3>
-										</div>
-										<div class="panel-body">
-											<div class="form-group">
-												<div class="col-sm-10">
-													<input type="password" class="form-control" name="password"
-														id="new_password">
-												</div>
-											</div>
-
-										</div>
-									</div>
-									<div class="panel panel-info" style="margin: 1em;">
-										<div class="panel-heading">
-											<h3 class="panel-title">
-												<label for="new_password" class="control-label panel-title">New
-													Password</label>
-											</h3>
-										</div>
-										<div class="panel-body">
-											<div class="form-group">
-												<div class="col-sm-10">
-													<input type="password" class="form-control" name="password"
-														id="new_password">
-												</div>
-											</div>
-
-										</div>
-									</div>
-
-
-									<div class="panel panel-info" style="margin: 1em;">
-										<div class="panel-heading">
-											<h3 class="panel-title">
-												<label for="confirm_password"
-													class="control-label panel-title">Confirm password</label>
-											</h3>
-										</div>
-										<div class="panel-body">
-											<div class="form-group">
-												<div class="col-sm-10">
-													<input type="password" class="form-control"
-														name="password_confirmation" id="confirm_password">
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-									<div class="panel panel-info border" style="margin: 1em;">
-										<div class="panel-body">
-											<div class="form-group">
-												<div class="pull-left">
-													<input type="submit" class="form-control btn btn-primary"
-														name="submit" id="submit">
-												</div>
-											</div>
-										</div>
-									</div>
-
-								</form>
-							</div>
-
-							<div class="col-md-9  admin-content" id="settings"></div>
-
-							<div class="col-md-9  admin-content" id="logout">
 								<div class="panel panel-info" style="margin: 1em;">
 									<div class="panel-heading">
-										<h3 class="panel-title">Confirm Logout</h3>
+										<h3 class="panel-title">
+											<label for="new_password" class="control-label panel-title">현재
+												비밀번호</label>
+										</h3>
 									</div>
 									<div class="panel-body">
-										Do you really want to logout ?<a href="#"
-											class="label label-danger"
-											onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-											<span>Yes</span>
-										</a><a href="/account" class="label label-success"><span>No</span></a>
-									</div>
-									<form id="logout-form" action="#" method="POST"
-										style="display: none;"></form>
+										<div class="form-group">
+											<div class="col-sm-10">
+												<input type="password" class="form-control" name="password"
+													id="now_password">
+											</div>
+										</div>
 
+									</div>
+								</div>
+								<div class="panel panel-info" style="margin: 1em;">
+									<div class="panel-heading">
+										<h3 class="panel-title">
+											<label for="new_password" class="control-label panel-title">New
+												Password</label>
+										</h3>
+									</div>
+									<div class="panel-body">
+										<div class="form-group">
+											<div class="col-sm-10">
+												<input type="password" class="form-control" name="password"
+													id="new_password">
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+
+								<div class="panel panel-info" style="margin: 1em;">
+									<div class="panel-heading">
+										<h3 class="panel-title">
+											<label for="confirm_password"
+												class="control-label panel-title">Confirm password</label>
+										</h3>
+									</div>
+									<div class="panel-body">
+										<div class="form-group">
+											<div class="col-sm-10">
+												<input type="password" class="form-control"
+													name="password_confirmation" id="confirm_password">
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="panel panel-info border" style="margin: 1em;">
+									<div class="panel-body">
+										<div class="form-group">
+											<div class="pull-left">
+												<input type="button" class="form-control btn btn-primary"
+													name="submit" id="submit" value="제출">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="logout" class="modal bs-example-modal-sm" tabindex="-1"
+								role="dialog" aria-hidden="true">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4>
+												Logout <i class="fa fa-lock"></i>
+											</h4>
+										</div>
+										<div class="modal-body">
+											<i class="fa fa-question-circle"></i> Are you sure you want
+											to log-off?
+										</div>
+										<div class="modal-footer">
+											<a href="logout.do" class="btn btn-primary btn-block">Logout</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
