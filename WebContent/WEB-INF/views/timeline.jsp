@@ -199,7 +199,7 @@
 					}
 					newPost +=
 					'<p>'
-					+ '<p>'
+					+ '<p style="word-break:break-all;">'
 					+ content
 					+ '</p>'
 					+ '</p>'
@@ -516,7 +516,7 @@
 														</c:if>
 														<!--  EOF -->
 
-														<p>${articleVO.content}</p>
+														<p style="word-break:break-all;">${articleVO.content}</p>
 														<div class="react-button dropdown btn btn-default btn-sm">
 															<ul class="dropdown-menu">
 																<li><img
