@@ -17,13 +17,13 @@
 			<a href="initMain.do" class="navbar-brand logo">b</a>
 		</div>
 		<nav class="collapse navbar-collapse" role="navigation"> <!-- Search Bar -->
-		<form class="search-bar navbar-form navbar-left">
+		<form class="search-bar navbar-form navbar-left" action="other_profile.do" method="get">
 			<div class="input-group input-group-sm" style="max-width: 360px;">
 				<input class="form-control" placeholder="Search" name="srch-term"
 					id="srch-term" type="text" list="search-data-list">
 				<datalist id="search-data-list"> </datalist>
 				<div class="input-group-btn">
-					<button class="btn btn-default" type="submit">
+					<button class="btn btn-default" type="submit" onClick="searchUser()">
 						<i class="glyphicon glyphicon-search"></i>
 					</button>
 				</div>
