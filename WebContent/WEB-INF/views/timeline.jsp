@@ -34,7 +34,6 @@
 .item img {
 	vertical-align: middle;
 }
-
 .item {
 	text-align: center;
 	margin: 1em 0;
@@ -43,9 +42,7 @@
 <script>
 	var uploadPhotoCount = 0;
 	var photoNum = 0;
-
 	$(function() {
-
 		$('.comment-write-area').on('keydown', function(e) {
 			var article_num = $(this).attr("name");
 			var content = $(this).val()
@@ -83,17 +80,14 @@
 				})
 			}
 		})
-
 		// timeline item (image container)
 		$(".item").width("100%");
 		$(".item").height($(".item").width());
-
 		// image
 		$(".item img").each(function() {
 			// 			$(this).load(function(){
 			var width = this.naturalWidth;
 			var height = this.naturalHeight;
-
 			var parentHeight = $(this).parent().height();
 			var parentWidth = $(this).parent().width()
 			if (width < height) {
@@ -109,7 +103,6 @@
 					height : h
 				})
 			}
-
 			// 				if(width < height){
 			// 					$(this).width("auto");
 			// 					$(this).height($(this).parent().height());
@@ -123,12 +116,9 @@
 			console.log('src:' + $(this).attr('src'))
 			console.log("부모 사이즈: " + $(this).parent().width() + ", " + $(this).parent().height());
 			console.log("이미지 사이즈: " + $(this).width() + ", " + $(this).height());
-
 			var diffWidth = $(this).parent().width() - $(this).width();
 			var diffHeight = $(this).parent().height() - $(this).height();
-
 			console.log("diffWidth: " + diffWidth + ", diffHeight: " + diffHeight);
-
 			$(this).attr('style', 'vertical-align:middle');
 			$(this).parent().attr('style', 'text-align:center')
 			$(this).css('margin', '30px 10px');
@@ -140,32 +130,25 @@
 			$(".item").width("100%");
 			$(".item").height($(".item").width());
 			console.log($(".item").width() + ", " + $(".item").height());
-
 			// image
 			$(".item img").each(function() {
 				console.log("부모 사이즈: " + $(this).parent().width() + ", " + $(this).parent().height());
 				console.log("이미지 사이즈: " + $(this).width() + ", " + $(this).height());
-
 				var diffWidth = $(this).parent().width() - $(this).width();
 				var diffHeight = $(this).parent().height() - $(this).height();
-
 				console.log("diffWidth: " + diffWidth + ", diffHeight: " + diffHeight);
-
 				$(this).css('margin-top', (diffHeight / 2) + 'px ');
 				$(this).css('margin-left', (diffWidth / 2) + 'px');
 			})
 		})
-
 		$(document).on('change', "#fileList", function() {
 			readURL(this);
 		});
-
 		$(document).on('keyup', '#modalContent', function() {
 			var modalContent = $('#modalContent').val();
 			$('#content').val(modalContent);
 			$("#content").val();
 		});
-
 		$(document).on('click', '#postBtn', function(e) {
 			//폼객체를 불러와서
 			var form = $('#write_form')[0];
@@ -199,7 +182,6 @@
 						+ '			<!--  -->'
 						+ '		</p>'
 						+ '	</a>';
-
 					if (photoCount != 0) {
 						newPost += '<img src="' + photoList[0].file_origiName + '" class="img-responsive">';
 					}
@@ -237,14 +219,12 @@
 				}
 			})
 		})
-
 		// 		$(document).on('hover', '.react-button', function()){
 		// 			$(this).after('<button>좋아요</button><button>화나요</button><button>슬퍼요</button>');
 		// 		}
 		// 		$(document).on('mouseout', '.react-button', function()){
 		// 			$(this).after("");
 		// 		}
-
 		$('#srch-term').on('keyup', function() {
 			var searchWord = $(this).val();
 			console.log(searchWord);
@@ -315,28 +295,23 @@
 	function makeFileContainer(uploadPhotoCount) {
 		addMorePhoto(uploadPhotoCount);
 	}
-
 	function addMorePhoto(uploadPhotoCount) {
 		console.log('uploadPhotoCount:' + uploadPhotoCount);
 		++photoNum;
 		++uploadPhotoCount;
 		$('#file-container').append('<span id="upload-btn-' + uploadPhotoCount + '"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" name="fileList" id="fileList" class="upload-btn" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="업로드할 파일 선택"></a><a href="#" style="color:red;" onclick="removePhoto(' + uploadPhotoCount + ')" style="width:20%">X</a><span>');
 	}
-
 	function removePhoto(uploadNum) {
 		console.log('선택 번호:' + uploadNum);
 		$("#upload-btn-" + uploadNum).remove();
 		--photoNum;
 		console.log('남은 사진 갯수:' + photoNum);
 	}
-
 	function readURL(changeInput) {
 		// 	console.log(id);
 		if (changeInput.files && changeInput.files[0]) {
 			var reader = new FileReader();
-
 			reader.readAsDataURL(changeInput.files[0]);
-
 			reader.onload = function(e) {
 				//     	console.log(e.target.result);
 				//     	alert($(changeInput).siblings('img').attr('src'));
@@ -345,7 +320,6 @@
 			addMorePhoto(++uploadPhotoCount);
 		}
 	}
-
 	function reactListener(id, article_num, expression) {
 		alert(id + " " + article_num + " " + expression);
 		$.ajax({
@@ -387,13 +361,11 @@
 .react-button:hover {
 	background-color: yellow;
 }
-
 .dropdown {
 	position: relative;
 	/** Make it fit tightly around it's children */
 	display: inline-block;
 }
-
 .dropdown .dropdown-menu {
 	position: absolute;
 	/**
@@ -405,15 +377,12 @@
 	/** Allow no empty space between this and .dropdown */
 	margin: 0;
 }
-
 .dropdown:hover .dropdown-menu {
 	display: block;
 }
-
 .dropdown-menu>li {
 	display: inline;
 }
-
 .dropdown-menu>*:hover {
 	background-color: yellow;
 }
@@ -538,7 +507,16 @@
 														</c:if>
 														<!--  EOF -->
 
+														<!-- Content -->
 														<p style="word-break: break-all;">${articleVO.content}</p>
+														<div style="width:100%; text-align: right;">
+															<a class="write-time">${articleVO.write_time}</a>
+														</div>
+														<!-- EO Content -->
+														
+														<br>
+														
+														<!-- React Start -->
 														<div class="react-button dropdown btn btn-default btn-sm">
 															<ul class="dropdown-menu">
 																<li><img
@@ -571,34 +549,31 @@
 														<!-- EO liked list -->
 														<table class="comment-area" width="100%">
 															<!-- Start Comment  -->
-															<c:forEach var="commentVO"
-																items="${articleVO.commentList}">
-																<tr id="comment-${commentVO.comment_num}">
-																	<td><div style="margin-bottom: 5px;">
-																			<a
-																				href="<%=request.getContextPath()%>/profile.do/${commentVO.id}">
-																				<img class="comment-img"
-																				src="<%=request.getContextPath()%>/${commentVO.photo_path}"
-																				style="display: inline-block;">
-																			</a> <div> <a
-																				href="<%=request.getContextPath()%>/profile.do/${commentVO.id}"><b>${commentVO.id}
-																				</b></a> &nbsp;${commentVO.content} <c:if
-																					test="${sessionScope.loginId==commentVO.id}">
-																					<input id="comment-delete" type="hidden"
-																						name="comment_num"
-																						value="${commentVO.comment_num}">
-																					<a
-																						onclick="deleteComment(${commentVO.comment_num})"
-																						style="color: #CCC; font-size: 5px;">X</a>
-																				</c:if>
-																					<br>${commentVO.write_time}
-																			</div>
-																		</div></td>
+															<c:forEach var="commentVO" items="${articleVO.commentList}">
+																<tr id="comment-${commentVO.comment_num}" style="margin-bottom: 5px;">
+																	<td width="45px">
+																		<a href="<%=request.getContextPath()%>/profile.do/${commentVO.id}">
+																			<img class="comment-img"
+																				src="<%=request.getContextPath()%>/${commentVO.photo_path}">
+																		</a> 
+																	</td>
+																	<td>
+																		<a href="<%=request.getContextPath()%>/profile.do/${commentVO.id}"><b>${commentVO.id}
+																			</b></a> &nbsp;${commentVO.content}
+																			<c:if test="${sessionScope.loginId==commentVO.id}">
+																				<input id="comment-delete" type="hidden"
+																					name="comment_num"
+																					value="${commentVO.comment_num}">
+																				<a onclick="deleteComment(${commentVO.comment_num})"
+																					style="color: #CCC; font-size: 5px;">X</a>
+																			</c:if>
+																		<div style="font-size: 5px;">${commentVO.write_time}</div>
+																	</td>
 																</tr>
 															</c:forEach>
 															<!--  EO Comment -->
 														</table>
-														<a class="write-time">${articleVO.write_time}</a>
+														
 														<hr>
 														<span> <input type="hidden" class="article-num"
 															value="${articleVO.article_num}"> <textarea
