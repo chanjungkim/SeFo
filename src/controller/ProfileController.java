@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
@@ -51,8 +52,7 @@ public class ProfileController {
 		mv.addObject("articleList", articleList);
 		mv.addObject("totalContentCnt", totalContentCnt);
 		mv.addObject("memberVO", memberVO);
-		mv.addObject("accessAut", "self");
-		System.out.println(articleList.size());
+		System.out.println("articlelist:" + articleList.size());
 		return mv;
 	}
 	
@@ -79,12 +79,11 @@ public class ProfileController {
 	/*
 	 *	사진 정보 추가 요청 ajax 처리
 	 **/
-	@RequestMapping(value="profileMoreArticle.do", method=RequestMethod.POST)
+	@RequestMapping("profileMoreArticle.do")
 	@ResponseBody
 	public List<ArticleVO> getMoreArticle(HttpSession session, int articleNum){
 		String id = (String) session.getAttribute("loginId");
 		List<ArticleVO> articleList = profileService.getProfileMoreArticleList(id, articleNum);
-		System.out.println("profileMoreArticle : " + articleList);
 		for(ArticleVO a : articleList) {
 			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
 			if (result != null && result.size() != 0) {
@@ -118,9 +117,34 @@ public class ProfileController {
 		}
 		return mv;
 	}
+	
 	@RequestMapping(value="updatePw.do",method=RequestMethod.POST)
 	public void updatePw(String id, String newPw,HttpSession session,HttpServletResponse response) {
 		boolean result=profileService.getUpdatePw(id, newPw);
+		try {
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/follow.do", method=RequestMethod.POST)
+	public void follow (String follow_id, HttpSession session, HttpServletResponse response) {
+		String id = (String) session.getAttribute("loginId");
+		boolean result = profileService.follow(id, follow_id);
+		try {
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/unfollow.do", method=RequestMethod.POST)
+	public void unFollow (String follow_id, HttpSession session, HttpServletResponse response) {
+		String id = (String) session.getAttribute("loginId");
+		boolean result = profileService.unFollow(id, follow_id);
 		try {
 			response.getWriter().println(result);
 		} catch (IOException e) {

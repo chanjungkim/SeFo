@@ -47,4 +47,43 @@
 	<update id="updatePw" >
 		update member set password=#{password} where id=#{id}
 	</update>
+	
+	<insert id="insertFollow">
+		INSERT into follow
+		VALUES(#{id}, #{followee})
+	</insert>
+	
+	<delete id="deleteFollow">
+		DELETE from follow
+		where id = #{id} AND followee = #{followee}
+	</delete>	
+	
+	<select id="selectTotalfollowCount" resultType="long">
+		SELECT count(followee) 
+		FROM follow 
+		WHERE id = #{id}; 
+	</select>
+	
+	<select id="selectTotalfolloweeCount" resultType="long">
+		SELECT count(id) 
+		FROM follow 
+		WHERE followee = #{followee}; 
+	</select>
+	
+	<select id="selectAllfollow" resultType="FollowVO">
+		SELECT * 
+		FROM follow 
+		WHERE id = #{id}; 
+	</select>
+	
+	<select id="selectAllfollower" resultType="FollowVO">
+		SELECT *
+		FROM follow 
+		WHERE followee = #{id}; 
+	</select>
+	
 </mapper>
+
+
+
+

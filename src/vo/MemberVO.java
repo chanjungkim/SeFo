@@ -1,6 +1,7 @@
 package vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class MemberVO {
 	private int member_num;
@@ -15,6 +16,8 @@ public class MemberVO {
 	private int follow_count;
 	private int follower_count;
 	private String self_info;
+	private List<FollowVO> followList;
+	private List<FollowVO> followerList;
 	
 	/////////////////////////////////////////////////////////////
 
@@ -112,6 +115,24 @@ public class MemberVO {
 
 	public void setSelf_info(String self_info) {
 		this.self_info = self_info;
+	}
+	
+	public List<FollowVO> getFollowList() {
+		return followList;
+	}
+
+	public void setFollowList(List<FollowVO> followList) {
+		this.followList = followList;
+		follow_count = followList.size();
+	}
+
+	public List<FollowVO> getFollowerList() {
+		return followerList;
+	}
+
+	public void setFollowerList(List<FollowVO> followerList) {
+		this.followerList = followerList;
+		follower_count = followerList.size();
 	}
 
 	@Override

@@ -80,6 +80,7 @@ public class ArticleVO {
 	}
 	public void setCommentList(List<CommentVO> commentList) {
 		this.commentList = commentList;
+		this.commentCount = commentList.size();
 	}
 	public List<MultipartFile> getFileList() {
 		return fileList;
@@ -101,9 +102,6 @@ public class ArticleVO {
 	}
 	public int getCommentCount() {
 		return commentCount;
-	}
-	public void setCommentCount(int commentCount) {
-		this.commentCount = commentCount;
 	}
 	public String getPhoto_path() {
 		return photo_path;

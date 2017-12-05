@@ -83,12 +83,7 @@ public class ArticleService {
 		
 		for (ArticleVO article : articleList) {
 			//TODO 飘罚黎记 贸府
-			List<CommentVO> commentList = dao.selectAllComment(article.getArticle_num()); 
-			article.setCommentList(commentList);
-			//TODO 飘罚黎记 贸府
-			for (CommentVO v : commentList) {
-				v.setPhoto_path(memberDao.initMain(v.getId()).getPhoto_path());
-			}
+			article.setCommentList(dao.selectAllComment(article.getArticle_num()));
 			article.setReactList(dao.selectAllReact(article.getArticle_num()));
 			// System.out.println(article.getArticle_num()+"/"+article.getCommentList().size());
 			article.toString();

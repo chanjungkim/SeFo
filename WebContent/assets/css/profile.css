@@ -74,9 +74,8 @@ hr {
 	margin: 0px"
 }
 
-#profile-edit {
+.profile-edit {
 	color: black;
-	background-color: transparent;
 	border-width : 0.5px;
 	padding : 3px;
 	padding-left : 20px;
