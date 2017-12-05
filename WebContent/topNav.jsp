@@ -14,12 +14,12 @@
 	$(function(){
 		var profileImg = new Image;
 		var memberId = '${sessionScope.loginId}';
-		profileImg.src = "assets/img/profile_pictures/" + memberId + ".JPG";
-		var profileImgPath = "assets/img/profile_pictures/" + memberId + ".JPG";
+		profileImg.src = "<%=request.getContextPath()%>/assets/img/profile_pictures/" + memberId + ".JPG";
+		var profileImgPath = "<%=request.getContextPath()%>/assets/img/profile_pictures/" + memberId + ".JPG";
 		if (!profileImg.complete) {
-			profileImgPath = "assets/img/profile_pictures/default_profile.JPG";
+			profileImgPath = "<%=request.getContextPath()%>/assets/img/profile_pictures/default_profile.JPG";
 		}
-		$('#profile_img').attr('src', profileImgPath);
+		$('#top_nav_profile_img').attr('src', profileImgPath);
 		
 		$('#srch-term').on('keyup', function(){
 			var searchWord = $(this).val();
@@ -47,6 +47,7 @@
 					console.log('검색 ajax 요청 실패');
 				}
 			})
+		})
 	})
 
 </script>
@@ -79,7 +80,8 @@
 		<!-- EOF Search Bar -->
 
 		<ul class="nav navbar-nav">
-			<li><a class="profile-link" href="<%=request.getContextPath()%>/profile.do/${sessionScope.loginId}"><img id="profile_img"
+			<li><a class="profile-link" href="<%=request.getContextPath()%>/profile.do/${sessionScope.loginId}">
+			<img id="top_nav_profile_img"
 					class="status"
 					width="20px" height="20px"> ${sessionScope.loginId}</a></li>
 			<li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>

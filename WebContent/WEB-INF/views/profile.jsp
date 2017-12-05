@@ -23,15 +23,7 @@
 <script type="text/javascript">
 
 	$(function() {
-		var profileImg = new Image;
-		var memberId = '${MemberVO.id}';
-		profileImg.src = "<%=request.getContextPath()%>/assets/img/profile_pictures/" + memberId + ".JPG";
 
-		if (!profileImg.complete) {
-			profileImg.src = "<%=request.getContextPath()%>/assets/img/profile_pictures/default_profile.JPG";
-		}
-		$('#profile_img').attr('src', profileImg.src);
-		///////////////////////////////////////	
 		var article_last_index = $('#article_last_index').val();
 		var article_count = 12;
 		$(window).scroll(function() {
@@ -147,7 +139,7 @@ figure>div>.photo-info {
 									<div class="row">
 										<div class="my_profile_img col-md-4 img-fluid"
 											style="margin: auto; width: auto; max-height: 100%; margin-left: 80px; margin-right: 80px;">
-											<img id="profile_img">
+											<img id="profile_img" src = "<%=request.getContextPath()%>/${memberVO.photo_path}">
 										</div>
 
 										<div class="col-md-8"

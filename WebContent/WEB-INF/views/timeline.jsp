@@ -39,12 +39,11 @@
 	text-align: center;
 	margin: 1em 0;
 }
-
 </style>
 <script>
 	var uploadPhotoCount = 0;
 	var photoNum = 0;
-	
+
 	$(function() {
 
 		$('.comment-write-area').on('keydown', function(e) {
@@ -84,83 +83,89 @@
 				})
 			}
 		})
-		
+
 		// timeline item (image container)
 		$(".item").width("100%");
 		$(".item").height($(".item").width());
-		
-		// image
-		$(".item img").each(function(){
-// 			$(this).load(function(){
-				var width = this.naturalWidth;
-				var height = this.naturalHeight;
-				
-				var parentHeight = $(this).parent().height();
-				var parentWidth = $(this).parent().width()
-				if(width < height){
-					var w =width * (parentHeight/height);
-					$(this).css({width: w, height:parentHeight})
-				}else{
-					var h = height * (parentWidth/width);
-					$(this).css({width: parentWidth, height:h})
-				}
-				
-// 				if(width < height){
-// 					$(this).width("auto");
-// 					$(this).height($(this).parent().height());
-// 				}else{
-// 					$(this).width($(this).parent().width());
-// 					$(this).height("auto");					
-// 				}
-// 				$(this).width('auto');
-// 				$(this).height('auto');
-				console.log('original size:'+width+"/"+height)
-				console.log('src:'+$(this).attr('src'))
-				console.log("부모 사이즈: " + $(this).parent().width()+", "+$(this).parent().height());
-				console.log("이미지 사이즈: " + $(this).width() +", " + $(this).height());
 
-				var diffWidth = $(this).parent().width()-$(this).width();
-				var diffHeight = $(this).parent().height()-$(this).height();
-					
-				console.log("diffWidth: "+diffWidth+", diffHeight: "+diffHeight);
-					
-				$(this).attr('style', 'vertical-align:middle');
-				$(this).parent().attr('style','text-align:center')
-				$(this).css('margin','30px 10px');
-// 			})
+		// image
+		$(".item img").each(function() {
+			// 			$(this).load(function(){
+			var width = this.naturalWidth;
+			var height = this.naturalHeight;
+
+			var parentHeight = $(this).parent().height();
+			var parentWidth = $(this).parent().width()
+			if (width < height) {
+				var w = width * (parentHeight / height);
+				$(this).css({
+					width : w,
+					height : parentHeight
+				})
+			} else {
+				var h = height * (parentWidth / width);
+				$(this).css({
+					width : parentWidth,
+					height : h
+				})
+			}
+
+			// 				if(width < height){
+			// 					$(this).width("auto");
+			// 					$(this).height($(this).parent().height());
+			// 				}else{
+			// 					$(this).width($(this).parent().width());
+			// 					$(this).height("auto");					
+			// 				}
+			// 				$(this).width('auto');
+			// 				$(this).height('auto');
+			console.log('original size:' + width + "/" + height)
+			console.log('src:' + $(this).attr('src'))
+			console.log("부모 사이즈: " + $(this).parent().width() + ", " + $(this).parent().height());
+			console.log("이미지 사이즈: " + $(this).width() + ", " + $(this).height());
+
+			var diffWidth = $(this).parent().width() - $(this).width();
+			var diffHeight = $(this).parent().height() - $(this).height();
+
+			console.log("diffWidth: " + diffWidth + ", diffHeight: " + diffHeight);
+
+			$(this).attr('style', 'vertical-align:middle');
+			$(this).parent().attr('style', 'text-align:center')
+			$(this).css('margin', '30px 10px');
+		// 			})
 		})
 		//
 		// if window size changes...
-		$(window).on('resize', function(){
+		$(window).on('resize', function() {
 			$(".item").width("100%");
 			$(".item").height($(".item").width());
-			console.log($(".item").width()+", "+$(".item").height());
-				
-				// image
-			$(".item img").each(function(){	
-					console.log("부모 사이즈: " + $(this).parent().width()+", "+$(this).parent().height());
-					console.log("이미지 사이즈: " + $(this).width() +", " + $(this).height());
+			console.log($(".item").width() + ", " + $(".item").height());
 
-					var diffWidth = $(this).parent().width()-$(this).width();
-					var diffHeight = $(this).parent().height()-$(this).height();
-						
-					console.log("diffWidth: "+diffWidth+", diffHeight: "+diffHeight);
+			// image
+			$(".item img").each(function() {
+				console.log("부모 사이즈: " + $(this).parent().width() + ", " + $(this).parent().height());
+				console.log("이미지 사이즈: " + $(this).width() + ", " + $(this).height());
 
-					$(this).css('margin-top', (diffHeight/2)+'px ');
-					$(this).css('margin-left', (diffWidth/2)+'px');	
+				var diffWidth = $(this).parent().width() - $(this).width();
+				var diffHeight = $(this).parent().height() - $(this).height();
+
+				console.log("diffWidth: " + diffWidth + ", diffHeight: " + diffHeight);
+
+				$(this).css('margin-top', (diffHeight / 2) + 'px ');
+				$(this).css('margin-left', (diffWidth / 2) + 'px');
 			})
 		})
-		
+
 		$(document).on('change', "#fileList", function() {
 			readURL(this);
 		});
-		
-		$(document).on('keyup', '#modalContent', function(){
+
+		$(document).on('keyup', '#modalContent', function() {
 			var modalContent = $('#modalContent').val();
 			$('#content').val(modalContent);
 			$("#content").val();
 		});
-		
+
 		$(document).on('click', '#postBtn', function(e) {
 			//폼객체를 불러와서
 			var form = $('#write_form')[0];
@@ -171,10 +176,10 @@
 			$('#file-container').empty();
 			$.ajax({
 				type : 'post', // 요청 보내면 doPost가 실행됨
-				enctype: 'multipart/form-data',
+				enctype : 'multipart/form-data',
 				url : 'writePost.do', // 우리가 작성한 java 서블릿에게
 				processData : false,
-	            cache: false,
+				cache : false,
 				contentType : false,
 				data : formData,
 				dataType : 'json', // 응답데이터 형식
@@ -194,38 +199,37 @@
 						+ '			<!--  -->'
 						+ '		</p>'
 						+ '	</a>';
-					
-					if(photoCount != 0){
-						newPost +=  '<img src="'+ photoList[0].file_origiName+ '" class="img-responsive">';
+
+					if (photoCount != 0) {
+						newPost += '<img src="' + photoList[0].file_origiName + '" class="img-responsive">';
 					}
-					newPost +=
-					'<p>'
-					+ '<p style="word-break:break-all;">'
-					+ content
-					+ '</p>'
-					+ '</p>'
-					+ '	<p>'
-					+ '		<button type="button" class="btn btn-default btn-sm">'
-					+ '			<i class="glyphicon glyphicon-thumbs-up"></i>'
-					+ '		</button>'
-					+ '		<!-- List of people who liked if more than 3, show number  otherwise id -->'
-					+ '		<label>아이디 리스트</label>'
-					+ '		<!-- EO liked list -->'
-					+ '	</p>'
-					+ '	<p>'
-					+ '	<table>'
-					+ '		<!-- Start Comment  -->'
-					+ '		<tr>'
-					+ '			<td><img'
-					+ '				src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"'
-					+ '				height="28px" width="28px"> <span>아이디</span></td>'
-					+ '			<td>댓글 내용</td>'
-					+ '		</tr>'
-					+ '		<!--  EO Comment -->'
-					+ '	</table>'
-					+ '	</p>'
-					+ '</div>'
-					+ '</div>';
+					newPost += '<p>'
+						+ '<p style="word-break:break-all;">'
+						+ content
+						+ '</p>'
+						+ '</p>'
+						+ '	<p>'
+						+ '		<button type="button" class="btn btn-default btn-sm">'
+						+ '			<i class="glyphicon glyphicon-thumbs-up"></i>'
+						+ '		</button>'
+						+ '		<!-- List of people who liked if more than 3, show number  otherwise id -->'
+						+ '		<label>아이디 리스트</label>'
+						+ '		<!-- EO liked list -->'
+						+ '	</p>'
+						+ '	<p>'
+						+ '	<table>'
+						+ '		<!-- Start Comment  -->'
+						+ '		<tr>'
+						+ '			<td><img'
+						+ '				src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"'
+						+ '				height="28px" width="28px"> <span>아이디</span></td>'
+						+ '			<td>댓글 내용</td>'
+						+ '		</tr>'
+						+ '		<!--  EO Comment -->'
+						+ '	</table>'
+						+ '	</p>'
+						+ '</div>'
+						+ '</div>';
 					$("#timeline").after(newPost);
 				},
 				error : function() {
@@ -233,15 +237,15 @@
 				}
 			})
 		})
-		
-// 		$(document).on('hover', '.react-button', function()){
-// 			$(this).after('<button>좋아요</button><button>화나요</button><button>슬퍼요</button>');
-// 		}
-// 		$(document).on('mouseout', '.react-button', function()){
-// 			$(this).after("");
-// 		}
-		
-		$('#srch-term').on('keyup', function(){
+
+		// 		$(document).on('hover', '.react-button', function()){
+		// 			$(this).after('<button>좋아요</button><button>화나요</button><button>슬퍼요</button>');
+		// 		}
+		// 		$(document).on('mouseout', '.react-button', function()){
+		// 			$(this).after("");
+		// 		}
+
+		$('#srch-term').on('keyup', function() {
 			var searchWord = $(this).val();
 			console.log(searchWord);
 			$.ajax({
@@ -250,16 +254,16 @@
 				data : {
 					'searchWord' : searchWord // 검색어 데이터	
 				},
-				dataType : 'json',// 응답데이터 형식
+				dataType : 'json', // 응답데이터 형식
 				success : function(resultData) {
 					console.log(resultData);
 					$('.search-option').remove();
-					var bookData='';
-					for(var i=0; i<resultData.length; i++){
-						bookData += '<option class="search-option" value="' +resultData[i]+ '">';
+					var bookData = '';
+					for (var i = 0; i < resultData.length; i++) {
+						bookData += '<option class="search-option" value="' + resultData[i] + '">';
 					}
-// 					$.each(resultData, function(index, item) {
-// 						bookData += '<option class="search-option" value="'+item+'">';
+					// 					$.each(resultData, function(index, item) {
+					// 						bookData += '<option class="search-option" value="'+item+'">';
 					console.log(bookData);
 					$('#search-data-list').append(bookData);
 				},
@@ -341,9 +345,9 @@
 			addMorePhoto(++uploadPhotoCount);
 		}
 	}
-	
-	function reactListener(id, article_num, expression){
-		alert(id+" "+article_num+" "+ expression);
+
+	function reactListener(id, article_num, expression) {
+		alert(id + " " + article_num + " " + expression);
 		$.ajax({
 			type : 'post', // 요청 보내면 doPost가 실행됨
 			url : 'react.do', // 우리가 작성한 java 서블릿에게
@@ -355,7 +359,7 @@
 			dataType : 'text', // 응답데이터 형식
 			success : function(resultData) {
 				alert("리액션 달기 설공!");
-				$('#like-indicator-'+article_num).append("+");
+				$('#like-indicator-' + article_num).append("+");
 			},
 			error : function() {
 				$.ajax({
@@ -369,7 +373,7 @@
 					dataType : 'text', // 응답데이터 형식
 					success : function(resultData) {
 						alert("리액션 달기 설공!");
-						$('#like-indicator-'+article_num).append("+");
+						$('#like-indicator-' + article_num).append("+");
 					},
 					error : function() {
 						alert('React ajax 요청 실패');
@@ -476,10 +480,11 @@
 													<div class="panel-thumbnail"></div>
 													<div class="panel-body">
 														<p class="lead">
-															<a href="showProfile.do/${articleVO.id}"> <!--  profile -->
-																<img class="profile"
-																src="assets/img/profile_pictures/${articleVO.id}.JPG"
-																height="40px" width="40px"> <span>${articleVO.id}</span>
+															<a
+																href="<%=request.getContextPath()%>/profile.do/${articleVO.id}">
+																<!--  profile --> <img class="profile"
+																src="<%=request.getContextPath() %>/${articleVO.photo_path}"
+																height="50px" width="50px"> <span>${articleVO.id}</span>
 																<!--  -->
 															</a> <i class="glyphicon glyphicon-menu-down"></i>
 														</p>
@@ -533,7 +538,7 @@
 														</c:if>
 														<!--  EOF -->
 
-														<p style="word-break:break-all;">${articleVO.content}</p>
+														<p style="word-break: break-all;">${articleVO.content}</p>
 														<div class="react-button dropdown btn btn-default btn-sm">
 															<ul class="dropdown-menu">
 																<li><img
@@ -544,9 +549,10 @@
 																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '2')"
 																	src="assets\img\icon\love.gif" width="40px"
 																	height="40px"></li>
-																<li>
-																<img onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '3')"
-																	src="assets\img\icon\angry.gif" width="40px"  height="40px"></li>
+																<li><img
+																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '3')"
+																	src="assets\img\icon\angry.gif" width="40px"
+																	height="40px"></li>
 																<li><img
 																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '4')"
 																	src="assets\img\icon\sad.gif" width="40px"
@@ -555,30 +561,39 @@
 															<i class="glyphicon glyphicon-thumbs-up"></i>
 														</div>
 														<!-- List of people who liked if more than 3, show number  otherwise id -->
-														<a id="like-indicator-${articleVO.article_num}">
-														<c:if test="${not empty articleVO.reactList}">
-															<c:forEach var="reactVO" items="${articleVO.reactList}">
+														<a id="like-indicator-${articleVO.article_num}"> <c:if
+																test="${not empty articleVO.reactList}">
+																<c:forEach var="reactVO" items="${articleVO.reactList}">
 																${reactVO.id}
 															</c:forEach>
-														</c:if>
+															</c:if>
 														</a>
 														<!-- EO liked list -->
-														<table class="comment-area">
+														<table class="comment-area" width="100%">
 															<!-- Start Comment  -->
 															<c:forEach var="commentVO"
 																items="${articleVO.commentList}">
 																<tr id="comment-${commentVO.comment_num}">
 																	<td><div style="margin-bottom: 5px;">
-																			<a href="showProfile.do/${articleVO.id}"> <img class="comment-img"
-																				src="assets/img/profile_pictures/${commentVO.id}.JPG"> <b>${commentVO.id} </b></a>
-																					<span>${commentVO.content}</span>
+																			<a
+																				href="<%=request.getContextPath()%>/profile.do/${commentVO.id}">
+																				<img class="comment-img"
+																				src="<%=request.getContextPath()%>/${commentVO.photo_path}"
+																				style="display: inline-block;">
+																			</a> <div> <a
+																				href="<%=request.getContextPath()%>/profile.do/${commentVO.id}"><b>${commentVO.id}
+																				</b></a> &nbsp;${commentVO.content} <c:if
+																					test="${sessionScope.loginId==commentVO.id}">
+																					<input id="comment-delete" type="hidden"
+																						name="comment_num"
+																						value="${commentVO.comment_num}">
+																					<a
+																						onclick="deleteComment(${commentVO.comment_num})"
+																						style="color: #CCC; font-size: 5px;">X</a>
+																				</c:if>
+																					<br>${commentVO.write_time}
+																			</div>
 																		</div></td>
-																	<c:if test="${sessionScope.loginId==commentVO.id}">
-																		<td><input id="comment-delete" type="hidden"
-																			name="comment_num" value="${commentVO.comment_num}">
-																			<a onclick="deleteComment(${commentVO.comment_num})"
-																			style="color: #CCC; font-size: 5px;">X</a></td>
-																	</c:if>
 																</tr>
 															</c:forEach>
 															<!--  EO Comment -->
