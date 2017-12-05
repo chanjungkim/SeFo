@@ -567,7 +567,7 @@
 																				<a onclick="deleteComment(${commentVO.comment_num})"
 																					style="color: #CCC; font-size: 5px;">X</a>
 																			</c:if>
-																		<div style="font-size: 5px;">${commentVO.write_time}</div>
+																		<div style="font-size: 5px; color:grey;">${commentVO.write_time}</div>
 																	</td>
 																</tr>
 															</c:forEach>
