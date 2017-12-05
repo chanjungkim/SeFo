@@ -37,4 +37,5 @@ public class MemberService {
 	public List<String> searchId(String searchWord) {
 		return dao.searchAllId(searchWord);
 	}
+
 }

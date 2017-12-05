@@ -82,8 +82,11 @@
 		WHERE followee = #{id}; 
 	</select>
 	
+	<delete id="deleteMember" parameterType="MemberVO"> 
+		delete from member where id=#{id} 
+	</delete>
+
+	<delete id="deleteArticle" parameterType="ArticleVO">
+		 delete from article where id=#{id}
+  	</delete>
 </mapper>
-
-
-
-

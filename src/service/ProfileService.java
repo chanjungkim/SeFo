@@ -54,7 +54,6 @@ public class ProfileService {
 			return false;
 		}
 	}
-	
 	public boolean follow(String id, String followee){
 		int result = dao.insertFollow(id, followee);
 		if (result == 1) {
@@ -76,5 +75,15 @@ public class ProfileService {
 	}
 	public List<FollowVO> getFollowerList(String id) {
 		return dao.selectAllfollower(id);
+	}
+	public boolean deleteAll(String id, String pw) {
+		int result=dao.deleteMember(id, pw);
+		int result2=dao.deleteArticle(id);
+		if(result>0&&result2>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

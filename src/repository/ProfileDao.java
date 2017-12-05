@@ -2,7 +2,6 @@ package repository;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -69,6 +68,13 @@ public class ProfileDao {
 		ProfileMapper mapper = session.getMapper(ProfileMapper.class);
 		return mapper.selectAllfollower(followee);
 	}
-	
 
+	public int deleteMember(String id, String pw) {
+		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
+		return mapper.deleteMember(id, pw);
+	}
+	public int deleteArticle(String id) {
+		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
+		return mapper.deleteArticle(id);
+	}
 }

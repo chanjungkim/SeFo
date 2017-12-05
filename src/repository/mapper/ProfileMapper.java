@@ -21,4 +21,6 @@ public interface ProfileMapper {
 	public int selectTotalfolloweeCount(String followee);
 	public List<FollowVO> selectAllfollow(String id);
 	public List<FollowVO> selectAllfollower(String id);
+	public int deleteMember(@Param("id")String id, @Param("password")String pw);
+	public int deleteArticle(@Param("id")String id);
 }

@@ -145,6 +145,11 @@ public class ProfileController {
 	public void unFollow (String follow_id, HttpSession session, HttpServletResponse response) {
 		String id = (String) session.getAttribute("loginId");
 		boolean result = profileService.unFollow(id, follow_id);
+	}
+	
+	@RequestMapping(value="deleteAll.do",method={RequestMethod.GET, RequestMethod.POST})
+	public void deleteAll(String id, String deletePw,HttpSession session,HttpServletResponse response) {
+		boolean result=profileService.deleteAll(id, deletePw);
 		try {
 			response.getWriter().println(result);
 		} catch (IOException e) {
