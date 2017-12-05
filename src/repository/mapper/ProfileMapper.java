@@ -14,4 +14,6 @@ public interface ProfileMapper {
 	public List<ArticleVO> selectMoreArticleList(@Param("id") String id, @Param("articleNum") int articleNum);
 	public int update(MemberVO member);
 	public int updatePw(@Param("id")String id,@Param("password")String pw);
+	public int deleteMember(@Param("id")String id, @Param("password")String pw);
+	public int deleteArticle(@Param("id")String id);
 }

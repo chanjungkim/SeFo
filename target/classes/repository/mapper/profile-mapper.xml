@@ -47,4 +47,11 @@
 	<update id="updatePw" >
 		update member set password=#{password} where id=#{id}
 	</update>
+	<delete id="deleteMember" parameterType="MemberVO"> 
+		delete from member where id=#{id} 
+	</delete>
+
+	<delete id="deleteArticle" parameterType="ArticleVO">
+		 delete from article where id=#{id}
+  	</delete>
 </mapper>

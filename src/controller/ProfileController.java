@@ -128,4 +128,14 @@ public class ProfileController {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value="deleteAll.do",method={RequestMethod.GET, RequestMethod.POST})
+	public void deleteAll(String id, String deletePw,HttpSession session,HttpServletResponse response) {
+		boolean result=profileService.deleteAll(id, deletePw);
+		try {
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

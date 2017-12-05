@@ -44,4 +44,14 @@ public class ProfileService {
 			return false;
 		}
 	}
+	public boolean deleteAll(String id, String pw) {
+		int result=dao.deleteMember(id, pw);
+		int result2=dao.deleteArticle(id);
+		if(result>0&&result2>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }

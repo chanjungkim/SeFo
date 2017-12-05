@@ -40,4 +40,12 @@ public class ProfileDao {
 		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
 		return mapper.updatePw(id,pw);
 	}
+	public int deleteMember(String id, String pw) {
+		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
+		return mapper.deleteMember(id, pw);
+	}
+	public int deleteArticle(String id) {
+		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
+		return mapper.deleteArticle(id);
+	}
 }
