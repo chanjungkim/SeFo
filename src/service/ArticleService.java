@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import repository.ArticleDao;
+import repository.MemberDao;
 import vo.ArticleVO;
 import vo.CommentVO;
 import vo.FileVO;
@@ -23,6 +24,9 @@ public class ArticleService {
 	@Autowired
 	private ArticleDao dao;
 
+	@Autowired
+	private MemberDao memberDao;
+	
 	public ArticleVO writeArticle(ArticleVO article, HttpServletRequest req) {
 		System.out.println("articleService 角青!");
 		int result = dao.insertArticle(article);
@@ -76,8 +80,15 @@ public class ArticleService {
 
 	public List<ArticleVO> getArticleList(String id) {
 		List<ArticleVO> articleList = dao.selectAllArticle(id);
+		
 		for (ArticleVO article : articleList) {
-			article.setCommentList(dao.selectAllComment(article.getArticle_num()));
+			//TODO 飘罚黎记 贸府
+			List<CommentVO> commentList = dao.selectAllComment(article.getArticle_num()); 
+			article.setCommentList(commentList);
+			//TODO 飘罚黎记 贸府
+			for (CommentVO v : commentList) {
+				v.setPhoto_path(memberDao.initMain(v.getId()).getPhoto_path());
+			}
 			article.setReactList(dao.selectAllReact(article.getArticle_num()));
 			// System.out.println(article.getArticle_num()+"/"+article.getCommentList().size());
 			article.toString();

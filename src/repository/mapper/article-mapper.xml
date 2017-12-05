@@ -17,21 +17,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<select id="selectAllArticle" resultType="ArticleVO">
-		SELECT * FROM ARTICLE
-		WHERE ID IN
-		(SELECT FOLLOWEE FROM FOLLOW WHERE ID = #{id}) OR ID =
-		#{id}
+		SELECT af.*, m.photo_path 
+		FROM (SELECT * FROM ARTICLE
+					WHERE ID IN
+							(SELECT FOLLOWEE FROM FOLLOW WHERE ID = #{id}) OR ID = #{id}) af, MEMBER m 
+			WHERE af.id = m.id
 		ORDER BY
 		WRITE_TIME DESC;
+		
 	</select>
 	<select id="selectArticlePhoto" resultType="FileVO">
 		SELECT * FROM
 		article_photo
 		WHERE article_num = #{article_num}
 	</select>
+	
 	<select id="selectAllComment" resultType="CommentVO">
-		SELECT * FROM COMMENT
-		WHERE ARTICLE_NUM = #{article_num}
+		SELECT c.*, m.photo_path 
+		FROM comment c, article a, member m 
+		WHERE c.article_num = a.article_num AND m.id = c.id AND a.article_num = #{article_num};
 	</select>
 
 	<insert id="insertComment" parameterType="CommentVO">

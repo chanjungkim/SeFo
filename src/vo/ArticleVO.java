@@ -10,17 +10,17 @@ public class ArticleVO {
 	private String id;
 	private Date write_time;
 	private String content;
-	private int like_count;
-	private int love_count;
-	private int angry_count;
+	private long likeit_count;
+	private long love_count;
+	private long angry_count;
+	private long sad_count;
 	private List<ReactVO> reactList;
 	private List<CommentVO> commentList;
 	private List<MultipartFile> fileList;
 	private List<FileVO> photoList;
 	private int photo_count;
 	private int commentCount;
-	////////////////////////////////////
-	
+	private String photo_path;
 	public long getArticle_num() {
 		return article_num;
 	}
@@ -45,23 +45,29 @@ public class ArticleVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getLike_count() {
-		return like_count;
+	public long getLikeit_count() {
+		return likeit_count;
 	}
-	public void setLike_count(int like_count) {
-		this.like_count = like_count;
+	public void setLikeit_count(long likeit_count) {
+		this.likeit_count = likeit_count;
 	}
-	public int getLove_count() {
+	public long getLove_count() {
 		return love_count;
 	}
-	public void setLove_count(int love_count) {
+	public void setLove_count(long love_count) {
 		this.love_count = love_count;
 	}
-	public int getAngry_count() {
+	public long getAngry_count() {
 		return angry_count;
 	}
-	public void setAngry_count(int angry_count) {
+	public void setAngry_count(long angry_count) {
 		this.angry_count = angry_count;
+	}
+	public long getSad_count() {
+		return sad_count;
+	}
+	public void setSad_count(long sad_count) {
+		this.sad_count = sad_count;
 	}
 	public List<ReactVO> getReactList() {
 		return reactList;
@@ -74,11 +80,6 @@ public class ArticleVO {
 	}
 	public void setCommentList(List<CommentVO> commentList) {
 		this.commentList = commentList;
-		this.commentCount = commentList.size();
-	}
-	
-	public int getCommentCount() {
-		return commentCount;
 	}
 	public List<MultipartFile> getFileList() {
 		return fileList;
@@ -98,12 +99,26 @@ public class ArticleVO {
 	public void setPhoto_count(int photo_count) {
 		this.photo_count = photo_count;
 	}
+	public int getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+	public String getPhoto_path() {
+		return photo_path;
+	}
+	public void setPhoto_path(String photo_path) {
+		this.photo_path = photo_path;
+	}
 	@Override
 	public String toString() {
 		return "ArticleVO [article_num=" + article_num + ", id=" + id + ", write_time=" + write_time + ", content="
-				+ content + ", like_count=" + like_count + ", love_count=" + love_count + ", angry_count=" + angry_count
-				+ ", reactList=" + reactList + ", commentList=" + commentList + ", fileList=" + fileList
-				+ ", photoList=" + photoList + ", photo_count=" + photo_count + "]";
+				+ content + ", likeit_count=" + likeit_count + ", love_count=" + love_count + ", angry_count="
+				+ angry_count + ", sad_count=" + sad_count + ", reactList=" + reactList + ", commentList=" + commentList
+				+ ", fileList=" + fileList + ", photoList=" + photoList + ", photo_count=" + photo_count
+				+ ", commentCount=" + commentCount + ", photo_path=" + photo_path + "]";
 	}
+	
 	
 }
