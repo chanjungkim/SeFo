@@ -9,12 +9,15 @@
 <title>Welcome! ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="<%=request.getContextPath()%>/assets/css/bootstrap.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/assets/css/profile.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/assets/css/bootstrap.css"
+	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/assets/css/profile.css"
+	rel="stylesheet">
 <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-<link href="<%=request.getContextPath()%>/assets/css/sefo.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/assets/css/sefo.css"
+	rel="stylesheet">
 <script src="https://use.fontawesome.com/804ea8b780.js"></script>
 <script
 	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
@@ -54,7 +57,7 @@
 						$.each(resultData, function() {
 							var myContext = "<%=request.getContextPath()%>";
 							article_last_index = this.article_num;
-							addImage += '<figure><div><img id="article_img" name ="article_img" src="'+ myContext +'/'+this.photoList[0].file_origiName + '"';
+							addImage += '<figure><div><img id="article_img" name ="article_img" src="' + myContext + '/' + this.photoList[0].file_origiName + '"';
 							addImage += 'style="z-index: 0;"><div class="photo-info">' + this.commentCount + '개</div></div> </figure>';
 							article_count_sum += 1;
 						})
@@ -69,7 +72,53 @@
 				})
 			}
 		})
-
+		/***
+		 * follow - unfollow start
+		 */ 		
+// 		$(document).on('click', '#follow-btn', function(){
+// 			var memberId = '${memberVO.id}';
+// 			alert(memberId);
+// 			$.ajax(){
+// 				type : 'post',
+<%-- 				url : '<%=request.getContextPath()%>/follow.do', --%>
+// 				data : {
+// 					'article_num' : arti
+// 				}
+// $(this).attr('style', 'background-color: transparent, color : black')
+// 			}
+// 		});
+		$(document).on('click', '#following-btn', function(){
+			var memberId = '${memberVO.id}';
+			var followCnt = $('#follower-cnt').text();
+			alert(followCnt)
+			$.ajax({
+				type : 'POST',
+				url : '<%=request.getContextPath()%>/unfollow.do',
+				data : {
+					'follow_id' : memberId
+				},
+				dataType : 'text',
+				success : function (resultData){
+					alert('언팔 성공')
+					$("#following-btn").hide();
+					$('#follower-cnt').text(" "+(followCnt-1));
+					$("#following-btn").after(
+							'<button class= "profile-edit"'
+							+'id="follow-btn" style="float: left;'
+							+'background-color: blue; color: white ">'
+							+'팔로우'
+							+'</button>'
+					);
+					
+				},
+				error : function(){
+					alert('언팔 실패')
+				}
+			})
+		});
+		/***
+		 * follow - unfollow End
+		 */ 
 		$(document).on('mouseenter', "#article_img", function() {
 			$(this).parent().attr('style', 'background-color:black;')
 			$(this).attr('style', 'opacity: 0.6');
@@ -102,6 +151,7 @@ figure>div>.photo-info {
 </style>
 </head>
 <body>
+
 	<c:if test="${empty articleList}">
 		<input type="hidden" id="article_last_index" value="0">
 	</c:if>
@@ -139,7 +189,8 @@ figure>div>.photo-info {
 									<div class="row">
 										<div class="my_profile_img col-md-4 img-fluid"
 											style="margin: auto; width: auto; max-height: 100%; margin-left: 80px; margin-right: 80px;">
-											<img id="profile_img" src = "<%=request.getContextPath()%>/${memberVO.photo_path}">
+											<img id="profile_img"
+												src="<%=request.getContextPath()%>/${memberVO.photo_path}">
 										</div>
 
 										<div class="col-md-8"
@@ -148,12 +199,12 @@ figure>div>.photo-info {
 												style="display: flex; align-items: center; align-self: center; margin-top: 10px;">
 												<div
 													style="font-size: 30px; margin-right: 25px; float: left; font-weight: 100;">${memberVO.id }</div>
-
+<!-- 												수정 : 성훈  -->
 												<div class="row"
 													style="float: left; display: flex; align-items: center;">
 													<c:choose>
 														<c:when test="${sessionScope.loginId == memberVO.id}">
-															<button id="profile-edit" style="float: left;">
+															<button class = "profile-edit" style="float: left;">
 																<a href="<%=request.getContextPath()%>/myPage.do"
 																	style="color: black; font-weight: lighter;"> <strong>프로필편집</strong>
 																</a>
@@ -163,12 +214,28 @@ figure>div>.photo-info {
 																style="width: 30px; height: 30px; float: left; vertical-align: bottom;"></a>
 														</c:when>
 														<c:otherwise>
-															<button id="profile-edit" style="float: left;">
-																<a href="#">채팅하기</a>
-															</button>
+															<c:set var="b" value="0" />
+															<c:forEach items="${memberVO.followerList }" var="i">
+																<c:if test="${i.id == sessionScope.loginId}">
+																	<c:set var="b" value="1" />
+																</c:if>
+															</c:forEach>
+															
+															<c:if test="${b==1}">
+																<button class = "profile-edit" id="following-btn" style="float: left;">
+																	팔로잉
+																</button>
+															</c:if>
+															<c:if test="${b==0}">
+																<button class= "profile-edit" id="follow-btn"
+																	style="float: left; background-color: blue; color: white ">
+																	팔로우
+																</button>
+															</c:if>
 														</c:otherwise>
 													</c:choose>
 												</div>
+<!-- 												수정 : 성훈  -->
 											</div>
 											<div class="row" style="margin-top: 10px;">
 												<span class="profile-span-margin-3px">게시물 </span> <strong><span
@@ -177,11 +244,11 @@ figure>div>.photo-info {
 												<button class="profile-span-margin-3px"
 													id="span_profile_follower"
 													style="font-size: 16px; background-color: transparent; border-style: none">
-													팔로워<strong> ${memberVO.follower_count}</strong>
+													팔로워<strong id="follower-cnt"> ${memberVO.follower_count}</strong>
 												</button>
 												<button id="btn_profile_follow"
 													style="font-size: 16px; background-color: transparent; border-style: none">
-													팔로우 <strong> ${memberVO.follow_count}</strong>
+													팔로우 <strong id="follow-cnt"> ${memberVO.follow_count}</strong>
 												</button>
 											</div>
 											<div
@@ -194,12 +261,13 @@ figure>div>.photo-info {
 												<figure>
 												<div>
 													<img id="article_img" name="article_img"
-														src=<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName }
+														src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName }"
 														style="z-index: 0;">
 													<div class="photo-info" style="">
-														<img src="assets/img/icon/chat.png"
+														<img
+															src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
 															style="width: 15px; height: 15px; display: inline-block;">
-														${articleVO.commentCount }개
+														${articleVO.commentCount}개
 													</div>
 												</div>
 												</figure>
@@ -230,8 +298,10 @@ figure>div>.photo-info {
 			</div>
 		</div>
 
-		<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
-		<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/bootstrap.js"></script>
+		<script type="text/javascript"
+			src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
+		<script type="text/javascript"
+			src="<%=request.getContextPath()%>/assets/js/bootstrap.js"></script>
 		<script type="text/javascript">
 			$(document)
 				.ready(
