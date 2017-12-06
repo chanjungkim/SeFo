@@ -81,8 +81,7 @@ public class ProfileController {
 	 **/
 	@RequestMapping("profileMoreArticle.do")
 	@ResponseBody
-	public List<ArticleVO> getMoreArticle(HttpSession session, int articleNum){
-		String id = (String) session.getAttribute("loginId");
+	public List<ArticleVO> getMoreArticle(HttpSession session, String id, int articleNum){
 		List<ArticleVO> articleList = profileService.getProfileMoreArticleList(id, articleNum);
 		for(ArticleVO a : articleList) {
 			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
@@ -130,13 +129,13 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value="/follow.do", method=RequestMethod.POST)
-	public String follow (String follow_id, HttpSession session, HttpServletResponse response) {
+	public @ResponseBody String follow (String follow_id, HttpSession session, HttpServletResponse response) {
 		String id = (String) session.getAttribute("loginId");
 		return profileService.follow(id, follow_id);
 	}
 	
 	@RequestMapping(value="/unfollow.do", method=RequestMethod.POST)
-	public String unFollow (String follow_id, HttpSession session, HttpServletResponse response) {
+	public @ResponseBody String unFollow (String follow_id, HttpSession session, HttpServletResponse response) {
 		String id = (String) session.getAttribute("loginId");
 		return profileService.unFollow(id, follow_id);
 	}

@@ -28,18 +28,18 @@
 	$(function() {
 
 		var article_last_index = $('#article_last_index').val();
+		var id = '${memberVO.id}';
 		var article_count = 12;
 		$(window).scroll(function() {
 			var maxHeight = $(document).height();
-
 			currentScroll = $(window).scrollTop() + $(window).height();
 			if ((maxHeight <= currentScroll) && article_count == 12) {
-
 				//ajax 요청
 				$.ajax({
 					type : 'post', //요청 보내면 doPost가 실행됨
 					url : '<%=request.getContextPath()%>/profileMoreArticle.do',
 					data : {
+						'id' : id,
 						'articleNum' : article_last_index
 					},
 					dataType : 'json',
@@ -77,36 +77,30 @@
 		 */ 		
 		 $(document).on('click', '#follow-btn', function(){
 				var memberId = '${memberVO.id}';
-				var followCnt = $('#follower-cnt').text();
 				$.ajax({
 					type : 'POST',
-					url : '<%=request.getContextPath()%>/unfollow.do',
+					url : '<%=request.getContextPath()%>/follow.do',
 					data : {
 						'follow_id' : memberId
 					},
-					dataType : 'text',
+					dataType : 'json',
 					success : function (resultData){
-						alert('팔로우 성공')
-						alert(resultData.followerCount)
-						$("#follow-btn").hide();
-						$('#follow-cnt').text(" "+(followCnt+1));
-						$("#follow-btn").after(
-								'<button class= "profile-edit"'
-								+'id="follower-btn" style="float: left;>'
-								+'팔로잉'
-								+'</button>'
-						);
-						
+						$('#follow-btn').attr('id', 'following-btn');
+						$('#following-btn').text('팔로윙');
+						$('#following-btn').css("float","left");
+						$('#following-btn').css("background-color","transparent");
+						$('#following-btn').css("color","black");
+						$('#following-btn').css("border-width","0.5px");
+						$('#follower-cnt').text(" "+resultData);						
 					},
 					error : function(){
 						alert('팔로우 실패')
 					}
 				})
+				return false;
 			});
 		$(document).on('click', '#following-btn', function(){
 			var memberId = '${memberVO.id}';
-			var followCnt = $('#follower-cnt').text();
-			alert(followCnt)
 			$.ajax({
 				type : 'POST',
 				url : '<%=request.getContextPath()%>/unfollow.do',
@@ -115,22 +109,21 @@
 				},
 				dataType : 'json',
 				success : function (resultData){
-					alert(resultData.followCount)
-					$("#following-btn").hide();
-					$('#follower-cnt').text(" "+(resultData.followCount));
-					$("#following-btn").after(
-							'<button class= "profile-edit"'
-							+'id="follow-btn" style="float: left;'
-							+'background-color: blue; color: white ">'
-							+'팔로우'
-							+'</button>'
-					);
+
+					$('#follower-cnt').text(" "+(resultData));
+					$('#following-btn').attr('id', 'follow-btn');
+					$('#follow-btn').text('팔로우');
+					$('#follow-btn').css("float","left");
+					$('#follow-btn').css("background-color","#3897f0");
+					$('#follow-btn').css("color","white");
+					$('#follow-btn').css("border-width","0px");
 					
 				},
 				error : function(){
 					alert('언팔 실패')
 				}
 			})
+			return false;
 		});
 		/***
 		 * follow - unfollow End
@@ -286,7 +279,7 @@ figure>div>.photo-info {
 															</c:if>
 															<c:if test="${b==0}">
 																<button class= "profile-edit" id="follow-btn"
-																	style="float: left; background-color: blue; color: white ">
+																	style="float: left; background-color: #3897f0; color: white; border: none">
 																	팔로우
 																</button>
 															</c:if>

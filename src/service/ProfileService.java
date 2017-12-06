@@ -57,8 +57,8 @@ public class ProfileService {
 	public String follow(String id, String followee){
 		int result = dao.insertFollow(id, followee);
 		if (result == 1) {
-			int followerCount = dao.selectFollowerCount(id);
-			return String.valueOf(followerCount);
+			int followCount = dao.selectFollowCount(id);
+			return String.valueOf(followCount);
 		} else {
 			return "0";
 		}
