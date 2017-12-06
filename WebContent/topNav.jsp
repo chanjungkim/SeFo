@@ -12,52 +12,45 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
 <script type="text/javascript">
-	$(function(){
-		var profileImg = new Image;
-		var memberId = '${sessionScope.loginId}';
-		profileImg.src = "<%=request.getContextPath()%>/assets/img/profile_pictures/" + memberId + ".JPG";
-		var profileImgPath = "<%=request.getContextPath()%>/assets/img/profile_pictures/" + memberId + ".JPG";
-		if (!profileImg.complete) {
-			profileImgPath = "<%=request.getContextPath()%>/assets/img/profile_pictures/default_profile.JPG";
-				}
-				$('#top_nav_profile_img').attr('src', profileImgPath);
+	$(function() {
+		$('#top_nav_profile_img').attr('src', profileImgPath);
 
-				$('#srch-term')
-						.on(
-								'keyup',
-								function() {
-									var searchWord = $(this).val();
-									console.log(searchWord);
-									$
-											.ajax({
-												type : 'post', // 요청 보내면 doPost가 실행됨
-												url : 'search.do', // 우리가 작성한 java 서블릿에게
-												data : {
-													'searchWord' : searchWord
-												// 검색어 데이터	
-												},
-												dataType : 'json',// 응답데이터 형식
-												success : function(resultData) {
-													console.log(resultData);
-													$('.search-option')
-															.remove();
-													var bookData = '';
-													for (var i = 0; i < resultData.length; i++) {
-														bookData += '<option class="search-option" value="' +resultData[i]+ '">';
-													}
-													// 					$.each(resultData, function(index, item) {
-													// 						bookData += '<option class="search-option" value="'+item+'">';
-													console.log(bookData);
-													$('#search-data-list')
-															.append(bookData);
-												},
-												error : function() {
-													console
-															.log('검색 ajax 요청 실패');
-												}
-											})
-								})
-			})
+		$('#srch-term')
+			.on(
+				'keyup',
+				function() {
+					var searchWord = $(this).val();
+					console.log(searchWord);
+					$
+						.ajax({
+							type : 'post', // 요청 보내면 doPost가 실행됨
+							url : 'search.do', // 우리가 작성한 java 서블릿에게
+							data : {
+								'searchWord' : searchWord
+							// 검색어 데이터	
+							},
+							dataType : 'json', // 응답데이터 형식
+							success : function(resultData) {
+								console.log(resultData);
+								$('.search-option')
+									.remove();
+								var bookData = '';
+								for (var i = 0; i < resultData.length; i++) {
+									bookData += '<option class="search-option" value="' + resultData[i] + '">';
+								}
+								// 					$.each(resultData, function(index, item) {
+								// 						bookData += '<option class="search-option" value="'+item+'">';
+								console.log(bookData);
+								$('#search-data-list')
+									.append(bookData);
+							},
+							error : function() {
+								console
+									.log('검색 ajax 요청 실패');
+							}
+						})
+				})
+	})
 </script>
 </head>
 <body>
@@ -69,7 +62,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span>
 			</button>
 			<a href="<%=request.getContextPath()%>/initMain.do"
-				class="navbar-brand logo">b</a>
+				class="navbar-brand logo">Secret Forest</a>
 		</div>
 		<nav class="collapse navbar-collapse" role="navigation"> <!-- Search Bar -->
 		<form class="search-bar navbar-form navbar-left" action="profile.do"
@@ -89,15 +82,15 @@
 		<!-- EOF Search Bar -->
 
 		<ul class="nav navbar-nav">
-			<li><a class="profile-link" href="<%=request.getContextPath()%>/profile.do/${sessionScope.loginId}">
-					<img id="top_nav_profile_img" class="status"
-					style="width: 20px; heigh: 20px; display: inline-block; margin-right:5px"><b>${sessionScope.loginId}</b>	
-			</a></li>
-			<li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
-			<li><a href="#" role="button" data-toggle="modal"><i
-					class="	glyphicon glyphicon-comment"></i></a></li>
-			<li><a href="#"><span
-					class="glyphicon glyphicon-heart-empty"></span></a></li>
+			<li><a class="profile-link"
+				href="<%=request.getContextPath()%>/profile.do/${sessionScope.loginId}"><img
+					src="<%=request.getContextPath()%>/assets/img/icon/user.png"
+					class="top-nav-icon"></a></li>
+			<li><a href="#" role="button" data-toggle="modal"><img
+					src="<%=request.getContextPath()%>/assets/img/icon/message.png"
+					class="top-nav-icon"></a></li>
+			<li><a href="#"><img class="top-nav-icon"
+					src="<%=request.getContextPath()%>/assets/img/icon/heart.png"></a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown"><a href="#" class="dropdown-toggle"

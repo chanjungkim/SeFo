@@ -1,11 +1,29 @@
 #nav-container {
-	background-color: black; position : sticky;
+	background-color: #ffffff; position : sticky;
 	top: 0px;
 	left: 0px;
 	z-index: 990;
 	position: sticky;
+	border-bottom-width: 1.5px;
+	border-bottom-color: #e6e6e6;
+	padding-bottom: 5px;
+	padding-left: 120px;
 }
-
+.logo{
+	font-family: cursive; 
+	color: black;
+	font-size: 25px;
+}
+.top-nav-icon {
+	width: 25px;
+	height: 25px;
+}
+#srch-term{
+	margin-left:50px;
+}
+.navbar-nav{
+	margin-left:250px;
+}
 #main {
 	padding: 0 auto;
 }
