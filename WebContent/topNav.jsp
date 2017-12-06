@@ -13,8 +13,6 @@
 	src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$('#top_nav_profile_img').attr('src', profileImgPath);
-
 		$('#srch-term')
 			.on(
 				'keyup',

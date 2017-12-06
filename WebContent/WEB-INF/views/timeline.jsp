@@ -61,19 +61,18 @@
 						var photo_path = resultData.photo_path;
 						var write_time = resultData.write_time;
 						var comment_num = resultData.comment_num;
-						$('#comment-area-'+article_num).append('<tr id="new-comment">'
-							+ '<td><div style="margin-bottom: 5px;">'
-							+ '		<td width="45px">'
+						$('#comment-area-'+article_num).append('<tr id="new-comment" style="margin-bottom: 5px;">'
+							+ '	<td width="45px">'
 							+ ' 	<a href="<%=request.getContextPath()%>/profile.do/'+id+'">'
 							+ '			<img class="comment-img"'
 							+ '			src="<%=request.getContextPath()%>/'+photo_path+'">'
-							+ '			> </a>' 
+							+ '		</a>' 
 							+ '</td>'
 							+ '<td>'
 							+ '	<a href="<%=request.getContextPath()%>/profile.do/'+id+'"><b>'+id
 							+ '	</b></a> &nbsp;'+content
 							+ '      <input id="comment-delete" type="hidden"'
-							+ '  		name="comment_num" value="'+comment_num}+'">'
+							+ '  		name="comment_num" value="'+comment_num+'">'
 							+ '		<a onclick="deleteComment('+comment_num+')"'
 							+ '			style="color: #CCC; font-size: 5px;">X</a>'
 							+ '<div style="font-size: 5px; color:grey;">'+write_time+'</div>'
@@ -94,7 +93,7 @@
 		// image
 		$(".item img").each(function() {
 			// 			$(this).load(function(){
-			var width = this7.naturalWidth;
+			var width = this.naturalWidth;
 			var height = this.naturalHeight;
 			var parentHeight = $(this).parent().height();
 			var parentWidth = $(this).parent().width()
