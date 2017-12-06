@@ -263,8 +263,8 @@ figure>div>.photo-info {
 								<div>
 									<!-- content -->
 									<div class="row">
-										<div class="my_profile_img col-md-4 img-fluid"
-											style="margin: auto; width: auto; max-height: 100%; margin-left: 80px; margin-right: 80px;">
+										<div class="my_profile_img col-md-1 img-fluid"
+											style="margin: auto; width: auto; max-height: 100%;">
 											<button
 												style="border-style: none; background-color: transparent; outline: none;"
 												class="btn btn-info btn-lg" data-toggle="modal"
@@ -285,7 +285,7 @@ figure>div>.photo-info {
 											</div>
 										</div>
 
-										<div class="col-md-8"
+										<div class="col-md-11"
 											style="margin: auto; width: auto; max-height: 100%;">
 											<div class="row"
 												style="display: flex; align-items: center; align-self: center; margin-top: 10px;">
@@ -345,7 +345,7 @@ figure>div>.photo-info {
 											</div>
 											<div
 												style="font-size: 15px; color: black; margin-top: 15px;">
-												<span class="profile-span-margin-3px">${memberVO.self_info}</span>
+												<span class="profile-span-margin-3px" style="word-break:break-all;">${memberVO.self_info}</span>
 											</div>
 										</div>
 									</div>

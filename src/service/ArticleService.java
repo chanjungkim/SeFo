@@ -75,6 +75,7 @@ public class ArticleService {
 			}
 		}
 		article.setReactList(getReactList(article.getArticle_num()));
+		article.setPhoto_path(memberDao.initMain(article.getId()).getPhoto_path());
 		return article;
 	}
 

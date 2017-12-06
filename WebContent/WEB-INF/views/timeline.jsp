@@ -43,7 +43,7 @@
 	var uploadPhotoCount = 0;
 	var photoNum = 0;
 	$(function() {
-		$('.comment-write-area').on('keydown', function(e) {
+		$(document).on('keydown', '.comment-write-area', function(e) {
 			var article_num = $(this).attr("name");
 			var content = $(this).val()
 			if (e.which == 13 && content.length > 0) {
@@ -177,18 +177,22 @@
 					var photoCount = resultData.photo_count;
 					var photoList = resultData.photoList;
 					var content = resultData.content;
+					var photoPath = resultData.photo_path;
+					var article_num = resultData.article_num;
+					var write_time = resultData.write_time;
+					var article_id = resultData.id;
 					// alert('글쓰기 완료');
 					var newPost = '<div class="panel panel-default"><div class="panel-thumbnail"></div>'
 						+ '<div class="panel-body">'
-						+ '<a href="#">'
 						+ '<p class="lead">'
+						+ '<a href="<%=request.getContextPath()%>/profile.do/'+article_id+'">'
 						+ '<!--  profile -->'
 						+ '<img class="profile"'
-						+ ' src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
+						+ ' src="<%=request.getContextPath()%>/'+photoPath+'"'
 						+ '				height="40px" width="40px"> <span>${sessionScope.loginId}</span>'
 						+ '			<!--  -->'
-						+ '		</p>'
 						+ '	</a>';
+						+ '</p>'
 					if (photoCount != 0) {
 						newPost += '<img src="' + photoList[0].file_origiName + '" class="img-responsive">';
 					}
@@ -196,26 +200,28 @@
 						+ '<p style="word-break:break-all;">'
 						+ content
 						+ '</p>'
+						+ '<div style="width:100%; text-align: right;">'
+						+ '<a class="write-time">'+write_time+'</a>'
+						+ '</div>'
+						+ '<br>'
 						+ '</p>'
 						+ '	<p>'
 						+ '		<button type="button" class="btn btn-default btn-sm">'
 						+ '			<i class="glyphicon glyphicon-thumbs-up"></i>'
 						+ '		</button>'
 						+ '		<!-- List of people who liked if more than 3, show number  otherwise id -->'
-						+ '		<label>아이디 리스트</label>'
 						+ '		<!-- EO liked list -->'
 						+ '	</p>'
+						+ '<table id="comment-area-'+article_num+'" class="comment-area" width="100%">'
 						+ '	<p>'
-						+ '	<table>'
-						+ '		<!-- Start Comment  -->'
-						+ '		<tr>'
-						+ '			<td><img'
-						+ '				src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png"'
-						+ '				height="28px" width="28px"> <span>아이디</span></td>'
-						+ '			<td>댓글 내용</td>'
-						+ '		</tr>'
+						+ '</table>'
+						+ '<hr>'
+						+ '		<span> <input type="hidden" class="article-num"'
+						+ '			value="'+article_num+'"> <textarea'
+						+ '			class="comment-write-area" placeholder="댓글달기..."'
+						+ '			name="'+article_num+'"></textarea>'
+						+ '		</span>'
 						+ '		<!--  EO Comment -->'
-						+ '	</table>'
 						+ '	</p>'
 						+ '</div>'
 						+ '</div>';
@@ -459,7 +465,7 @@
 																href="<%=request.getContextPath()%>/profile.do/${articleVO.id}">
 																<!--  profile --> <img class="profile"
 																src="<%=request.getContextPath() %>/${articleVO.photo_path}"
-																height="50px" width="50px"> <span>${articleVO.id}</span>
+																height="40px" width="40px"> <span>${articleVO.id}</span>
 																<!--  -->
 															</a> <i class="glyphicon glyphicon-menu-down"></i>
 														</p>
