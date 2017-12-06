@@ -54,22 +54,30 @@
 						'article_num' : article_num,
 						'content' : content
 					}, // 검색어 데이터
-					dataType : 'text', // 응답데이터 형식
+					dataType : 'json', // 응답데이터 형식
 					success : function(resultData) {
 						alert("댓글 작성 성공!");
-						$('.comment-area').append('<tr id="new-comment">'
+						var id = resultData.id;
+						var photo_path = resultData.photo_path;
+						var write_time = resultData.write_time;
+						var comment_num = resultData.comment_num;
+						$('#comment-area-'+article_num).append('<tr id="new-comment">'
 							+ '<td><div style="margin-bottom: 5px;">'
-							+ '		<img class="comment-img"'
-							+ '			src="assets/img/profile_pictures/${sessionScope.loginId}.JPG"'
-							+ '			> <span><b>${sessionScope.loginId} </b>'
-							+ content
-							+ '	</div></td>'
-							+ '	<td><input type="hidden" name="id"'
-							+ '		value="${sessionScope.loginId}">'
-							+ '      <input type="hidden" name="' + content + '">'
-							+ '  <a id="comment-delete"'
-							+ '		onclick="deleteNewComment(${sessionScope.loginId},' + content + ')">'
-							+ 'X' + '</a></td>'
+							+ '		<td width="45px">'
+							+ ' 	<a href="<%=request.getContextPath()%>/profile.do/'+id+'">'
+							+ '			<img class="comment-img"'
+							+ '			src="<%=request.getContextPath()%>/'+photo_path+'">'
+							+ '			> </a>' 
+							+ '</td>'
+							+ '<td>'
+							+ '	<a href="<%=request.getContextPath()%>/profile.do/'+id+'"><b>'+id
+							+ '	</b></a> &nbsp;'+content
+							+ '      <input id="comment-delete" type="hidden"'
+							+ '  		name="comment_num" value="'+comment_num}+'">'
+							+ '		<a onclick="deleteComment('+comment_num+')"'
+							+ '			style="color: #CCC; font-size: 5px;">X</a>'
+							+ '<div style="font-size: 5px; color:grey;">'+write_time+'</div>'
+							+ '</td>'
 							+ '</tr>'
 						);
 						$('.comment-write-area').val("");
@@ -86,7 +94,7 @@
 		// image
 		$(".item img").each(function() {
 			// 			$(this).load(function(){
-			var width = this.naturalWidth;
+			var width = this7.naturalWidth;
 			var height = this.naturalHeight;
 			var parentHeight = $(this).parent().height();
 			var parentWidth = $(this).parent().width()
@@ -395,7 +403,6 @@
 		%>
 	</c:if>
 	<c:if test="${not empty sessionScope.loginId}">
-
 		<div class="wrapper">
 			<div class="box">
 				<div class="row row-offcanvas">
@@ -547,7 +554,9 @@
 															</c:if>
 														</a>
 														<!-- EO liked list -->
-														<table class="comment-area" width="100%">
+														
+														<!-- Comment Start -->
+														<table id="comment-area-${articleVO.article_num}" class="comment-area" width="100%">
 															<!-- Start Comment  -->
 															<c:forEach var="commentVO" items="${articleVO.commentList}">
 																<tr id="comment-${commentVO.comment_num}" style="margin-bottom: 5px;">
