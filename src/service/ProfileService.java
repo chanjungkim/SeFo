@@ -54,20 +54,22 @@ public class ProfileService {
 			return false;
 		}
 	}
-	public boolean follow(String id, String followee){
+	public String follow(String id, String followee){
 		int result = dao.insertFollow(id, followee);
 		if (result == 1) {
-			return true;
+			int followerCount = dao.selectFollowerCount(id);
+			return String.valueOf(followerCount);
 		} else {
-			return false;
+			return "0";
 		}
 	}
-	public boolean unFollow(String id, String followee) {
+	public String unFollow(String id, String followee) {
 		int result = dao.deleteFollow(id, followee);
 		if (result == 1) {
-			return true;
+			int followCount = dao.selectFollowCount(id);
+			return String.valueOf(followCount);
 		} else {
-			return false;
+			return "0";
 		}
 	}
 	public List<FollowVO> getFollowList(String followee){

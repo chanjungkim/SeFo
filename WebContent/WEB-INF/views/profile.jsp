@@ -75,18 +75,34 @@
 		/***
 		 * follow - unfollow start
 		 */ 		
-// 		$(document).on('click', '#follow-btn', function(){
-// 			var memberId = '${memberVO.id}';
-// 			alert(memberId);
-// 			$.ajax(){
-// 				type : 'post',
-<%-- 				url : '<%=request.getContextPath()%>/follow.do', --%>
-// 				data : {
-// 					'article_num' : arti
-// 				}
-// $(this).attr('style', 'background-color: transparent, color : black')
-// 			}
-// 		});
+		 $(document).on('click', '#follow-btn', function(){
+				var memberId = '${memberVO.id}';
+				var followCnt = $('#follower-cnt').text();
+				$.ajax({
+					type : 'POST',
+					url : '<%=request.getContextPath()%>/unfollow.do',
+					data : {
+						'follow_id' : memberId
+					},
+					dataType : 'text',
+					success : function (resultData){
+						alert('팔로우 성공')
+						alert(resultData.followerCount)
+						$("#follow-btn").hide();
+						$('#follow-cnt').text(" "+(followCnt+1));
+						$("#follow-btn").after(
+								'<button class= "profile-edit"'
+								+'id="follower-btn" style="float: left;>'
+								+'팔로잉'
+								+'</button>'
+						);
+						
+					},
+					error : function(){
+						alert('팔로우 실패')
+					}
+				})
+			});
 		$(document).on('click', '#following-btn', function(){
 			var memberId = '${memberVO.id}';
 			var followCnt = $('#follower-cnt').text();
@@ -97,11 +113,11 @@
 				data : {
 					'follow_id' : memberId
 				},
-				dataType : 'text',
+				dataType : 'json',
 				success : function (resultData){
-					alert('언팔 성공')
+					alert(resultData.followCount)
 					$("#following-btn").hide();
-					$('#follower-cnt').text(" "+(followCnt-1));
+					$('#follower-cnt').text(" "+(resultData.followCount));
 					$("#following-btn").after(
 							'<button class= "profile-edit"'
 							+'id="follow-btn" style="float: left;'

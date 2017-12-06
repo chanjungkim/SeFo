@@ -130,21 +130,15 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value="/follow.do", method=RequestMethod.POST)
-	public void follow (String follow_id, HttpSession session, HttpServletResponse response) {
+	public String follow (String follow_id, HttpSession session, HttpServletResponse response) {
 		String id = (String) session.getAttribute("loginId");
-		boolean result = profileService.follow(id, follow_id);
-		try {
-			response.getWriter().println(result);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return profileService.follow(id, follow_id);
 	}
 	
 	@RequestMapping(value="/unfollow.do", method=RequestMethod.POST)
-	public void unFollow (String follow_id, HttpSession session, HttpServletResponse response) {
+	public String unFollow (String follow_id, HttpSession session, HttpServletResponse response) {
 		String id = (String) session.getAttribute("loginId");
-		boolean result = profileService.unFollow(id, follow_id);
+		return profileService.unFollow(id, follow_id);
 	}
 	
 	@RequestMapping(value="deleteAll.do",method={RequestMethod.GET, RequestMethod.POST})
