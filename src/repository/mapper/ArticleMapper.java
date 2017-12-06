@@ -19,8 +19,10 @@ public interface ArticleMapper {
 	public int insertArticlePhoto(FileVO vo);
 	public List<FileVO> selectArticlePhoto(long article_num);
 	public int updatePhotoCount(@Param("count")int count, @Param("article_num") long article_num);
+	public int selectReact(@Param("article_num") long article_num, @Param("id") String id);
+	public int countReact(@Param("article_num") long article_num);
+	public int updateReact(@Param("article_num") long article_num, @Param("id") String id, @Param("expression") String expression);
 	public int insertReact(@Param("article_num") long article_num, @Param("id") String id, @Param("expression") String expression);
 	public List<ReactVO> selectAllReact(long article_num);
-	public int deleteReact(@Param("article_num") long article_num, @Param("id") String id);
 	public ArticleVO selectArticle(long article_num);
 }

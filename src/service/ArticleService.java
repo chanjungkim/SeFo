@@ -136,6 +136,18 @@ public class ArticleService {
 			return false;
 	}
 
+	public boolean selectReact(long article_num, String id) {
+		int result = dao.selectReact(article_num, id);
+		if(result > 0) return true;
+		else return false;
+	}
+	
+	public boolean countReact(long article_num) {
+		int result = dao.countReact(article_num);
+		if( result > 0) return true;
+		else return false;
+	}
+
 	public boolean saveReact(long article_num, String id, String expression) {
 		int result = dao.insertReact(article_num, id, expression);
 		if( result > 0) return true;
@@ -147,15 +159,9 @@ public class ArticleService {
 	}
 
 	public boolean updateReact(long article_num, String id, String expression) {
-		int result1 = dao.deleteReact(article_num, id);
-		int result2 = 0;
-		if(result1 > 0) {
-			result2 = dao.insertReact(article_num, id, expression);
-			if(result2 > 0) return true;
-			else return false;
-		}else{
-			return false;
-		}
+		int result = dao.updateReact(article_num, id, expression);
+		if(result > 0) return true;
+		else return false;
 	}
 
 	public ArticleVO getAnArticle(long article_num) {

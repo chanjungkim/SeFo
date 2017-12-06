@@ -539,13 +539,43 @@
 															<i class="glyphicon glyphicon-thumbs-up"></i>
 														</div>
 														<!-- List of people who liked if more than 3, show number  otherwise id -->
-														<a id="like-indicator-${articleVO.article_num}"> <c:if
-																test="${not empty articleVO.reactList}">
-																<c:forEach var="reactVO" items="${articleVO.reactList}">
-																${reactVO.id}
-															</c:forEach>
+														<span onclick="alert('test')">
+																<c:if test="${not empty articleVO.reactList}">
+																	<ul style="display: inline-block;">
+																	<c:if test="${articleVO.react_like == true}" >
+																		<li style="display: inline-block;">
+																			<img
+																			src="assets\img\icon\like.gif" width="40px"
+																			height="40px">
+																		</li>
+																	</c:if>
+																	<c:if test="${articleVO.react_love == true}" >
+																		<li style="display: inline-block;" >
+																			<img
+																			src="assets\img\icon\love.gif" width="40px"
+																			height="40px">
+																			
+																		</li>
+																	</c:if>
+																	<c:if test="${articleVO.react_angly == true}" >
+																		<li style="display: inline-block;">
+																			<img 
+																			src="assets\img\icon\angry.gif" width="40px"  height="40px">
+																			
+																		</li>
+																	</c:if>
+																	<c:if test="${articleVO.react_sad == true}" >
+																		<li style="display: inline-block;">
+																			<img
+																			src="assets\img\icon\sad.gif" width="40px"
+																			height="40px">
+																			
+																		</li>
+																	</c:if>
+																	</ul>
+																	${articleVO.react_count}명
 															</c:if>
-														</a>
+														</span>
 														<!-- EO liked list -->
 														<table class="comment-area" width="100%">
 															<!-- Start Comment  -->

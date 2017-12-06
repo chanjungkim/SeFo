@@ -17,21 +17,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<select id="selectAllArticle" resultType="ArticleVO">
-		SELECT * FROM ARTICLE
-		WHERE ID IN
-		(SELECT FOLLOWEE FROM FOLLOW WHERE ID = #{id}) OR ID =
-		#{id}
+		SELECT af.*, m.photo_path 
+		FROM (SELECT * FROM ARTICLE
+					WHERE ID IN
+							(SELECT FOLLOWEE FROM FOLLOW WHERE ID = #{id}) OR ID = #{id}) af, MEMBER m 
+			WHERE af.id = m.id
 		ORDER BY
 		WRITE_TIME DESC;
+		
 	</select>
 	<select id="selectArticlePhoto" resultType="FileVO">
 		SELECT * FROM
 		article_photo
 		WHERE article_num = #{article_num}
 	</select>
+	
 	<select id="selectAllComment" resultType="CommentVO">
-		SELECT * FROM COMMENT
-		WHERE ARTICLE_NUM = #{article_num}
+		SELECT c.*, m.photo_path 
+		FROM comment c, article a, member m 
+		WHERE c.article_num = a.article_num AND m.id = c.id AND a.article_num = #{article_num};
 	</select>
 
 	<insert id="insertComment" parameterType="CommentVO">
@@ -58,6 +62,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		article_num = #{article_num}
 	</update>
 
+	<select id="selectReact" resultType="int">
+		SELECT COUNT(*)
+		FROM REACT
+		WHERE ARTICLE_NUM = #{article_num} AND ID= #{id}
+	</select>
+	
+	 <update id="countReact">
+		UPDATE ARTICLE
+		SET REACT_COUNT = REACT_COUNT+1
+		WHERE ARTICLE_NUM = #{article_num}
+	</update>
+	
+	<update id="updateReact">
+		UPDATE REACT
+		SET TYPE_NUM = ${expression}, REACT_TIME = now()
+		WHERE ARTICLE_NUM = #{article_num} AND ID = #{id}
+	</update>
+		
 	<insert id="insertReact">
 		INSERT INTO REACT(ARTICLE_NUM, ID, TYPE_NUM, REACT_TIME)
 		VALUES(#{article_num}, #{id}, ${expression}, now())
@@ -68,8 +90,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM REACT WHERE ARTICLE_NUM = #{article_num};
 	</select>
 
-	<delete id="deleteReact">
-		DELETE FROM REACT WHERE ID = #{id} AND ARTICLE_NUM = #{article_num}
-	</delete>
 	
+	<select id="selectArticle" parameterType="long" resultType="ArticleVO">
+		SELECT * FROM ARTICLE WHERE ARTICLE_NUM = #{article_num}
+	</select>
 </mapper>

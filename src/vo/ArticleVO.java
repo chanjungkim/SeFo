@@ -10,10 +10,7 @@ public class ArticleVO {
 	private String id;
 	private Date write_time;
 	private String content;
-	private long likeit_count;
-	private long love_count;
-	private long angry_count;
-	private long sad_count;
+	private int react_count;
 	private List<ReactVO> reactList;
 	private List<CommentVO> commentList;
 	private List<MultipartFile> fileList;
@@ -21,6 +18,37 @@ public class ArticleVO {
 	private int photo_count;
 	private int commentCount;
 	private String photo_path;
+	private boolean react_like;
+	private boolean react_love;
+	private boolean react_angly;
+	private boolean react_sad;
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+	public boolean isReact_like() {
+		return react_like;
+	}
+	public void setReact_like(boolean react_like) {
+		this.react_like = react_like;
+	}
+	public boolean isReact_love() {
+		return react_love;
+	}
+	public void setReact_love(boolean react_love) {
+		this.react_love = react_love;
+	}
+	public boolean isReact_angly() {
+		return react_angly;
+	}
+	public void setReact_angly(boolean react_angly) {
+		this.react_angly = react_angly;
+	}
+	public boolean isReact_sad() {
+		return react_sad;
+	}
+	public void setReact_sad(boolean react_sad) {
+		this.react_sad = react_sad;
+	}
 	public long getArticle_num() {
 		return article_num;
 	}
@@ -45,29 +73,11 @@ public class ArticleVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public long getLikeit_count() {
-		return likeit_count;
+	public int getReact_count() {
+		return react_count;
 	}
-	public void setLikeit_count(long likeit_count) {
-		this.likeit_count = likeit_count;
-	}
-	public long getLove_count() {
-		return love_count;
-	}
-	public void setLove_count(long love_count) {
-		this.love_count = love_count;
-	}
-	public long getAngry_count() {
-		return angry_count;
-	}
-	public void setAngry_count(long angry_count) {
-		this.angry_count = angry_count;
-	}
-	public long getSad_count() {
-		return sad_count;
-	}
-	public void setSad_count(long sad_count) {
-		this.sad_count = sad_count;
+	public void setReact_count(int react_count) {
+		this.react_count = react_count;
 	}
 	public List<ReactVO> getReactList() {
 		return reactList;
@@ -112,11 +122,12 @@ public class ArticleVO {
 	@Override
 	public String toString() {
 		return "ArticleVO [article_num=" + article_num + ", id=" + id + ", write_time=" + write_time + ", content="
-				+ content + ", likeit_count=" + likeit_count + ", love_count=" + love_count + ", angry_count="
-				+ angry_count + ", sad_count=" + sad_count + ", reactList=" + reactList + ", commentList=" + commentList
+				+ content + ", react_count=" + react_count + ", reactList=" + reactList + ", commentList=" + commentList
 				+ ", fileList=" + fileList + ", photoList=" + photoList + ", photo_count=" + photo_count
-				+ ", commentCount=" + commentCount + ", photo_path=" + photo_path + "]";
+				+ ", commentCount=" + commentCount + ", photo_path=" + photo_path + ", react_like=" + react_like
+				+ ", react_love=" + react_love + ", react_angly=" + react_angly + ", react_sad=" + react_sad + "]";
 	}
+
 	
 	
 }
