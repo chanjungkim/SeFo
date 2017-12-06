@@ -6,8 +6,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import repository.mapper.ArticleMapper;
 import repository.mapper.ProfileMapper;
 import vo.ArticleVO;
+import vo.FileVO;
 import vo.FollowVO;
 import vo.MemberVO;
 
@@ -76,5 +78,12 @@ public class ProfileDao {
 	public int deleteArticle(String id) {
 		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
 		return mapper.deleteArticle(id);
+	}
+	public int insertArticlePhoto(FileVO file) {
+		System.out.println("profile insertArticlePhoto ½ÇÇà");
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		int result = mapper.insertArticlePhoto(file);
+		System.out.println("insertArticlePhoto :" + result);
+		return result;
 	}
 }

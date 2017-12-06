@@ -89,4 +89,7 @@
 	<delete id="deleteArticle" parameterType="ArticleVO">
 		 delete from article where id=#{id}
   	</delete>
+  	<insert id="insertArticlePhoto" parameterType="FileVO"> 
+  		INSERT INTO article_photo(article_num, file_path, file_name, file_origiName) VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName}) 
+  	</insert>
 </mapper>

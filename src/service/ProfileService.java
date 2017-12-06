@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import repository.ProfileDao;
 import repository.mapper.ProfileMapper;
 import vo.ArticleVO;
+import vo.FileVO;
 import vo.FollowVO;
 import vo.MemberVO;
 
@@ -87,5 +88,9 @@ public class ProfileService {
 		else {
 			return false;
 		}
+	}
+	public int insertArticlePhoto(FileVO file) {
+		int result=dao.insertArticlePhoto(file);
+		return result;
 	}
 }
