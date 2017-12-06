@@ -115,13 +115,13 @@ public class ArticleService {
 			return false;
 	}
 
-	public boolean writeComment(CommentVO comment) {
+	public CommentVO writeComment(CommentVO comment) {
 		System.out.println("writeComment 서비스 실행" + comment.getId() + ":" + comment.getContent());
 		int result = dao.insertComment(comment);
 		if (result > 0)
-			return true;
+			return dao.selectLastComment(comment.getArticle_num(), comment.getId());
 		else
-			return false;
+			return null;
 	}
 
 	public List<FileVO> getArticlePhoto(long article_num) {

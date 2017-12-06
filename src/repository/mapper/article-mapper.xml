@@ -37,7 +37,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM comment c, article a, member m 
 		WHERE c.article_num = a.article_num AND m.id = c.id AND a.article_num = #{article_num};
 	</select>
-
+	
+	<select id="selectLastComment" resultType = "CommentVO">
+		SELECT c.*, m.photo_path 
+		FROM comment c, member m
+		WHERE comment_num = 
+				(select max(comment_num) from comment where article_num=#{article_num} and id= #{id})
+				AND c.id = m.id;
+	</select>
+	
 	<insert id="insertComment" parameterType="CommentVO">
 		INSERT INTO
 		COMMENT(ARTICLE_NUM, ID, WRITE_TIME, CONTENT)

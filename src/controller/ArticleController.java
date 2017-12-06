@@ -60,7 +60,8 @@ public class ArticleController {
 	}
 
 	@RequestMapping(value = "/writeComment.do", method = RequestMethod.POST)
-	public void writeComment(HttpSession session, HttpServletResponse response, String content, long article_num) {
+	@ResponseBody
+	public CommentVO writeComment(HttpSession session, HttpServletResponse response, String content, long article_num) {
 		System.out.println("writeComment 컨틀롤러 실행" + content);
 		CommentVO comment = new CommentVO();
 
@@ -81,13 +82,8 @@ public class ArticleController {
 			e1.printStackTrace();
 		}
 
-		boolean result = service.writeComment(comment);
-		try {
-			response.getWriter().println(result);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		CommentVO result = service.writeComment(comment);
+		return result ;
 	}
 
 	@RequestMapping(value = "/deleteComment.do", method = RequestMethod.POST)

@@ -94,4 +94,8 @@ public class ArticleDao {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectArticle(article_num);
 	}
+	public CommentVO selectLastComment(long article_num, String id) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.selectLastComment(article_num, id);
+	}
 } 
