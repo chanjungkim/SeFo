@@ -147,6 +147,48 @@
 			$(this).siblings().attr('style', 'opacity: 0');
 		});
 	});
+	function openGalleryModal(article_num){
+		alert(article_num);
+		var urlContext = '<%=request.getContextPath()%>/article.do/'+article_num;
+		alert(urlContext);
+		
+		$.ajax({
+			type: 'get',
+			url: urlContext,
+			data : {
+				'article_num' : article_num  
+			},
+			dataType : 'json',
+			success : function(articleVO) {
+				var photoList = articleVO.photoList;
+				var myContext = "<%=request.getContextPath()%>";
+//	 			for( i in photoList){
+//	 				var photoListInfo = photoList[i];
+//	 				for( j in photoListInfo){
+//	 					alert([i]+" "+[j]+" "+photoListInfo[j]);
+//	 				}
+//	 			}
+				newModalContents =
+					'<div class="item active">'
+					+'<img class="img-responsive" src="'+ myContext +'/'+photoList[0].file_origiName +'" alt="...">'
+					+'<div class="carousel-caption">One Image</div>'
+					+'</div>';
+				for(var i = 1 ; i < photoList.length ; i++){
+					newModalContents +=
+						'<div class="item">'
+						+'<img class="img-responsive" src="'+ myContext +'/'+photoList[i].file_origiName +'" alt="...">'
+						+'<div class="carousel-caption"> '+i+' Image</div>'
+						+'</div>';
+				}
+				alert(newModalContents);
+				$('.carousel-inner').empty();
+				$('.carousel-inner').append(newModalContents);
+			},
+			error : function() {
+				alert('Article 가져오기 ajax 요청 실패');
+			}
+		})
+	}
 </script>
 <style type="text/css">
 figure {
@@ -273,20 +315,21 @@ figure>div>.photo-info {
 									</div>
 									<div id="gallery" class="gallery" style="margin-top: 15px">
 										<c:forEach items="${articleList}" var="articleVO">
-											<c:if test="${!empty articleVO.getPhotoList() }">
-												<figure>
-												<div>
-													<img id="article_img" name="article_img"
-														src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName }"
-														style="z-index: 0;">
-													<div class="photo-info" style="">
-														<img
-															src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
-															style="width: 15px; height: 15px; display: inline-block;">
-														${articleVO.commentCount}개
+											<c:if test="${not empty articleVO.getPhotoList()}">
+												<c:if
+													test="${not empty articleVO.getPhotoList().get(0).file_origiName}">
+													<figure>
+													<div data-toggle="modal" data-target=".bs-example-modal-lg">
+														<img id="article_img" name="article_img" src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName}"
+															style="z-index: 0;" onclick="openGalleryModal(${articleVO.article_num})">
+														<div class="photo-info" style="">
+															<img src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
+																style="width: 15px; height: 15px; display: inline-block;">
+															${articleVO.commentCount}개
+														</div>
 													</div>
-												</div>
-												</figure>
+													</figure>
+												</c:if>
 											</c:if>
 										</c:forEach>
 									</div>
@@ -313,7 +356,32 @@ figure>div>.photo-info {
 				</div>
 			</div>
 		</div>
+		
+		<!-- GalleryModal Start -->
+	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+		aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div id="carousel-example-generic" class="carousel slide"
+					data-ride="carousel">
+					
+					<!-- Modal Content Area -->
+					<div class="carousel-inner">
+					</div>
 
+					<!-- Controls -->
+					<a class="left carousel-control" href="#carousel-example-generic"
+						role="button" data-slide="prev"> <span
+						class="glyphicon glyphicon-chevron-left"></span>
+					</a> <a class="right carousel-control" href="#carousel-example-generic"
+						role="button" data-slide="next"> <span
+						class="glyphicon glyphicon-chevron-right"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- EO Gallery Modal -->
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
 		<script type="text/javascript"

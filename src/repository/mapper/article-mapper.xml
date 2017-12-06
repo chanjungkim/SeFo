@@ -76,4 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM REACT WHERE ID = #{id} AND ARTICLE_NUM = #{article_num}
 	</delete>
 	
+	<select id="selectArticle" parameterType="long" resultType="ArticleVO">
+		SELECT * FROM ARTICLE WHERE ARTICLE_NUM = #{article_num}
+	</select>
 </mapper>

@@ -22,4 +22,5 @@ public interface ArticleMapper {
 	public int insertReact(@Param("article_num") long article_num, @Param("id") String id, @Param("expression") String expression);
 	public List<ReactVO> selectAllReact(long article_num);
 	public int deleteReact(@Param("article_num") long article_num, @Param("id") String id);
+	public ArticleVO selectArticle(long article_num);
 }

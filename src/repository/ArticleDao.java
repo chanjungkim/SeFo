@@ -89,4 +89,9 @@ public class ArticleDao {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.deleteReact(article_num, id);
 	}
+
+	public ArticleVO selectArticle(long article_num) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.selectArticle(article_num);
+	}
 } 

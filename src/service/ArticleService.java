@@ -157,4 +157,18 @@ public class ArticleService {
 			return false;
 		}
 	}
+
+	public ArticleVO getAnArticle(long article_num) {
+		ArticleVO article = dao.selectArticle(article_num);
+		article.setCommentList(dao.selectAllComment(article_num));
+		for (CommentVO v : article.getCommentList()) {
+			v.setPhoto_path(memberDao.initMain(v.getId()).getPhoto_path());
+		}
+		article.setReactList(dao.selectAllReact(article_num));
+		article.setPhotoList(dao.selectArticlePhoto(article_num));
+		
+		// System.out.println(article.getArticle_num()+"/"+article.getCommentList().size());
+		article.toString();
+		return article;
+	}
 }

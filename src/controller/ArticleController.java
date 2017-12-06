@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,9 +14,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import service.ArticleService;
 import vo.ArticleVO;
@@ -43,7 +47,6 @@ public class ArticleController {
 			now = sdf.parse(timeStr);
 			article.setId(id);
 			article.setWrite_time(now);
-			System.out.println(article.toString());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -127,5 +130,21 @@ public class ArticleController {
 	@RequestMapping("/showReactList.do")
 	public List<ReactVO> getReactList(long article_num) {
 		return service.getReactList(article_num);
+	}
+	
+	@RequestMapping("/article.do/{article_num}")
+	public void getAnArticle(HttpSession session, HttpServletResponse response, @PathVariable long article_num) {
+		ArticleVO article = service.getAnArticle(article_num);		
+		PrintWriter writer = null;
+
+		try {
+			writer = response.getWriter();
+			System.out.println("받아온 article 정보:"+article);
+			Gson gson = new Gson();
+			writer.print(gson.toJson(article));    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -14,7 +14,6 @@
 <meta http-equiv="content-type" content="text/html; charset=EUC-KR">
 <meta charset="UTF-8">
 <title>Welcome! ${sessionScope.loginId}</title>
-<meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--[if lt IE 9]>
@@ -567,7 +566,7 @@
 																				<a onclick="deleteComment(${commentVO.comment_num})"
 																					style="color: #CCC; font-size: 5px;">X</a>
 																			</c:if>
-																		<div style="font-size: 5px;">${commentVO.write_time}</div>
+																		<div style="font-size: 5px; color:grey;">${commentVO.write_time}</div>
 																	</td>
 																</tr>
 															</c:forEach>
