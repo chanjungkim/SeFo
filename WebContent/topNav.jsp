@@ -55,7 +55,7 @@
 </head>
 <body>
 	<div id="nav-container" class="top-bar navbar navbar-static-top">
-		<div class="navbar-header">
+			<div class="navbar-header col-md-3">
 			<button class="navbar-toggle" type="button" data-toggle="collapse"
 				data-target=".navbar-collapse">
 				<span class="sr-only">Toggle</span> <span class="icon-bar"></span> <span
@@ -64,35 +64,37 @@
 			<a href="<%=request.getContextPath()%>/initMain.do"
 				class="navbar-brand logo">Secret Forest</a>
 		</div>
-		<nav class="collapse navbar-collapse" role="navigation"> <!-- Search Bar -->
-		<form class="search-bar navbar-form navbar-left" action="profile.do"
-			method="get">
-			<div class="input-group input-group-sm" style="max-width: 360px;">
-				<input class="form-control" placeholder="Search" name="srch-term"
-					id="srch-term" type="text" list="search-data-list">
-				<datalist id="search-data-list"> </datalist>
-				<div class="input-group-btn">
-					<button class="btn btn-default" type="submit"
-						onClick="searchUser()">
-						<i class="glyphicon glyphicon-search"></i>
-					</button>
+		<!-- Search Bar -->
+		<div class="col-md-6">
+			<form class="search-bar navbar-form navbar-left col-md-6"
+				action="profile.do" method="get">
+				<div class="input-group input-group-sm" style="max-width: 360px;">
+					<input class="form-control" placeholder="Search" name="srch-term"
+						id="srch-term" type="text" list="search-data-list">
+					<datalist id="search-data-list"> </datalist>
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="submit"
+							onClick="searchUser()">
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 		<!-- EOF Search Bar -->
-
-		<ul class="nav navbar-nav">
-			<li><a class="profile-link"
-				href="<%=request.getContextPath()%>/profile.do/${sessionScope.loginId}"><img
-					src="<%=request.getContextPath()%>/assets/img/icon/user.png"
-					class="top-nav-icon"></a></li>
-			<li><a href="#" role="button" data-toggle="modal"><img
-					src="<%=request.getContextPath()%>/assets/img/icon/message.png"
-					class="top-nav-icon"></a></li>
-			<li><a href="#"><img class="top-nav-icon"
-					src="<%=request.getContextPath()%>/assets/img/icon/heart.png"></a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
+		<div class="col-md-3">
+			<ul class="nav navbar-nav">
+				<li><a class="profile-link"
+					href="<%=request.getContextPath()%>/profile.do/${sessionScope.loginId}"><img
+						src="<%=request.getContextPath()%>/assets/img/icon/user.png"
+						class="top-nav-icon"></a></li>
+				<li><a href="#" role="button" data-toggle="modal"><img
+						src="<%=request.getContextPath()%>/assets/img/icon/message.png"
+						class="top-nav-icon"></a></li>
+				<li><a href="#"><img class="top-nav-icon"
+						src="<%=request.getContextPath()%>/assets/img/icon/heart.png"></a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i></a>
 				<ul class="dropdown-menu">
@@ -104,7 +106,7 @@
 					<li><a href="">More</a></li>
 				</ul></li>
 		</ul>
-		</nav>
+		</div>
 	</div>
 </body>
 </html>

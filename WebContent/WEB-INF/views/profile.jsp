@@ -249,7 +249,7 @@ figure>div>.photo-info {
 											<div class="row"
 												style="display: flex; align-items: center; align-self: center; margin-top: 10px;">
 												<div
-													style="font-size: 30px; margin-right: 25px; float: left; font-weight: 100;">${memberVO.id }</div>
+													style="font-size: 30px; margin-right: 30px; float: left; font-family: 나눔고딕">${memberVO.id }</div>
 <!-- 												수정 : 성훈  -->
 												<div class="row"
 													style="float: left; display: flex; align-items: center;">
@@ -288,7 +288,7 @@ figure>div>.photo-info {
 												</div>
 <!-- 												수정 : 성훈  -->
 											</div>
-											<div class="row" style="margin-top: 10px;">
+											<div class="row" style="margin-top: 15px;">
 												<span class="profile-span-margin-3px">게시물 </span> <strong><span
 													class="profile-span-margin-10px" id="span_profile_article">${totalContentCnt}
 												</span></strong>
@@ -303,7 +303,9 @@ figure>div>.photo-info {
 												</button>
 											</div>
 											<div
-												style="font-size: 15px; color: black; font-weight: bold; margin-top: 10px;">${memberVO.self_info }</div>
+												style="font-size: 15px; color: black; margin-top: 15px;">
+												<span class="profile-span-margin-3px">${memberVO.self_info}</span>
+											</div>
 										</div>
 									</div>
 									<div id="gallery" class="gallery" style="margin-top: 15px">
