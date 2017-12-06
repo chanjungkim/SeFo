@@ -1,12 +1,14 @@
 package vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class FileVO {
 	private long article_num;
 	private int article_photo_num;
 	private String file_path;
 	private String file_name;
 	private String file_origiName;
-	
+	private MultipartFile memImg;
 	///////////////////////////////
 	public String getFile_path() {
 		return file_path;
@@ -38,5 +40,12 @@ public class FileVO {
 	public void setFile_origiName(String file_origiName) {
 		this.file_origiName = file_origiName;
 	}
+	public MultipartFile getMemImg() {
+		return memImg;
+	}
+	public void setMemImg(MultipartFile memImg) {
+		this.memImg = memImg;
+	}
+	
 	
 }

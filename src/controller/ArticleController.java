@@ -113,14 +113,14 @@ public class ArticleController {
 	@RequestMapping(value = "/react.do", method = RequestMethod.POST)
 	public void saveReact(HttpSession session, HttpServletResponse response, String id, long article_num,
 			String expression) {
-		System.out.println("react 컨틀롤러 실행: " + article_num + " " + id + " " + expression);
-		service.saveReact(article_num,id, expression);
-	}
-
-	@RequestMapping(value = "/reactUpdate.do", method = RequestMethod.POST)
-	public void updateReact(HttpSession session, HttpServletResponse response, String id, long article_num, String expression) {
-		System.out.println("react 컨틀롤러 실행: "+article_num+" "+id+" "+expression);
-		service.updateReact(article_num, id, expression);
+		if(service.selectReact(article_num, id)) {
+			//이미 눌렀을 경우
+			service.updateReact(article_num, id, expression);
+		} else {
+			//처음 누르는 경우
+			service.saveReact(article_num,id, expression);
+			service.countReact(article_num);
+		}
 	}
 
 	@RequestMapping("/showReactList.do")

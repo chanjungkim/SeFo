@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import vo.ArticleVO;
+import vo.FileVO;
 import vo.FollowVO;
 import vo.MemberVO;
 
@@ -23,4 +24,5 @@ public interface ProfileMapper {
 	public List<FollowVO> selectAllfollower(String id);
 	public int deleteMember(@Param("id")String id, @Param("password")String pw);
 	public int deleteArticle(@Param("id")String id);
+	public int insertArticlePhoto(FileVO vo);
 }

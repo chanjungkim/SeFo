@@ -77,6 +77,19 @@ public class MemberController {
 				a.setPhotoList(result);
 			} 
 		}
+		for(int i=0; i<articleList.size(); i++) {
+			for(int j=0; j<articleList.get(i).getReactList().size(); j++) {
+				if(articleList.get(i).getReactList().get(j).getType_num() == 1)
+					articleList.get(i).setReact_like(true);
+				if(articleList.get(i).getReactList().get(j).getType_num() == 2)
+					articleList.get(i).setReact_love(true);
+				if(articleList.get(i).getReactList().get(j).getType_num() == 3)
+					articleList.get(i).setReact_angly(true);
+				if(articleList.get(i).getReactList().get(j).getType_num() == 4)
+					articleList.get(i).setReact_sad(true);
+			}
+		}
+
 		mv.addObject("articleList", articleList);
 		mv.addObject("memberInfo", member);
 		mv.setViewName("timeline");

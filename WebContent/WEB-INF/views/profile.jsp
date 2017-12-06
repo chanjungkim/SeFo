@@ -139,6 +139,31 @@
 			$(this).attr('style', 'background-color: none; opacity:1');
 			$(this).siblings().attr('style', 'opacity: 0');
 		});
+		$('#send')on('click',function(){
+			var form = $('#write_form')[0];
+			//FormData parameter에 담아줌
+			var formData = new FormData(form);
+			$('#content').val("");
+			$('#modalContent').val("");
+			$('#file-container').empty();
+			$.ajax({
+				type : 'post', // 요청 보내면 doPost가 실행됨
+				enctype : 'multipart/form-data',
+				url : 'profilePhoto.do', // 우리가 작성한 java 서블릿에게
+				processData : false,
+				cache : false,
+				contentType : false,
+				data : formData,
+				dataType : 'json', // 응답데이터 형식
+				success : function(resultData) {
+					
+					alert("사진전송 성공")
+					window.location.href="profile.do";
+				},
+				error : function() {
+					alert('ajax 요청 실패');
+				}
+		})
 	});
 	function openGalleryModal(article_num){
 		alert(article_num);
@@ -240,8 +265,24 @@ figure>div>.photo-info {
 									<div class="row">
 										<div class="my_profile_img col-md-4 img-fluid"
 											style="margin: auto; width: auto; max-height: 100%; margin-left: 80px; margin-right: 80px;">
-											<img id="profile_img"
-												src="<%=request.getContextPath()%>/${memberVO.photo_path}">
+											<button
+												style="border-style: none; background-color: transparent; outline: none;"
+												class="btn btn-info btn-lg" data-toggle="modal"
+												data-target="#myModal">
+												<img id="profile_img"
+													src="<%=request.getContextPath()%>/${memberVO.photo_path}">
+											</button>
+											<div id="myModal" class="modal fade" role="dialog">
+												<div class="modal-dialog">
+
+													<!-- Modal content-->
+													<div class="modal-content">
+														<input type="file">
+														<input type="submit" id="send" value="전송">
+													</div>
+
+												</div>
+											</div>
 										</div>
 
 										<div class="col-md-8"

@@ -50,7 +50,7 @@
 						dataType : 'text', // 응답데이터 형식
 						success : function(resultData) {
 							alert("비밀번호 변경 완료");
-							window.location.href="profile.do"
+							window.location.href="profile.do/${sessionScope.loginId}"
 						},
 						error : function() {
 							alert('비밀번호 변경 ajax 요청 실패');
@@ -169,8 +169,8 @@ table {
 											<tr class="panel panel-info">
 												<td class="panel-body"><h3 class="panel-title">성별</h3></td>
 												<td><select class="panel-body">
-														<option id=aaa value="남자" selecter>남자</option>
-														<option id=aaa value="여자" selecter>여자</option>
+														<option id=aaa value="남" selecter>남</option>
+														<option id=aaa value="여" selecter>여</option>
 												</select></td>
 											</tr>
 											<tr class="panel panel-info">

@@ -75,6 +75,21 @@ public class ArticleDao {
 		return mapper.updatePhotoCount(count, article_num);
 	}
 
+	public int selectReact(long article_num, String id) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.selectReact(article_num, id);
+	}
+	
+	public int countReact(long article_num) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.countReact(article_num);
+	}
+	
+	public int updateReact(long article_num, String id, String expression) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.updateReact(article_num, id, expression);
+	}
+
 	public int insertReact(long article_num, String id, String expression) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.insertReact(article_num, id, expression);
@@ -83,11 +98,6 @@ public class ArticleDao {
 	public List<ReactVO> selectAllReact(long article_num) {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectAllReact(article_num);
-	}
-
-	public int deleteReact(long article_num, String id) {
-		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
-		return mapper.deleteReact(article_num, id);
 	}
 
 	public ArticleVO selectArticle(long article_num) {

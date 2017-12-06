@@ -49,7 +49,7 @@
 	</update>
 	
 	<insert id="insertFollow">
-		INSERT into follow
+		INSERT into follow(id, followee)
 		VALUES(#{id}, #{followee})
 	</insert>
 	
@@ -58,13 +58,13 @@
 		where id = #{id} AND followee = #{followee}
 	</delete>	
 	
-	<select id="selectTotalfollowCount" resultType="long">
+	<select id="selectTotalfollowCount" resultType="int">
 		SELECT count(followee) 
 		FROM follow 
 		WHERE id = #{id}; 
 	</select>
 	
-	<select id="selectTotalfolloweeCount" resultType="long">
+	<select id="selectTotalfolloweeCount" resultType="int">
 		SELECT count(id) 
 		FROM follow 
 		WHERE followee = #{followee}; 
@@ -89,4 +89,7 @@
 	<delete id="deleteArticle" parameterType="ArticleVO">
 		 delete from article where id=#{id}
   	</delete>
+  	<insert id="insertArticlePhoto" parameterType="FileVO"> 
+  		INSERT INTO article_photo(article_num, file_path, file_name, file_origiName) VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName}) 
+  	</insert>
 </mapper>
