@@ -24,9 +24,7 @@
 <script
 	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <script type="text/javascript">
-
 	$(function() {
-
 		var article_last_index = $('#article_last_index').val();
 		var id = '${memberVO.id}';
 		var article_count = 12;
@@ -163,50 +161,9 @@
 				error : function() {
 					alert('ajax 요청 실패');
 				}
-		})
+			})
+		});
 	});
-	function openGalleryModal(article_num){
-		alert(article_num);
-		var urlContext = '<%=request.getContextPath()%>/article.do/'+article_num;
-		alert(urlContext);
-		
-		$.ajax({
-			type: 'get',
-			url: urlContext,
-			data : {
-				'article_num' : article_num  
-			},
-			dataType : 'json',
-			success : function(articleVO) {
-				var photoList = articleVO.photoList;
-				var myContext = "<%=request.getContextPath()%>";
-//	 			for( i in photoList){
-//	 				var photoListInfo = photoList[i];
-//	 				for( j in photoListInfo){
-//	 					alert([i]+" "+[j]+" "+photoListInfo[j]);
-//	 				}
-//	 			}
-				newModalContents =
-					'<div class="item active">'
-					+'<img class="img-responsive" src="'+ myContext +'/'+photoList[0].file_origiName +'" alt="...">'
-					+'<div class="carousel-caption">One Image</div>'
-					+'</div>';
-				for(var i = 1 ; i < photoList.length ; i++){
-					newModalContents +=
-						'<div class="item">'
-						+'<img class="img-responsive" src="'+ myContext +'/'+photoList[i].file_origiName +'" alt="...">'
-						+'<div class="carousel-caption"> '+i+' Image</div>'
-						+'</div>';
-				}
-				alert(newModalContents);
-				$('.carousel-inner').empty();
-				$('.carousel-inner').append(newModalContents);
-			},
-			error : function() {
-				alert('Article 가져오기 ajax 요청 실패');
-			}
-		})
-	}
 </script>
 <style type="text/css">
 figure {
@@ -261,9 +218,10 @@ figure>div>.photo-info {
 						<div class="padding">
 							<div class="profile-container">
 								<div>
+
 									<!-- content -->
 									<div class="row">
-										<div class="my_profile_img col-md-1 img-fluid"
+										<div class="my_profile_img col-md-3 img-fluid"
 											style="margin: auto; width: auto; max-height: 100%;">
 											<button
 												style="border-style: none; background-color: transparent; outline: none;"
@@ -277,26 +235,26 @@ figure>div>.photo-info {
 
 													<!-- Modal content-->
 													<div class="modal-content">
-														<input type="file">
-														<input type="submit" id="send" value="전송">
+														<input type="file"> <input type="submit" id="send"
+															value="전송">
 													</div>
 
 												</div>
 											</div>
 										</div>
 
-										<div class="col-md-11"
+										<div class="col-md-9"
 											style="margin: auto; width: auto; max-height: 100%;">
 											<div class="row"
 												style="display: flex; align-items: center; align-self: center; margin-top: 10px;">
 												<div
 													style="font-size: 30px; margin-right: 30px; float: left; font-family: 나눔고딕">${memberVO.id }</div>
-<!-- 												수정 : 성훈  -->
+												<!-- 												수정 : 성훈  -->
 												<div class="row"
 													style="float: left; display: flex; align-items: center;">
 													<c:choose>
 														<c:when test="${sessionScope.loginId == memberVO.id}">
-															<button class = "profile-edit" style="float: left;">
+															<button class="profile-edit" style="float: left;">
 																<a href="<%=request.getContextPath()%>/myPage.do"
 																	style="color: black; font-weight: lighter;"> <strong>프로필편집</strong>
 																</a>
@@ -312,22 +270,20 @@ figure>div>.photo-info {
 																	<c:set var="b" value="1" />
 																</c:if>
 															</c:forEach>
-															
+
 															<c:if test="${b==1}">
-																<button class = "profile-edit" id="following-btn" style="float: left;">
-																	팔로잉
-																</button>
+																<button class="profile-edit" id="following-btn"
+																	style="float: left;">팔로잉</button>
 															</c:if>
 															<c:if test="${b==0}">
-																<button class= "profile-edit" id="follow-btn"
+																<button class="profile-edit" id="follow-btn"
 																	style="float: left; background-color: #3897f0; color: white; border: none">
-																	팔로우
-																</button>
+																	팔로우</button>
 															</c:if>
 														</c:otherwise>
 													</c:choose>
 												</div>
-<!-- 												수정 : 성훈  -->
+												<!-- 												수정 : 성훈  -->
 											</div>
 											<div class="row" style="margin-top: 15px;">
 												<span class="profile-span-margin-3px">게시물 </span> <strong><span
@@ -336,30 +292,36 @@ figure>div>.photo-info {
 												<button class="profile-span-margin-3px"
 													id="span_profile_follower"
 													style="font-size: 16px; background-color: transparent; border-style: none">
-													팔로워<strong id="follower-cnt"> ${memberVO.follower_count}</strong>
+													팔로워<strong id="follower-cnt">
+														${memberVO.follower_count}</strong>
 												</button>
 												<button id="btn_profile_follow"
 													style="font-size: 16px; background-color: transparent; border-style: none">
-													팔로우 <strong id="follow-cnt"> ${memberVO.follow_count}</strong>
+													팔로우 <strong id="follow-cnt">
+														${memberVO.follow_count}</strong>
 												</button>
 											</div>
-											<div
-												style="font-size: 15px; color: black; margin-top: 15px;">
-												<span class="profile-span-margin-3px" style="word-break:break-all;">${memberVO.self_info}</span>
+											<div style="font-size: 15px; color: black; margin-top: 15px;">
+												<span class="profile-span-margin-3px"
+													style="word-break: break-all;">${memberVO.self_info}</span>
 											</div>
 										</div>
 									</div>
-									<div id="gallery" class="gallery" style="margin-top: 15px">
+									<div id="gallery" class="gallery"
+										style="margin-top: 15px; max-width: 1000px; margin: auto">
 										<c:forEach items="${articleList}" var="articleVO">
 											<c:if test="${not empty articleVO.getPhotoList()}">
 												<c:if
 													test="${not empty articleVO.getPhotoList().get(0).file_origiName}">
 													<figure>
 													<div data-toggle="modal" data-target=".bs-example-modal-lg">
-														<img id="article_img" name="article_img" src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName}"
-															style="z-index: 0;" onclick="openGalleryModal(${articleVO.article_num})">
+														<img id="article_img" name="article_img"
+															src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName}"
+															style="z-index: 0;"
+															onclick="openGalleryModal(${articleVO.article_num})">
 														<div class="photo-info" style="">
-															<img src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
+															<img
+																src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
 																style="width: 15px; height: 15px; display: inline-block;">
 															${articleVO.commentCount}개
 														</div>
@@ -392,32 +354,31 @@ figure>div>.photo-info {
 				</div>
 			</div>
 		</div>
-		
-		<!-- GalleryModal Start -->
-	<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
-		aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div id="carousel-example-generic" class="carousel slide"
-					data-ride="carousel">
-					
-					<!-- Modal Content Area -->
-					<div class="carousel-inner">
-					</div>
 
-					<!-- Controls -->
-					<a class="left carousel-control" href="#carousel-example-generic"
-						role="button" data-slide="prev"> <span
-						class="glyphicon glyphicon-chevron-left"></span>
-					</a> <a class="right carousel-control" href="#carousel-example-generic"
-						role="button" data-slide="next"> <span
-						class="glyphicon glyphicon-chevron-right"></span>
-					</a>
+		<!-- GalleryModal Start -->
+		<div class="modal fade bs-example-modal-lg" tabindex="-1"
+			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div id="carousel-example-generic" class="carousel slide"
+						data-ride="carousel">
+
+						<!-- Modal Content Area -->
+						<div class="carousel-inner"></div>
+
+						<!-- Controls -->
+						<a class="left carousel-control" href="#carousel-example-generic"
+							role="button" data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left"></span>
+						</a> <a class="right carousel-control"
+							href="#carousel-example-generic" role="button" data-slide="next">
+							<span class="glyphicon glyphicon-chevron-right"></span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- EO Gallery Modal -->
+		<!-- EO Gallery Modal -->
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
 		<script type="text/javascript"

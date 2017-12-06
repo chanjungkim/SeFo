@@ -2,9 +2,9 @@ package service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +27,7 @@ public class ArticleService {
 	@Autowired
 	private MemberDao memberDao;
 	
-	public ArticleVO writeArticle(ArticleVO article, HttpServletRequest req) {
+	public ArticleVO writeArticle(ArticleVO article, HttpServletRequest req) throws UnsupportedEncodingException {
 		System.out.println("articleService ½ÇÇà!");
 		int result = dao.insertArticle(article);
 		// System.out.println(result + " : "+article.getContent());
@@ -47,7 +47,8 @@ public class ArticleService {
 					article.setPhoto_count(article.getFileList().size());
 					for (MultipartFile m : article.getFileList()) {
 						FileVO fileVO = new FileVO();
-						String savedName = new Random().nextInt(1000000) + m.getOriginalFilename();
+						String savedName = new String(m.getOriginalFilename().getBytes(), "UTF-8");
+						System.out.println("savedName : " + savedName );
 						File savedFile = new File(dir.getAbsolutePath() + "/" + savedName);
 						try {
 							m.transferTo(savedFile);
