@@ -11,32 +11,90 @@
 <link rel="stylesheet" href="./assets/css/signup.css">
 <script type="text/javascript" src="./assets/js/jquery.js"></script>
 <script type="text/javascript">
-	$(function(){
-		$('#duplicate-check-button').click(function(){
-			var id = $('#input-id').val();
-			$.ajax({
-				type:'post', // 요청 보내면 doPost가 실행됨
-				url:'overlab-check.do', // 우리가 작성한 java 서블릿에게
-				data:{'id':''+id}, // 검색어 데이터
-				dataType: 'text',// 응답데이터 형식
-				success: function(resultData){
+$(function(){
+	$('#duplicate-check-button').click(function(){
+		var id = $('#input-id').val();
+		$.ajax({
+			type:'post', // 요청 보내면 doPost가 실행됨
+			url:'overlab-check.do', // 우리가 작성한 java 서블릿에게
+			data:{'id':''+id}, // 검색어 데이터
+			dataType: 'text',// 응답데이터 형식
+			success: function(resultData){
+				
+				if(resultData == 'true'){
+					alert('사용 가능한 아이디 입니다.')// 로그인 실패시 팝업
+					$('#id_check').attr('value', 'check');
 					
-					if(resultData == 'true'){
-						alert('사용 가능한 아이디 입니다.')// 로그인 실패시 팝업
-					}else{
-						alert('이미 존재하는 아이디 입니다.')// 로그인 실패시 팝업
-					}
-				},
-				error : function() {
-					alert('ajax 요청 실패');
+				}else{
+					alert('이미 존재하는 아이디 입니다.')// 로그인 실패시 팝업
 				}
-			})
+			},
+			error : function() {
+				alert('ajax 요청 실패');
+			}
 		})
-		
 	})
+	$('#gender-female').on('click', function(){
+		if($('#gender-female').attr('checked') == 'checked'){
+			$('#gender-male').attr('checked', '');
+		}else{
+			$('#gender-male').attr('checked', 'checked');
+		}
+	})
+	
+	$('#gender-male').on('click', function(){
+		if($('#gender-male').attr('checked') == 'checked'){
+			$('#gender-female').attr('checked', '');
+		}else{
+			$('#gender-female').attr('checked', 'checked');
+		}
+	})
+	
+})
 function checkIn() {
-		///////////예외 처리 해야하는 부분
-
+	///////////예외 처리 해야하는 부분
+		if($('#input-id').val()==""){
+			alert("ID를입력하시오"); 
+			return false;
+		}else if($('#pw').val()==""){
+			alert("비밀번호를입력하시오"); 
+			return false;
+		}else if($('#checkPw').val() == ""){
+			alert("비밀번호 확인을 입력하시오");
+			return false;
+		}else if($('#name').val() == ""){
+			alert("이름을 입력하시오");
+			return false;
+		}else if($('#email').val() == ""){
+			alert("email을 입력하시오");
+			return false;
+		}else if($('#year').val() == ""){
+			alert("년도를 입력하시오");
+			return false;
+		}else if($('#month').val() == ""){
+			alert("달을 입력하시오");
+			return false;
+		}else if($('#day').val() == ""){
+			alert("일을 입력하시오");
+			return false;
+		}else if($('#phone1').val() == ""){
+			alert("핸드폰을 입력하시오");
+			return false;
+		}else if($('#phone2').val() == ""){
+			alert("핸드폰을 입력하시오");
+			return false;
+		}else if($('#phone3').val() == ""){
+			alert("핸드폰을 입력하시오");
+			return false;
+		}else if($('#pw').val()!=$('#checkPw').val()){
+			alert("비밀번호가 다릅니다");
+			return false;
+		}else if($('#id_check').val()=="uncheck"){
+			alert("중복확인을 안했습니다.");
+			return false;
+		}
+		
+	
 }
 </script>
 </head>
