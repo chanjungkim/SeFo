@@ -162,4 +162,36 @@ public class ArticleController {
 		if(service.removeArticle(article_num)) writer.print(true);
 		else writer.print(false);
 	}
+	@RequestMapping("/leftArticle.do")
+	public void getLeftArticleNum(HttpSession session, HttpServletResponse response, long article_num, String id) {
+		long leftArticleNum = service.getLeftArticleNum(article_num, id);
+		
+		PrintWriter writer = null;
+
+		try {
+			writer = response.getWriter();
+			System.out.println("받아온 left ArticleNum정보:"+leftArticleNum);
+			Gson gson = new Gson();
+			writer.print(gson.toJson(leftArticleNum));    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/rightArticle.do")
+	public void getRightArticleNum(HttpSession session, HttpServletResponse response, long article_num, String id) {
+		long rightArticleNum = service.getRightArticleNum(article_num, id);	
+		PrintWriter writer = null;
+
+		try {
+			writer = response.getWriter();
+			System.out.println("받아온 rightArticleNum 정보:"+rightArticleNum);
+			Gson gson = new Gson();
+			writer.print(gson.toJson(rightArticleNum));    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

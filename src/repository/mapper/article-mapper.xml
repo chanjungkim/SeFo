@@ -100,7 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	
 	<select id="selectArticle" parameterType="long" resultType="ArticleVO">
-		SELECT * FROM ARTICLE WHERE ARTICLE_NUM = #{article_num}
+		SELECT c.* , m.photo_path FROM ARTICLE c , Member m WHERE c.ARTICLE_NUM = #{article_num}  AND c.id = m.id;
 	</select>
 	
 	<delete id="removeArticle" parameterType="long">
@@ -108,4 +108,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM ARTICLE
 	WHERE ARTICLE_NUM = #{article_num}
 	</delete>
+		
+	<select id="selectLeftArticleNum" resultType="long">
+		SELECT ARTICLE_NUM FROM ARTICLE WHERE id = #{id} AND ARTICLE_NUM &gt; #{article_num} AND PHOTO_COUNT &gt; 0  LIMIT 1 
+	</select>
+
+	<select id="selectRightArticleNum" resultType="long">
+		SELECT ARTICLE_NUM FROM ARTICLE WHERE id = #{id} AND ARTICLE_NUM &lt; #{article_num} AND PHOTO_COUNT &gt; 0 ORDER BY ARTICLE_NUM DESC LIMIT 1 
+	</select>
+	<!-- &gt == '>' , &lt == '<' -->
+
 </mapper>
