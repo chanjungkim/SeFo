@@ -25,6 +25,7 @@
 	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <script src="<%=request.getContextPath()%>/assets/js/gallery.js"></script>
 <script type="text/javascript">
+
 	$(function() {
 		var article_last_index = $('#article_last_index').val();
 		var id = '${memberVO.id}';
@@ -81,6 +82,57 @@
 		/***
 		 * follow - unfollow start
 		 */ 		
+		 $(document).on('click', '#follower-btn2', function(){	
+			 var memberId = $(this).val();
+			 var btn = $(this);
+			 $.ajax({
+					type : 'POST',
+					url : '<%=request.getContextPath()%>/follow.do',
+					data : {
+						'follow_id' : memberId
+					},
+					dataType : 'json',
+					success : function (resultData){
+						btn.attr('id', 'following-btn2');
+						btn.text('팔로잉');
+						btn.css("background-color","transparent");
+						btn.css("color","black");
+						btn.css("border-width","0.1px");
+						btn.css("float", "right");
+						btn.css("border", "groove");
+					},
+					error : function(){
+						alert('팔로우 실패')
+					}
+				})
+				return false;
+		 });
+		
+		$(document).on('click', '#following-btn2', function(){	
+			 var memberId = $(this).val();
+			 var btn = $(this);
+			 $.ajax({
+					type : 'POST',
+					url : '<%=request.getContextPath()%>/unfollow.do',
+					data : {
+						'follow_id' : memberId
+					},
+					dataType : 'json',
+					success : function (resultData){
+						btn.attr('id', 'follower-btn2');
+						btn.text('팔로우');
+						btn.css("background-color","#3897f0");
+						btn.css("color","white");
+						btn.css("border-width","0px");				
+						btn.css("float","right");
+						btn.css("border", "groove");
+					},
+					error : function(){
+						alert('팔로우 실패')
+					}
+				})
+				return false;
+		});
 		 $(document).on('click', '#follow-btn', function(){
 				var memberId = '${memberVO.id}';
 				$.ajax({
@@ -105,6 +157,7 @@
 				})
 				return false;
 			});
+		
 		$(document).on('click', '#following-btn', function(){
 			var memberId = '${memberVO.id}';
 			$.ajax({
@@ -205,6 +258,7 @@ $(document)
 						$('#btnShow').toggle();
 					});
 });
+
 </script>
 <style type="text/css">
 figure {
@@ -240,6 +294,29 @@ figure>div>.photo-info {
   text-align: left;
   vertical-align: middle;
 }
+
+/* Remove margins and padding from the list */
+#follower_ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the list items */
+#follower_ul > li {
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #fff;
+  font-size: 18px;
+  transition: 0.2s;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 
 </style>
 </head>
@@ -345,12 +422,11 @@ figure>div>.photo-info {
 													class="profile-span-margin-10px" id="span_profile_article">${totalContentCnt}
 												</span></strong>
 												<button class="profile-span-margin-3px"
-													id="span_profile_follower"
-													style="font-size: 16px; background-color: transparent; border-style: none">
+													id="span_profile_follower" data-toggle="modal" href="#follower-modal" style="font-size: 16px; background-color: transparent; border-style: none">
 													팔로워<strong id="follower-cnt">
 														${memberVO.follower_count}</strong>
 												</button>
-												<button id="btn_profile_follow"
+												<button id="btn_profile_follow" data-toggle="modal" href="#follow-modal"
 													style="font-size: 16px; background-color: transparent; border-style: none">
 													팔로우 <strong id="follow-cnt">
 														${memberVO.follow_count}</strong>
@@ -362,7 +438,97 @@ figure>div>.photo-info {
 											</div>
 										</div>
 								</div>
-								<!-- 									</div> -->
+								<!-- The Modal -->
+								<div id="follower-modal" class="modal fade in">
+						        <div class="modal-dialog">
+						            <div class="modal-content">
+						 
+						                <div class="modal-header">
+						                    <a class="btn btn-default" data-dismiss="modal" style="float: right;"><span class="glyphicon glyphicon-remove"></span></a>
+						                    <h4 class="modal-title">팔로워</h4>
+						                </div>
+						                <div class="modal-body" style="max-height: 350px; overflow-Y:scroll;">
+						                    <ul id="follower_ul">
+						                    <c:forEach items="${memberVO.followerList }" var="i">
+												  <li>
+												  <div style="display: inline;">
+												  		<img id="follower-img" src="<%=request.getContextPath()%>/${memberVO.photo_path}">
+												  </div>
+												  <div style="display: inline; margin-left: 5px">${ i.id}
+												  </div>
+												 <c:if test="${sessionScope.loginId != i.id}">
+												<c:set var="check" value="${i.checkMyFollow}" />
+												<c:choose>
+												    <c:when test="${check == true}">
+												         <div style="display: inline;">
+												  		<button class="profile-edit" id="following-btn2" style="float: right; border:groove;" value="${i.id}">
+														팔로잉</button>
+													</div>
+												    </c:when>
+												    <c:when test="${check == false}">
+												          <div style="display: inline;">
+												  		<button class="profile-edit" id="follower-btn2"  value="${i.id}"
+														style="float: right; margin: auto; background-color: #3897f0; color: white; border: none; border:groove;">
+														팔로우</button>
+													</div>
+												    </c:when>
+												</c:choose>
+												</c:if>
+												  </li>
+											  </c:forEach>
+											</ul>
+						                </div>
+						            </div><!-- /.modal-content -->
+						        </div><!-- /.modal-dalog -->
+						    </div><!-- /.modal -->
+							<!-- EO Modal -->
+							
+							<!-- The Modal -->
+								<div id="follow-modal" class="modal fade in">
+						        <div class="modal-dialog">
+						            <div class="modal-content">
+						 
+						                <div class="modal-header">
+						                    <a class="btn btn-default" data-dismiss="modal" style="float: right;"><span class="glyphicon glyphicon-remove"></span></a>
+						                    <h4 class="modal-title">팔로우</h4>
+						                </div>
+						                <div class="modal-body" style="max-height: 350px; overflow-Y:scroll;">
+						                    <ul id="follower_ul">
+						                    <c:forEach items="${memberVO.followList }" var="i">
+												  <li>
+												  <div style="display: inline;">
+												  		<img id="follower-img" src="<%=request.getContextPath()%>/${memberVO.photo_path}">
+												  </div>
+												  <div style="display: inline; margin-left: 5px">${ i.followee}
+												  </div>
+												  <c:if test="${sessionScope.loginId != i.followee}">
+												  <c:set var="check" value="${i.checkMyFollow}" />
+												<c:choose>
+												    <c:when test="${check == true}">
+												         <div style="display: inline;">
+												  		<button class="profile-edit" id="following-btn2" style="float: right; border:groove;" value="${i.followee}">
+														팔로잉</button>
+													</div>
+												    </c:when>
+												    <c:when test="${check == false}">
+												          <div style="display: inline;">
+												  		<button class="profile-edit" id="follower-btn2" value="${i.followee}"
+														style="float: right; margin: auto; background-color: #3897f0; color: white; border: none; border:groove;">
+														팔로우</button>
+													</div>
+												    </c:when>
+												</c:choose>
+												</c:if>
+												  </li>
+											  </c:forEach>
+											</ul>
+						                </div>
+						            </div><!-- /.modal-content -->
+						        </div><!-- /.modal-dalog -->
+						    </div><!-- /.modal -->
+							<!-- EO Modal -->
+							
+								<!-- </div> -->
 								<!--<hr> -->
 
 								<!--<h4 class="text-center"> -->
@@ -483,5 +649,6 @@ figure>div>.photo-info {
 		</div>
 		<!-- EO Gallery Modal -->
 	</c:if>
+
 </body>
 </html>

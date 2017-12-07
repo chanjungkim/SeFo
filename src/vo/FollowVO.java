@@ -4,8 +4,17 @@ public class FollowVO {
 	private long follow_num;
 	private String id;
 	private String followee;
+	private boolean checkMyFollow;
 	
 	/////////////////////////////////////
+
+	public boolean isCheckMyFollow() {
+		return checkMyFollow;
+	}
+
+	public void setCheckMyFollow(boolean checkMyFollow) {
+		this.checkMyFollow = checkMyFollow;
+	}
 
 	public long getFollow_num() {
 		return follow_num;

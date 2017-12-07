@@ -48,7 +48,7 @@ public class ProfileController {
 			} 
 		}
 		int totalContentCnt = profileService.getProfileContentCount(userId);
-		MemberVO memberVO = profileService.getProfileInfo(userId);
+		MemberVO memberVO = profileService.getProfileInfo((String)session.getAttribute("loginId"), userId);
 		mv.addObject("articleList", articleList);
 		mv.addObject("totalContentCnt", totalContentCnt);
 		mv.addObject("memberVO", memberVO);
@@ -96,7 +96,7 @@ public class ProfileController {
 	public ModelAndView mypage(MemberVO member,HttpSession session) {
 		String loginId = (String)session.getAttribute("loginId");
 		ModelAndView mv = new ModelAndView();
-		member = profileService.getProfileInfo(loginId);
+		member = profileService.getProfileInfo(loginId,loginId);
 		mv.addObject("original", member);
 		mv.setViewName("myPage");
 		return mv;
