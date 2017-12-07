@@ -243,7 +243,7 @@ figure>div>.photo-info {
 
 </style>
 </head>
-<body>
+<body>											
 	<c:if test="${empty articleList}">
 		<input type="hidden" id="article_last_index" value="0">
 	</c:if>
@@ -274,17 +274,16 @@ figure>div>.photo-info {
 						<jsp:include page="${request.getContextPath()}/topNav.jsp" />
 						<!-- /top nav -->
 
-						<div class="padding">
+						<div class="padding profile-main">
+							<div class="row">
 							<div class="profile-container">
-								<div>
 									<!-- content -->
-									<div class="row">
-										<div class="my_profile_img img-fluid col-md-4" style="margin-left: 50px">
-											<button
-												style="border-style: none; background-color: transparent; outline: none;"
-												class="btn btn-info btn-lg" data-toggle="modal" 
+									<div class="well col-md-12">
+										<div class="row">
+										<div class="my_profile_img img-fluid col-md-4">
+											<button class="btn btn-info btn-lg" data-toggle="modal" 
 												data-target="#myModal" >
-												<img id="profile_img"
+												<img id="profile-img"
 													src="<%=request.getContextPath()%>/${memberVO.photo_path}">
 											</button>
 											<div id="myModal" class="modal fade" role="dialog">
@@ -362,9 +361,22 @@ figure>div>.photo-info {
 													style="word-break: break-all;">${memberVO.self_info}</span>
 											</div>
 										</div>
-									</div>
-									<div id="gallery" class="gallery"
-										style="margin-top: 15px; max-width: 1000px; margin: auto">
+								</div>
+								<!-- 									</div> -->
+								<!--<hr> -->
+
+								<!--<h4 class="text-center"> -->
+								<!--	<a href="http://usebootstrap.com/theme/facebook" target="ext">Download -->
+								<!--this Template @Bootply</a> -->
+								<!--</h4> -->
+
+								<!--<hr> -->
+								</div>
+							</div>
+							<!-- /col-9 -->
+						</div>
+														<div class="row">
+									<div id="gallery" class="gallery"  style="margin-top: 15px; max-width: 1000px; margin: auto">
 										<c:forEach items="${articleList}" var="articleVO">
 											<c:if test="${not empty articleVO.getPhotoList()}">
 												<c:if
@@ -392,29 +404,17 @@ figure>div>.photo-info {
 										</c:forEach>
 									</div>
 								</div>
-								<!-- 									</div> -->
-								<hr>
-								<jsp:include page="${request.getContextPat()}/footer.jsp" />
-								<hr>
-								<!--<hr> -->
-
-								<!--<h4 class="text-center"> -->
-								<!--	<a href="http://usebootstrap.com/theme/facebook" target="ext">Download -->
-								<!--this Template @Bootply</a> -->
-								<!--</h4> -->
-
-								<!--<hr> -->
-							</div>
-							<!-- /col-9 -->
-						</div>
 						<!-- /padding -->
 					</div>
 					<!-- /main -->
 
+						<hr>
+						<jsp:include page="${request.getContextPat()}/footer.jsp" />
+						<hr>
 				</div>
 			</div>
 		</div>
-
+</div>
 		<!-- GalleryModal Start -->
 		<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="width:100%;">
 			<div class="modal-dialog modal-lg" style="width:90%">

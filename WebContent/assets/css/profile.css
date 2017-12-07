@@ -66,12 +66,12 @@ hr {
 	font-size: 5px;
 }
 
-#profile_img {
+#profile-img {
 	border-radius: 50%;
 	border: 0.5px solid #aaa;
 	width: 140px; 
 	height: 140px; 
-	margin: 0px"
+	margin: 0px;
 }
 
 .profile-edit {
@@ -229,3 +229,29 @@ img {
 {min-height:60px; height:auto;}
 .mt
 { margin-top:50px;}
+
+.profile-main{
+	
+}
+.profile-container{
+	margin-top : 30px;
+	margin:auto;
+	max-width:700px;
+}
+
+.well{
+	background-color: transparent;
+	border-style: none;
+}
+
+.my_profile_img{
+}
+
+.my_profile_img > button{
+	border-style: none;
+	background-color: transparent;
+	outline: none;"
+}
+.well{
+	resize: none;
+}
