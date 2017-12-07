@@ -350,7 +350,6 @@
 	
 function removeArticle(article_num) {
 	if (confirm("게시글을 삭제 하시겠습니까?")) {
-		alert(article_num);
 		$.ajax({
 			type : 'post', // 요청 보내면 doPost가 실행됨
 			url : 'remove-article.do', // 우리가 작성한 java 서블릿에게
