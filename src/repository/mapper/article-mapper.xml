@@ -117,5 +117,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT ARTICLE_NUM FROM ARTICLE WHERE id = #{id} AND ARTICLE_NUM &lt; #{article_num} AND PHOTO_COUNT &gt; 0 ORDER BY ARTICLE_NUM DESC LIMIT 1 
 	</select>
 	<!-- &gt == '>' , &lt == '<' -->
-
+	<insert id="insertNotification" parameterType="NotificationVO">
+		INSERT into notification(recieve_id, notification_type, article_num)
+		VALUES(#{id}, #{type}, #{article_num});
+	</insert>
 </mapper>

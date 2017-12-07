@@ -8,11 +8,14 @@
 <title>Login Box Concept</title>
 <link rel='stylesheet prefetch'
 	href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
-<link rel="stylesheet" href="./assets/css/login.css">
-<script type="text/javascript" src="./assets/js/jquery.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/login.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
 <script type="text/javascript">
 	$(function() {
-
+		wsocket = new WebSocket("ws://localhost:8888/chatting/echo-ws");
+		wsocket.onopen = function() { //서버연결되면 실행
+// 			alert("세션 연결")
+		};
 		$('#id').focus();
 
 		$('body').keypress(function(e) {
@@ -37,13 +40,13 @@
 					'id' : '' + id,
 					'password' : '' + pwd
 				}, // 검색어 데이터
-				dataType : 'text',// 응답데이터 형식
+				dataType : 'text', // 응답데이터 형식
 				success : function(resultData) {
-					alert('login success:'+resultData);
+// 					alert('login success:' + resultData);
 					if (resultData == 'true') {
 						location.href = "initMain.do" // 로그인 완료후 이동할 화면
 					} else {
-						alert('로그인 실패')// 로그인 실패시 팝업
+						alert('로그인 실패') // 로그인 실패시 팝업
 					}
 				},
 				error : function() {
@@ -55,6 +58,18 @@
 		$('#btnSignup').click(function() {
 			location.href = "moveSignupForm.do";
 		})
+
+		////////////////////////////////////////////
+		function sendMessage() {
+			wsocket.onmessage = onMessage;
+		}
+		function onMessage(evt) { //서버에서 메세지를받으면 실행
+			var data = evt.data;
+			alert("서버에서 데이터 받음:" + data);
+		}
+		function onClose(evt) { //연결이 종료되면 실행}
+			alert("연결 끊김");
+		}
 	})
 </script>
 </head>
@@ -79,16 +94,16 @@
 					Cookie[] cookies = request.getCookies();
 
 					if (cookies != null) {
-						for(int i = 0 ; i < cookies.length ; i++){
-							if(cookies[i].getName().equals("sefoId")){ // Find a cookie named as "sefoId"
-								
+						for (int i = 0; i < cookies.length; i++) {
+							if (cookies[i].getName().equals("sefoId")) { // Find a cookie named as "sefoId"
+
 								// get "sefoId" Cookie
 								String cName = cookies[i].getName();
 
 								// get the value of the Cookie
 								String cValue = cookies[i].getValue();
-								
-								pageContext.setAttribute("lastId", cValue);	
+
+								pageContext.setAttribute("lastId", cValue);
 								break;
 							}
 						}
@@ -96,10 +111,11 @@
 				%>
 				<c:choose>
 					<c:when test="${lastId != null}">
-						<input placeholder='Username' type='text' id="id" value="${lastId}">			
+						<input placeholder='Username' type='text' id="id"
+							value="${lastId}">
 					</c:when>
 					<c:otherwise>
-						<input placeholder='Username' type='text' id="id">						
+						<input placeholder='Username' type='text' id="id">
 					</c:otherwise>
 				</c:choose>
 				<div class='validation'>
