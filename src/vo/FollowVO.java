@@ -5,7 +5,7 @@ public class FollowVO {
 	private String id;
 	private String followee;
 	private boolean checkMyFollow;
-	
+	private String photo_path;
 	/////////////////////////////////////
 
 	public boolean isCheckMyFollow() {
@@ -40,6 +40,14 @@ public class FollowVO {
 		this.followee = followee;
 	}
 	
+	public String getPhoto_path() {
+		return photo_path;
+	}
+
+	public void setPhoto_path(String photo_path) {
+		this.photo_path = photo_path;
+	}
+
 	@Override
 	public String toString() {
 		return "FollowVO [follow_num=" + follow_num + ", id=" + id + ", followee=" + followee + "]";

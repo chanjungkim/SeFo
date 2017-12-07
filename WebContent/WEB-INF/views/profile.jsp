@@ -452,7 +452,7 @@ figure>div>.photo-info {
 						                    <c:forEach items="${memberVO.followerList }" var="i">
 												  <li>
 												  <div style="display: inline;">
-												  		<img id="follower-img" src="<%=request.getContextPath()%>/${memberVO.photo_path}">
+												  		<img id="follower-img" src="<%=request.getContextPath()%>/${i.photo_path}">
 												  </div>
 												  <div style="display: inline; margin-left: 5px">${ i.id}
 												  </div>
@@ -497,9 +497,9 @@ figure>div>.photo-info {
 						                    <c:forEach items="${memberVO.followList }" var="i">
 												  <li>
 												  <div style="display: inline;">
-												  		<img id="follower-img" src="<%=request.getContextPath()%>/${memberVO.photo_path}">
+												  		<img id="follower-img" src="<%=request.getContextPath()%>/${i.photo_path}">
 												  </div>
-												  <div style="display: inline; margin-left: 5px">${ i.followee}
+												  <div style="display: inline; margin-left: 5px">${i.followee}
 												  </div>
 												  <c:if test="${sessionScope.loginId != i.followee}">
 												  <c:set var="check" value="${i.checkMyFollow}" />
