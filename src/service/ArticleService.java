@@ -3,6 +3,8 @@ package service;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,14 +49,15 @@ public class ArticleService {
 					article.setPhoto_count(article.getFileList().size());
 					for (MultipartFile m : article.getFileList()) {
 						FileVO fileVO = new FileVO();
-						String savedName = new String(m.getOriginalFilename().getBytes(), "UTF-8");
-						System.out.println("savedName : " + savedName );
-						File savedFile = new File(dir.getAbsolutePath() + "/" + savedName);
+						
+						String savedName = URLDecoder.decode(m.getOriginalFilename(),"UTF-8");
+						long time = System.currentTimeMillis();
+						File savedFile = new File(dir.getAbsolutePath() + "/"+time + savedName);
 						try {
 							m.transferTo(savedFile);
 							fileVO.setArticle_num(article.getArticle_num());
 							fileVO.setFile_name(savedName);
-							fileVO.setFile_origiName("userArticleImage/" + article.getArticle_num() + "/" + savedName);
+							fileVO.setFile_origiName("userArticleImage/" + article.getArticle_num() + "/" +time+ savedName);
 							fileVO.setFile_path(savedFile.getAbsolutePath());
 							// DB에 업로드 내역 기록
 							dao.insertArticlePhoto(fileVO);
