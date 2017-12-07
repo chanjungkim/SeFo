@@ -9,9 +9,9 @@
 	
 	
 	<websocket:handlers>
-		<websocket:mapping handler="chatHandler" path="chat-ws"/>
+		<websocket:mapping handler="websocketHandler" path="/sefo-ws"/>
 	</websocket:handlers>
-	<bean id="chatHandler" class="controller.ChatWebSocketHandler"></bean>
+	<bean id="websocketHandler" class="controller.WebSocketHandler"></bean>
 
 <mvc:default-servlet-handler/>
 

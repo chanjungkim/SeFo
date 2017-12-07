@@ -29,13 +29,34 @@ public class ProfileService {
 	public int getProfileContentCount(String id) {
 		return dao.selectContentCount(id);
 	};
-	public MemberVO getProfileInfo(String id) {
+	public MemberVO getProfileInfo(String loginId,  String id) {
 		//ÆÈ·Î¿ì ÆÈ·Î¿ö Á¤º¸ ³Ö±â
 //		int followCount = dao.selectFollowCount(id);
 //		int followeeCount = dao.selectFollowerCount(id);
 		MemberVO vo = dao.selectProfileInfo(id);
-		vo.setFollowList(dao.selectAllfollow(id));
-		vo.setFollowerList(dao.selectAllfollower(id));
+		List<FollowVO> followList = dao.selectAllfollow(id);
+		List<FollowVO> followerList = dao.selectAllfollower(id);
+		
+		List<FollowVO> follow = getFollowList(loginId);
+		
+		for(int i=0; i<followList.size(); i++) {
+			for(int j=0; j<follow.size(); j++) {
+				if(followList.get(i).getFollowee().equals(follow.get(j).getFollowee())) {
+					followList.get(i).setCheckMyFollow(true);
+				}
+			}
+		}
+		
+		for(int i=0; i<followerList.size(); i++) {
+			for(int j=0; j<follow.size(); j++) {
+				if(followerList.get(i).getId().equals(follow.get(j).getFollowee())) {
+					followerList.get(i).setCheckMyFollow(true);
+				}
+			}
+		}
+		
+		vo.setFollowList(followList);
+		vo.setFollowerList(followerList);
 //		vo.setFollow_count(followCount);
 //		vo.setFollower_count(followeeCount);
 		

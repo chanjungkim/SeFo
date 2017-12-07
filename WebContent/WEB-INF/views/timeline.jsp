@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-  <%@page import="java.util.ArrayList"%>
+		  <%@page import="java.util.ArrayList"%>
 <%@page import="vo.ReactVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.awt.image.BufferedImage"%>
@@ -37,12 +37,17 @@
 	text-align: center;
 	margin: 1em 0;
 }
-
 </style>
 <script>
 	var uploadPhotoCount = 0;
 	var photoNum = 0;
+	var wsocket;
 	$(function() {
+		wsocket = new WebSocket("ws://localhost:8888/chatting/echo-ws");
+		wsocket.onopen = function() { //º≠πˆø¨∞·µ«∏È Ω««‡
+			alert("ººº« ø¨∞·")
+		};
+		sendMessage();
 		$(document).on('keydown', '.comment-write-area', function(e) {
 			var article_num = $(this).attr("name");
 			var content = $(this).val()
@@ -339,7 +344,16 @@
 			addMorePhoto(++uploadPhotoCount);
 		}
 	}
-	
+	function sendMessage() {
+		wsocket.onmessage = onMessage;
+	}
+	function onMessage(evt) { //º≠πˆø°º≠ ∏ﬁºº¡ˆ∏¶πﬁ¿∏∏È Ω««‡
+		var data = evt.data;
+		alert("º≠πˆø°º≠ µ•¿Ã≈Õ πﬁ¿Ω:" + data);
+	}
+	function onClose(evt) { //ø¨∞·¿Ã ¡æ∑·µ«∏È Ω««‡}
+		alert("ø¨∞· ≤˜±Ë");
+	}
 function removeArticle(article_num) {
 	if (confirm("Ïù¥ Í∏ÄÏùÑ ÏÇ≠Ï†úÌïòÏãúÍ≤†ÏäµÎãàÍπå?")) {
 		$.ajax({
@@ -479,28 +493,21 @@ function removeArticle(article_num) {
 		<div class="wrapper">
 			<div class="box">
 				<div class="row row-offcanvas">
-
 					<!-- sidebar -->
 					<%-- 					<jsp:include page="${request.getContextPath()}/sidebar.jsp" /> --%>
 					<!-- /sidebar -->
-
 					<!-- main right col -->
 					<div class="column col-sm-12" id="main">
-
 						<!-- top nav -->
 						<jsp:include page="${request.getContextPath()}/topNav.jsp" />
 						<!-- /top nav -->
-
 						<div class="padding timeline-main">
 							<div>
-
 								<!-- content -->
 								<div class="row">
-
 									<!-- main col left -->
 									<div class="timeline-container">
 										<!-- 									<div class="col-sm-7 article-list"> -->
-
 										<div id="timeline" class="well" data-target="#modal"
 											data-toggle="modal">
 											<!-- 											<form class="form-horizontal" role="form" enctype="multipart/form-data"  -->
@@ -520,7 +527,6 @@ function removeArticle(article_num) {
 											</ul>
 											<!-- 											</form> -->
 										</div>
-
 										<!-- Start For Loop  -->
 										<c:if test="${not empty articleList}">
 											<c:forEach items="${articleList}" var="articleVO" begin="0"
@@ -590,7 +596,6 @@ function removeArticle(article_num) {
 															</div>
 														</c:if>
 														<!--  EOF -->
-
 														<!-- Content -->
 														<p style="word-break: break-all;">${articleVO.content}</p>
 														<div style="width:100%; text-align: right;">
@@ -713,12 +718,9 @@ function removeArticle(article_num) {
 						<!-- /padding -->
 					</div>
 					<!-- /main -->
-
 				</div>
 			</div>
 		</div>
-
-
 		<!--post modal-->
 		<div id="modal" class="modal fade media-center" tabindex="-1"
 			role="dialog" aria-hidden="true">

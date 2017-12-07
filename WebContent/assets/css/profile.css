@@ -72,6 +72,14 @@ hr {
 	width: 140px; 
 	height: 140px; 
 	margin: 0px;
+	display: block;
+}
+
+#follower-img {
+	border-radius: 50%;
+	border: 0.5px solid #aaa;
+	width: 34px; 
+	height: 34px; 
 }
 .file_input_div {
     position:relative;
@@ -91,10 +99,6 @@ hr {
 
 #div_midle {
 	
-}
-
-img {
-	display: block;
 }
 
 .gallery {
@@ -126,6 +130,7 @@ img {
 	width : 100%;
 	-webkit-transition: all .3s ease-in-out;
 	transition: all .3s ease-in-out;
+	display: block;
 }
 
 /* loader css */

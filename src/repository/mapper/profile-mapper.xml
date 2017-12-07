@@ -71,15 +71,15 @@
 	</select>
 	
 	<select id="selectAllfollow" resultType="FollowVO">
-		SELECT * 
-		FROM follow 
-		WHERE id = #{id}; 
+		select f.*,m.photo_path 
+		from follow f, member m 
+		where f.id=#{id} and f.followee= m.id; 
 	</select>
 	
 	<select id="selectAllfollower" resultType="FollowVO">
-		SELECT *
-		FROM follow 
-		WHERE followee = #{id}; 
+		select f.*,m.photo_path 
+		from follow f, member m 
+		where f.followee =#{id} and f.id= m.id;  
 	</select>
 	
 	<delete id="deleteMember" parameterType="MemberVO"> 

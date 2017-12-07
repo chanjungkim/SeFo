@@ -5,12 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
-<script
-	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script
-	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/topNav.css">
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
 	$('#srch-term').on('keyup', function() {
@@ -90,18 +88,32 @@ function showMsg(){
 				<li><a href="#" role="button" data-toggle="modal"><img
 						src="<%=request.getContextPath()%>/assets/img/icon/message.png"
 						class="top-nav-icon"></a></li>
-				<li><a href="#"><img class="top-nav-icon"
-						src="<%=request.getContextPath()%>/assets/img/icon/heart.png"></a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<img class="top-nav-icon" src="<%=request.getContextPath()%>/assets/img/icon/heart.png" style="display:inline-block;">
+					</a>
+					<ul class="dropdown-menu">
+			            <li><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+			            <li class="divider"></li>
+			            <li><a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+			            <li class="divider"></li>
+			            <li><a href="#">Messages <span class="badge pull-right"> 42 </span></a></li>
+			            <li class="divider"></li>
+			            <li><a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+			            <li class="divider"></li>
+			        	<li><a href="#">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+			        </ul>
+			    </li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-			<li class="dropdown"><a href="#" class="dropdown-toggle"
-				data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i></a>
-				<ul class="dropdown-menu">
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i></a>
+					<ul class="dropdown-menu">
 					<li><a id="logout"
 						href="<%=request.getContextPath()%>/logout.do">Log Out</a></li>
 					<li><a href="">More</a></li>
-				</ul></li>
-		</ul>
+					</ul></li>
+			</ul>
 		</div>
 	</div>
 </body>
