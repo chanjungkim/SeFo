@@ -39,7 +39,7 @@
 				}, // 검색어 데이터
 				dataType : 'text',// 응답데이터 형식
 				success : function(resultData) {
-
+					alert('login success:'+resultData);
 					if (resultData == 'true') {
 						location.href = "initMain.do" // 로그인 완료후 이동할 화면
 					} else {

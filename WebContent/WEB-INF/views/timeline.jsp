@@ -1,19 +1,17 @@
-<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    <%@page import="java.util.ArrayList"%>
 <%@page import="vo.ReactVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.awt.image.BufferedImage"%>
 <%@page import="java.io.File"%>
 <%@page import="javax.imageio.ImageIO"%>
 <%@page import="java.awt.Image"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=EUC-KR">
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Welcome! ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -49,15 +47,15 @@
 			var content = $(this).val()
 			if (e.which == 13 && content.length > 0) {
 				$.ajax({
-					type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
-					url : 'writeComment.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
+					type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
+					url : 'writeComment.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
 					data : {
 						'article_num' : article_num,
 						'content' : content
-					}, // ê²€ìƒ‰ì–´ ë°ì´í„°
-					dataType : 'json', // ì‘ë‹µë°ì´í„° í˜•ì‹
+					}, // °Ë»ö¾î µ¥ÀÌÅÍ
+					dataType : 'json', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
 					success : function(resultData) {
-						alert("ëŒ“ê¸€ ì‘ì„± ì„±ê³µ!");
+						alert("´ñ±Û ÀÛ¼º ¼º°ø!");
 						var id = resultData.id;
 						var photo_path = resultData.photo_path;
 						var write_time = resultData.write_time;
@@ -83,7 +81,7 @@
 						$('.comment-write-area').val("");
 					},
 					error : function() {
-						alert('ëŒ“ê¸€ ajax ìš”ì²­ ì‹¤íŒ¨');
+						alert('´ñ±Û ajax ¿äÃ» ½ÇÆĞ');
 					}
 				})
 			}
@@ -122,8 +120,8 @@
 			// 				$(this).height('auto');
 			console.log('original size:' + width + "/" + height)
 			console.log('src:' + $(this).attr('src'))
-			console.log("ë¶€ëª¨ ì‚¬ì´ì¦ˆ: " + $(this).parent().width() + ", " + $(this).parent().height());
-			console.log("ì´ë¯¸ì§€ ì‚¬ì´ì¦ˆ: " + $(this).width() + ", " + $(this).height());
+			console.log("ºÎ¸ğ »çÀÌÁî: " + $(this).parent().width() + ", " + $(this).parent().height());
+			console.log("ÀÌ¹ÌÁö »çÀÌÁî: " + $(this).width() + ", " + $(this).height());
 			var diffWidth = $(this).parent().width() - $(this).width();
 			var diffHeight = $(this).parent().height() - $(this).height();
 			console.log("diffWidth: " + diffWidth + ", diffHeight: " + diffHeight);
@@ -137,14 +135,10 @@
 		$(window).on('resize', function() {
 			$(".item").width("100%");
 			$(".item").height($(".item").width());
-			console.log($(".item").width() + ", " + $(".item").height());
 			// image
 			$(".item img").each(function() {
-				console.log("ë¶€ëª¨ ì‚¬ì´ì¦ˆ: " + $(this).parent().width() + ", " + $(this).parent().height());
-				console.log("ì´ë¯¸ì§€ ì‚¬ì´ì¦ˆ: " + $(this).width() + ", " + $(this).height());
 				var diffWidth = $(this).parent().width() - $(this).width();
 				var diffHeight = $(this).parent().height() - $(this).height();
-				console.log("diffWidth: " + diffWidth + ", diffHeight: " + diffHeight);
 				$(this).css('margin-top', (diffHeight / 2) + 'px ');
 				$(this).css('margin-left', (diffWidth / 2) + 'px');
 			})
@@ -158,22 +152,40 @@
 			$("#content").val();
 		});
 		$(document).on('click', '#postBtn', function(e) {
-			//í¼ê°ì²´ë¥¼ ë¶ˆëŸ¬ì™€ì„œ
+			//Æû°´Ã¼¸¦ ºÒ·¯¿Í¼­
 			var form = $('#write_form')[0];
-			//FormData parameterì— ë‹´ì•„ì¤Œ
+// 			var form = jQuery('#write_form')
+// 			form = form.serialize();
+			//FormData parameter¿¡ ´ã¾ÆÁÜ
+// 			alert(form.serialize());
 			var formData = new FormData(form);
 			$('#content').val("");
 			$('#modalContent').val("");
 			$('#file-container').empty();
+			
+// 			for (var pair of formData.entries()) {
+// 			    console.log(pair[0]+ ', ' + pair[1]); 
+// 			}
+			
+			var newForm = new FormData();
+			for(var pair of formData.entries()) {
+				if (pair[0] == 'content'){
+				   	newForm.append(pair[0],encodeURIComponent(pair[1]));
+				}else{
+					newForm.append(pair[0],pair[1],encodeURIComponent(pair[1].name));
+				}
+			}
+			for (var pair of newForm.entries()) {
+			    console.log(pair[0]+ ', ' + pair[1]); 
+			}
 			$.ajax({
-				type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
-				enctype : 'multipart/form-data',
-				url : 'writePost.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
+				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
+				url : 'writePost.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
 				processData : false,
 				cache : false,
 				contentType : false,
-				data : formData,
-				dataType : 'json', // ì‘ë‹µë°ì´í„° í˜•ì‹
+				data : newForm,
+				dataType : 'json', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
 				success : function(resultData) {
 					var photoCount = resultData.photo_count;
 					var photoList = resultData.photoList;
@@ -182,7 +194,7 @@
 					var article_num = resultData.article_num;
 					var write_time = resultData.write_time;
 					var article_id = resultData.id;
-					// alert('ê¸€ì“°ê¸° ì™„ë£Œ');
+					// alert('±Û¾²±â ¿Ï·á');
 					var newPost = '<div class="panel panel-default"><div class="panel-thumbnail"></div>'
 						+ '<div class="panel-body">'
 						+ '<p class="lead">'
@@ -219,7 +231,7 @@
 						+ '<hr>'
 						+ '		<span> <input type="hidden" class="article-num"'
 						+ '			value="'+article_num+'"> <textarea'
-						+ '			class="comment-write-area" placeholder="ëŒ“ê¸€ë‹¬ê¸°..."'
+						+ '			class="comment-write-area" placeholder="´ñ±Û´Ş±â..."'
 						+ '			name="'+article_num+'"></textarea>'
 						+ '		</span>'
 						+ '		<!--  EO Comment -->'
@@ -229,12 +241,12 @@
 					$("#timeline").after(newPost);
 				},
 				error : function() {
-					alert('ajax ìš”ì²­ ì‹¤íŒ¨');
+					alert('ajax ¿äÃ» ½ÇÆĞ');
 				}
 			})
 		})
 		// 		$(document).on('hover', '.react-button', function()){
-		// 			$(this).after('<button>ì¢‹ì•„ìš”</button><button>í™”ë‚˜ìš”</button><button>ìŠ¬í¼ìš”</button>');
+		// 			$(this).after('<button>ÁÁ¾Æ¿ä</button><button>È­³ª¿ä</button><button>½½ÆÛ¿ä</button>');
 		// 		}
 		// 		$(document).on('mouseout', '.react-button', function()){
 		// 			$(this).after("");
@@ -243,12 +255,12 @@
 			var searchWord = $(this).val();
 			console.log(searchWord);
 			$.ajax({
-				type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
-				url : 'search.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
+				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
+				url : 'search.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
 				data : {
-					'searchWord' : searchWord // ê²€ìƒ‰ì–´ ë°ì´í„°	
+					'searchWord' : searchWord // °Ë»ö¾î µ¥ÀÌÅÍ	
 				},
-				dataType : 'json', // ì‘ë‹µë°ì´í„° í˜•ì‹
+				dataType : 'json', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
 				success : function(resultData) {
 					console.log(resultData);
 					$('.search-option').remove();
@@ -262,46 +274,46 @@
 					$('#search-data-list').append(bookData);
 				},
 				error : function() {
-					console.log('ê²€ìƒ‰ ajax ìš”ì²­ ì‹¤íŒ¨');
+					console.log('°Ë»ö ajax ¿äÃ» ½ÇÆĞ');
 				}
 			})
 		})
 	})
 	function deleteComment(comment_num) {
-		if (confirm("ëŒ“ê¸€ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
+		if (confirm("´ñ±ÛÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")) {
 			$.ajax({
-				type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
-				url : 'deleteComment.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
+				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
+				url : 'deleteComment.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
 				data : {
 					'comment_num' : comment_num
-				}, // ê²€ìƒ‰ì–´ ë°ì´í„°
-				dataType : 'text', // ì‘ë‹µë°ì´í„° í˜•ì‹
+				}, // °Ë»ö¾î µ¥ÀÌÅÍ
+				dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
 				success : function(resultData) {
-					alert("ì‚­ì œ ì„±ê³µ!");
+					alert("»èÁ¦ ¼º°ø!");
 					$('#comment-' + comment_num).remove();
 				},
 				error : function() {
-					alert('ajax ìš”ì²­ ì‹¤íŒ¨');
+					alert('ajax ¿äÃ» ½ÇÆĞ');
 				}
 			})
 		}
 	}
 	function deleteNewComment(id, content) {
-		if (confirm("ëŒ“ê¸€ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
+		if (confirm("´ñ±ÛÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")) {
 			$.ajax({
-				type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
-				url : 'deleteNewComment.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
+				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
+				url : 'deleteNewComment.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
 				data : {
 					'id' : id,
 					'content' : content
-				}, // ê²€ìƒ‰ì–´ ë°ì´í„°
-				dataType : 'text', // ì‘ë‹µë°ì´í„° í˜•ì‹
+				}, // °Ë»ö¾î µ¥ÀÌÅÍ
+				dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
 				success : function(resultData) {
-					alert("ì‚­ì œ ì„±ê³µ!");
+					alert("»èÁ¦ ¼º°ø!");
 					$('#new-comment').remove();
 				},
 				error : function() {
-					alert('ajax ìš”ì²­ ì‹¤íŒ¨');
+					alert('ajax ¿äÃ» ½ÇÆĞ');
 				}
 			})
 		}
@@ -313,13 +325,13 @@
 		console.log('uploadPhotoCount:' + uploadPhotoCount);
 		++photoNum;
 		++uploadPhotoCount;
-		$('#file-container').append('<span id="upload-btn-' + uploadPhotoCount + '"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" name="fileList" id="fileList" class="upload-btn" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="ì—…ë¡œë“œí•  íŒŒì¼ ì„ íƒ"></a><a href="#" style="color:red;" onclick="removePhoto(' + uploadPhotoCount + ')" style="width:20%">X</a><span>');
+		$('#file-container').append('<span id="upload-btn-' + uploadPhotoCount + '"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" name="fileList" id="fileList" class="upload-btn" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="¾÷·ÎµåÇÒ ÆÄÀÏ ¼±ÅÃ"></a><a href="#" style="color:red;" onclick="removePhoto(' + uploadPhotoCount + ')" style="width:20%">X</a><span>');
 	}
 	function removePhoto(uploadNum) {
-		console.log('ì„ íƒ ë²ˆí˜¸:' + uploadNum);
+		console.log('¼±ÅÃ ¹øÈ£:' + uploadNum);
 		$("#upload-btn-" + uploadNum).remove();
 		--photoNum;
-		console.log('ë‚¨ì€ ì‚¬ì§„ ê°¯ìˆ˜:' + photoNum);
+		console.log('³²Àº »çÁø °¹¼ö:' + photoNum);
 	}
 	function readURL(changeInput) {
 		// 	console.log(id);
@@ -337,34 +349,34 @@
 	function reactListener(id, article_num, expression) {
 		alert(id + " " + article_num + " " + expression);
 		$.ajax({
-			type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
-			url : 'react.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
+			type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
+			url : 'react.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
 			data : {
 				'article_num' : article_num,
 				'id' : id,
 				'expression' : expression
-			}, // ê²€ìƒ‰ì–´ ë°ì´í„°
-			dataType : 'text', // ì‘ë‹µë°ì´í„° í˜•ì‹
+			}, // °Ë»ö¾î µ¥ÀÌÅÍ
+			dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
 			success : function(resultData) {
-				alert("ë¦¬ì•¡ì…˜ ë‹¬ê¸° ì„¤ê³µ!");
+				alert("¸®¾×¼Ç ´Ş±â ¼³°ø!");
 				$('#like-indicator-' + article_num).append("+");
 			},
 			error : function() {
 				$.ajax({
-					type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
-					url : 'reactUpdate.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
+					type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
+					url : 'reactUpdate.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
 					data : {
 						'article_num' : article_num,
 						'id' : id,
 						'expression' : expression
-					}, // ê²€ìƒ‰ì–´ ë°ì´í„°
-					dataType : 'text', // ì‘ë‹µë°ì´í„° í˜•ì‹
+					}, // °Ë»ö¾î µ¥ÀÌÅÍ
+					dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
 					success : function(resultData) {
-						alert("ë¦¬ì•¡ì…˜ ë‹¬ê¸° ì„¤ê³µ!");
+						alert("¸®¾×¼Ç ´Ş±â ¼³°ø!");
 						$('#like-indicator-' + article_num).append("+");
 					},
 					error : function() {
-						alert('React ajax ìš”ì²­ ì‹¤íŒ¨');
+						alert('React ajax ¿äÃ» ½ÇÆĞ');
 					}
 				})
 			}
@@ -586,7 +598,7 @@
 																		</li>
 																	</c:if>
 																	</ul>
-																	${articleVO.react_count}ëª…
+																	${articleVO.react_count}¸í
 															</c:if>
 														</span>
 														<!-- EO liked list -->
@@ -622,7 +634,7 @@
 														<hr>
 														<span> <input type="hidden" class="article-num"
 															value="${articleVO.article_num}"> <textarea
-																class="comment-write-area" placeholder="ëŒ“ê¸€ë‹¬ê¸°..."
+																class="comment-write-area" placeholder="´ñ±Û´Ş±â..."
 																name="${articleVO.article_num}"></textarea>
 														</span>
 													</div>
@@ -689,3 +701,6 @@
 	</c:if>
 </body>
 </html>
+
+
+

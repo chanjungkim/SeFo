@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
@@ -35,6 +37,15 @@ public class ArticleController {
 	@ResponseBody
 	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			ArticleVO article) throws UnsupportedEncodingException {
+		String decodedData = URLDecoder.decode(article.getContent(), "UTF-8");
+		article.setContent(decodedData);
+		
+		if (article.getFileList() != null) {
+			for (MultipartFile m : article.getFileList()) {
+				String filename = URLDecoder.decode(m.getOriginalFilename(), "UTF-8");
+				System.out.println("tt:"+filename);
+			}
+		}
 		String id = (String) session.getAttribute("loginId");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = sdf.format(new Date());

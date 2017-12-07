@@ -61,7 +61,6 @@ public class MemberController {
 	@RequestMapping("/initMain.do")
 	public ModelAndView initMain(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {   	
 		String id = (String) session.getAttribute("loginId");
-	
 		Cookie cookie = new Cookie("sefoId", id);
 		cookie.setComment("last id");
 		cookie.setMaxAge(60*60*24*3);
