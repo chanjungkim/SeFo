@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import repository.mapper.ArticleMapper;
 import repository.mapper.ProfileMapper;
@@ -85,5 +86,10 @@ public class ProfileDao {
 		int result = mapper.insertArticlePhoto(file);
 		System.out.println("insertArticlePhoto :" + result);
 		return result;
+	}
+
+	public int updateProfilePhoto(String userId, String photo_path) {
+		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
+		return mapper.updateProfilePhoto(userId, photo_path);
 	}
 }

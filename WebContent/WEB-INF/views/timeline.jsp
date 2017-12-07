@@ -48,15 +48,15 @@
 			var content = $(this).val()
 			if (e.which == 13 && content.length > 0) {
 				$.ajax({
-					type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-					url : 'writeComment.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+					type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+					url : 'writeComment.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					data : {
 						'article_num' : article_num,
 						'content' : content
-					}, // °Ë»ö¾î µ¥ÀÌÅÍ
-					dataType : 'json', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+					}, // ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+					dataType : 'json', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					success : function(resultData) {
-						alert("´ñ±Û ÀÛ¼º ¼º°ø!");
+						alert("ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 						var id = resultData.id;
 						var photo_path = resultData.photo_path;
 						var write_time = resultData.write_time;
@@ -82,7 +82,7 @@
 						$('.comment-write-area').val("");
 					},
 					error : function() {
-						alert('´ñ±Û ajax ¿äÃ» ½ÇÆĞ');
+						alert('ï¿½ï¿½ï¿½ ajax ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½');
 					}
 				})
 			}
@@ -121,8 +121,8 @@
 			// 				$(this).height('auto');
 			console.log('original size:' + width + "/" + height)
 			console.log('src:' + $(this).attr('src'))
-			console.log("ºÎ¸ğ »çÀÌÁî: " + $(this).parent().width() + ", " + $(this).parent().height());
-			console.log("ÀÌ¹ÌÁö »çÀÌÁî: " + $(this).width() + ", " + $(this).height());
+			console.log("ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " + $(this).parent().width() + ", " + $(this).parent().height());
+			console.log("ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " + $(this).width() + ", " + $(this).height());
 			var diffWidth = $(this).parent().width() - $(this).width();
 			var diffHeight = $(this).parent().height() - $(this).height();
 			console.log("diffWidth: " + diffWidth + ", diffHeight: " + diffHeight);
@@ -153,20 +153,12 @@
 			$("#content").val();
 		});
 		$(document).on('click', '#postBtn', function(e) {
-			//Æû°´Ã¼¸¦ ºÒ·¯¿Í¼­
+			//ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Í¼ï¿½
 			var form = $('#write_form')[0];
-// 			var form = jQuery('#write_form')
-// 			form = form.serialize();
-			//FormData parameter¿¡ ´ã¾ÆÁÜ
-// 			alert(form.serialize());
 			var formData = new FormData(form);
 			$('#content').val("");
 			$('#modalContent').val("");
 			$('#file-container').empty();
-			
-// 			for (var pair of formData.entries()) {
-// 			    console.log(pair[0]+ ', ' + pair[1]); 
-// 			}
 			
 			var newForm = new FormData();
 			for(var pair of formData.entries()) {
@@ -180,13 +172,13 @@
 			    console.log(pair[0]+ ', ' + pair[1]); 
 			}
 			$.ajax({
-				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-				url : 'writePost.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+				type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+				url : 'writePost.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				processData : false,
 				cache : false,
 				contentType : false,
 				data : newForm,
-				dataType : 'json', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+				dataType : 'json', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				success : function(resultData) {
 					var photoCount = resultData.photo_count;
 					var photoList = resultData.photoList;
@@ -195,7 +187,7 @@
 					var article_num = resultData.article_num;
 					var write_time = resultData.write_time;
 					var article_id = resultData.id;
-					// alert('±Û¾²±â ¿Ï·á');
+					// alert('ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½');
 					var newPost = '<div class="panel panel-default"><div class="panel-thumbnail"></div>'
 						+ '<div class="panel-body">'
 						+ '<p class="lead">'
@@ -232,7 +224,7 @@
 						+ '<hr>'
 						+ '		<span> <input type="hidden" class="article-num"'
 						+ '			value="'+article_num+'"> <textarea'
-						+ '			class="comment-write-area" placeholder="´ñ±Û´Ş±â..."'
+						+ '			class="comment-write-area" placeholder="ï¿½ï¿½Û´Ş±ï¿½..."'
 						+ '			name="'+article_num+'"></textarea>'
 						+ '		</span>'
 						+ '		<!--  EO Comment -->'
@@ -242,12 +234,12 @@
 					$("#timeline").after(newPost);
 				},
 				error : function() {
-					alert('ajax ¿äÃ» ½ÇÆĞ');
+					alert('ajax ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½');
 				}
 			})
 		})
 		// 		$(document).on('hover', '.react-button', function()){
-		// 			$(this).after('<button>ÁÁ¾Æ¿ä</button><button>È­³ª¿ä</button><button>½½ÆÛ¿ä</button>');
+		// 			$(this).after('<button>ï¿½ï¿½ï¿½Æ¿ï¿½</button><button>È­ï¿½ï¿½ï¿½ï¿½</button><button>ï¿½ï¿½ï¿½Û¿ï¿½</button>');
 		// 		}
 		// 		$(document).on('mouseout', '.react-button', function()){
 		// 			$(this).after("");
@@ -256,12 +248,12 @@
 			var searchWord = $(this).val();
 			console.log(searchWord);
 			$.ajax({
-				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-				url : 'search.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+				type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+				url : 'search.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				data : {
-					'searchWord' : searchWord // °Ë»ö¾î µ¥ÀÌÅÍ	
+					'searchWord' : searchWord // ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 				},
-				dataType : 'json', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+				dataType : 'json', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				success : function(resultData) {
 					console.log(resultData);
 					$('.search-option').remove();
@@ -275,46 +267,46 @@
 					$('#search-data-list').append(bookData);
 				},
 				error : function() {
-					console.log('°Ë»ö ajax ¿äÃ» ½ÇÆĞ');
+					console.log('ï¿½Ë»ï¿½ ajax ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½');
 				}
 			})
 		})
 	})
 	function deleteComment(comment_num) {
-		if (confirm("´ñ±ÛÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")) {
+		if (confirm("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?")) {
 			$.ajax({
-				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-				url : 'deleteComment.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+				type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+				url : 'deleteComment.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				data : {
 					'comment_num' : comment_num
-				}, // °Ë»ö¾î µ¥ÀÌÅÍ
-				dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+				}, // ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				dataType : 'text', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				success : function(resultData) {
-					alert("»èÁ¦ ¼º°ø!");
+					alert("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 					$('#comment-' + comment_num).remove();
 				},
 				error : function() {
-					alert('ajax ¿äÃ» ½ÇÆĞ');
+					alert('ajax ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½');
 				}
 			})
 		}
 	}
 	function deleteNewComment(id, content) {
-		if (confirm("´ñ±ÛÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")) {
+		if (confirm("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?")) {
 			$.ajax({
-				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-				url : 'deleteNewComment.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+				type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+				url : 'deleteNewComment.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				data : {
 					'id' : id,
 					'content' : content
-				}, // °Ë»ö¾î µ¥ÀÌÅÍ
-				dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+				}, // ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				dataType : 'text', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				success : function(resultData) {
-					alert("»èÁ¦ ¼º°ø!");
+					alert("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 					$('#new-comment').remove();
 				},
 				error : function() {
-					alert('ajax ¿äÃ» ½ÇÆĞ');
+					alert('ajax ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½');
 				}
 			})
 		}
@@ -326,13 +318,13 @@
 		console.log('uploadPhotoCount:' + uploadPhotoCount);
 		++photoNum;
 		++uploadPhotoCount;
-		$('#file-container').append('<span id="upload-btn-' + uploadPhotoCount + '"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" name="fileList" id="fileList" class="upload-btn" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="¾÷·ÎµåÇÒ ÆÄÀÏ ¼±ÅÃ"></a><a href="#" style="color:red;" onclick="removePhoto(' + uploadPhotoCount + ')" style="width:20%">X</a><span>');
+		$('#file-container').append('<span id="upload-btn-' + uploadPhotoCount + '"class="upload-btn-wrapper" style="width:10%"><a href="#"><input type="file" name="fileList" id="fileList" class="upload-btn" style="width:80%; height:50px"/><img src="assets/img/addPhotoButtonImage.png" style="width:80%; height:50px;" alt="ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"></a><a href="#" style="color:red;" onclick="removePhoto(' + uploadPhotoCount + ')" style="width:20%">X</a><span>');
 	}
 	function removePhoto(uploadNum) {
-		console.log('¼±ÅÃ ¹øÈ£:' + uploadNum);
+// 		console.log('ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£:' + uploadNum);
 		$("#upload-btn-" + uploadNum).remove();
 		--photoNum;
-		console.log('³²Àº »çÁø °¹¼ö:' + photoNum);
+// 		console.log('ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½:' + photoNum);
 	}
 	function readURL(changeInput) {
 		// 	console.log(id);
@@ -349,24 +341,24 @@
 	}
 	
 function removeArticle(article_num) {
-	if (confirm("°Ô½Ã±ÛÀ» »èÁ¦ ÇÏ½Ã°Ú½À´Ï±î?")) {
+	if (confirm("ì´ ê¸€ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
 		$.ajax({
-			type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-			url : 'remove-article.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+			type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+			url : 'remove-article.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			data : {
 				'article_num' : article_num
-			}, // °Ë»ö¾î µ¥ÀÌÅÍ
-			dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+			}, // ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			dataType : 'text', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			success : function(resultData) {
 				if(resultData) {		
 					$('#article-'+article_num).remove();
 				}
 				else {
-					alert("»èÁ¦ ½ÇÆĞ!");
+					alert("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 				}
 			},
 			error : function() {
-				alert('ajax ¿äÃ» ½ÇÆĞ');
+				alert('ajax ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½');
 			}
 		})
 	}
@@ -375,16 +367,16 @@ function removeArticle(article_num) {
 	function reactListener(id, article_num, expression) {
 		alert(id + " " + article_num + " " + expression);
 		$.ajax({
-			type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-			url : 'react.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+			type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+			url : 'react.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			data : {
 				'article_num' : article_num,
 				'id' : id,
 				'expression' : expression
-			}, // °Ë»ö¾î µ¥ÀÌÅÍ
-			dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+			}, // ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			dataType : 'text', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			success : function(resultData) {
-				alert("¸®¾×¼Ç ´Ş±â ¼³°ø!");
+				alert("ï¿½ï¿½ï¿½×¼ï¿½ ï¿½Ş±ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 // 				var a = '<c:if test="${not empty articleVO.reactList}">'
 // 					+ '<ul style="display: inline-block;">'
 // 					+ '<c:if test="${articleVO.react_like == true}" >'
@@ -418,7 +410,7 @@ function removeArticle(article_num) {
 // 						</li>
 // 					</c:if>
 // 					</ul>
-// 					${articleVO.react_count}¸í
+// 					${articleVO.react_count}ï¿½ï¿½
 // 			</c:if>
 // 		</span>
 		<!-- EO liked list -->'
@@ -426,20 +418,20 @@ function removeArticle(article_num) {
 			},
 			error : function() {
 				$.ajax({
-					type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-					url : 'reactUpdate.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+					type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+					url : 'reactUpdate.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					data : {
 						'article_num' : article_num,
 						'id' : id,
 						'expression' : expression
-					}, // °Ë»ö¾î µ¥ÀÌÅÍ
-					dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+					}, // ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+					dataType : 'text', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					success : function(resultData) {
-						alert("¸®¾×¼Ç ´Ş±â ¼³°ø!");
+						alert("ï¿½ï¿½ï¿½×¼ï¿½ ï¿½Ş±ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 						$('#like-indicator-' + article_num).append("+");
 					},
 					error : function() {
-						alert('React ajax ¿äÃ» ½ÇÆĞ');
+						alert('React ajax ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½');
 					}
 				})
 			}
@@ -665,7 +657,7 @@ function removeArticle(article_num) {
 																		</li>
 																	</c:if>
 																	</ul>
-																	${articleVO.react_count}¸í
+																	${articleVO.react_count}ï¿½ï¿½
 															</c:if>
 														</span>
 														<!-- EO liked list -->
@@ -701,7 +693,7 @@ function removeArticle(article_num) {
 														<hr>
 														<span> <input type="hidden" class="article-num"
 															value="${articleVO.article_num}"> <textarea
-																class="comment-write-area" placeholder="´ñ±Û´Ş±â..."
+																class="comment-write-area" placeholder="ï¿½ï¿½Û´Ş±ï¿½..."
 																name="${articleVO.article_num}"></textarea>
 														</span>
 													</div>

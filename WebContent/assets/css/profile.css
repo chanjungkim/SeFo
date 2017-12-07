@@ -66,26 +66,27 @@ hr {
 	font-size: 5px;
 }
 
-#profile-img {
+#profile-img, .file_input_div, .file_input_img_btn, .file_input_hidden {
 	border-radius: 50%;
 	border: 0.5px solid #aaa;
 	width: 140px; 
 	height: 140px; 
 	margin: 0px;
 }
+.file_input_div {
+    position:relative;
+    overflow:hidden;
+}
 
-.profile-edit {
-	color: black;
-	border-width : 0.5px;
-	padding : 3px;
-	padding-left : 25px;
-	padding-right : 25px;
-	border-bottom-style: solid;
-	border-right-style: solid;
-	border-color: #BBB;
-	border-radius: 5px 5px 5px 5px;
-	background-color: transparent;
-	outline: none;
+.file_input_hidden {
+    font-size:29px;
+    position:absolute;
+    right:0px;
+    top:0px;
+    opacity:0;
+    filter: alpha(opacity=0);
+    -ms-filter: alpha(opacity=0);
+    cursor:pointer;
 }
 
 #div_midle {

@@ -1,9 +1,17 @@
 package service;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import repository.ProfileDao;
 import repository.mapper.ProfileMapper;
@@ -91,6 +99,43 @@ public class ProfileService {
 	}
 	public int insertArticlePhoto(FileVO file) {
 		int result=dao.insertArticlePhoto(file);
+		return result;
+	}
+	public int changeProfilePhoto(HttpServletRequest request, String userId, MultipartFile m) {
+		System.out.println("PhotoService: changeAProfilePhoto 실행!");
+		
+		// 파일처리
+		String uploadPath = request.getServletContext().getRealPath("assets/img/profile_pictures");
+		
+		File dir = new File(uploadPath + '/' );
+		
+		// 폴더가 없을 경우 생성
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		
+		
+		String savedName = null;
+
+		try {
+			savedName = URLDecoder.decode(m.getOriginalFilename(),"UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		long time = System.currentTimeMillis();
+
+		File savedFile = new File(dir.getAbsolutePath() + "/"+time + savedName);
+		
+		int result = dao.updateProfilePhoto(userId, savedFile.getAbsolutePath());
+
+		try {
+			m.transferTo(savedFile);
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 }

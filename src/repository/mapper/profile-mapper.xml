@@ -92,4 +92,8 @@
   	<insert id="insertArticlePhoto" parameterType="FileVO"> 
   		INSERT INTO article_photo(article_num, file_path, file_name, file_origiName) VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName}) 
   	</insert>
+  	
+  	<update id="updateProfilePhoto">
+  		UPDATE MEMBER SET PHOTO_PATH = ${photo_path} WHERE ID = ${id}
+  	</update>
 </mapper>

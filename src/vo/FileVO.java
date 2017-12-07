@@ -9,6 +9,7 @@ public class FileVO {
 	private String file_name;
 	private String file_origiName;
 	private MultipartFile memImg;
+	
 	///////////////////////////////
 	public String getFile_path() {
 		return file_path;

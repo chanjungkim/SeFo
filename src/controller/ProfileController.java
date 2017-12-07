@@ -1,21 +1,22 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import service.ArticleService;
@@ -23,6 +24,7 @@ import service.ProfileService;
 import vo.ArticleVO;
 import vo.FileVO;
 import vo.MemberVO;
+import vo.SingleFileVO;
 
 @Controller
 public class ProfileController {
@@ -55,27 +57,6 @@ public class ProfileController {
 		System.out.println("articlelist:" + articleList.size());
 		return mv;
 	}
-	
-//	@RequestMapping(value = "/other_profile.do", method=RequestMethod.GET)
-//	public ModelAndView otherProfilePage(HttpServletRequest httpServletRequest) {
-//		String id = httpServletRequest.getParameter("srch-term");
-//		ModelAndView mv = new ModelAndView("profile");
-//		List<ArticleVO> articleList = profileService.getProfileFistArticleList(id);
-//		for(ArticleVO a : articleList) {
-//			List<FileVO> result = articleService.getArticlePhoto(a.getArticle_num());
-//			if (result != null && result.size() != 0) {
-//				a.setPhotoList(result);
-//			} 
-//		}
-//		int totalContentCnt = profileService.getProfileContentCount(id);
-//		MemberVO memberVO = profileService.getProfileInfo(id);
-//		mv.addObject("articleList", articleList);
-//		mv.addObject("totalContentCnt", totalContentCnt);
-//		mv.addObject("memberVO", memberVO);
-//		mv.addObject("accessAut", "other");
-//		return mv;
-//	}
-	
 	/*
 	 *	사진 정보 추가 요청 ajax 처리
 	 **/
@@ -101,6 +82,7 @@ public class ProfileController {
 		mv.setViewName("myPage");
 		return mv;
 	}
+	
 	@RequestMapping(value="updateProfile.do",method=RequestMethod.POST)
 	public ModelAndView update(MemberVO member, HttpSession session) {
 		String loginId=(String)session.getAttribute("loginId");
@@ -140,7 +122,7 @@ public class ProfileController {
 		return profileService.unFollow(id, follow_id);
 	}
 	
-	@RequestMapping(value="deleteAll.do",method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/deleteAll.do",method={RequestMethod.GET, RequestMethod.POST})
 	public void deleteAll(String id, String deletePw,HttpSession session,HttpServletResponse response) {
 		boolean result=profileService.deleteAll(id, deletePw);
 		try {
@@ -149,5 +131,17 @@ public class ProfileController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value = "/changeProfilePhoto.do", method= RequestMethod.POST)
+	public void changePhofilePhoto (HttpSession sessoion, SingleFileVO singleFileVO)
+			throws UnsupportedEncodingException {
+		
+//		String filename = URLDecoder.decode(m.getOriginalFilename(), "UTF-8");
+		
+//		System.out.println("tt:"+filename);
+		System.out.println("changeProfilePhoto.do 실행");
+		System.out.println(singleFileVO.getFile());
+//		profileService.changeProfilePhoto(request, userId, file_1);
 	}
 }

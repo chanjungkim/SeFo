@@ -16,11 +16,9 @@
 <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-<link href="<%=request.getContextPath()%>/assets/css/sefo.css"
-	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/assets/css/sefo.css" rel="stylesheet">
 <script src="https://use.fontawesome.com/804ea8b780.js"></script>
-<script
-	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script
 	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <script src="<%=request.getContextPath()%>/assets/js/gallery.js"></script>
@@ -162,7 +160,6 @@
 				data : formData,
 				dataType : 'json', // 응답데이터 형식
 				success : function(resultData) {
-					
 					alert("사진전송 성공")
 					window.location.href="profile.do";
 				},
@@ -176,35 +173,54 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/bootstrap.js"></script>
 <script type="text/javascript">
-$(document)
-	.ready(
-		function() {
-			$('[data-toggle=offcanvas]')
-				.click(
-					function() {
-						$(this)
-							.toggleClass(
-								'visible-xs text-center');
-						$(this)
-							.find('i')
-							.toggleClass(
-								'glyphicon-chevron-right glyphicon-chevron-left');
-						$('.row-offcanvas')
-							.toggleClass(
-								'active');
-						$('#lg-menu')
-							.toggleClass(
-								'hidden-xs')
-							.toggleClass(
-								'visible-xs');
-						$('#xs-menu')
-							.toggleClass(
-								'visible-xs')
-							.toggleClass(
-								'hidden-xs');
+$(document).ready(function() {
+			$('[data-toggle=offcanvas]').click(function() {
+						$(this).toggleClass('visible-xs text-center');
+						$(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+						$('.row-offcanvas').toggleClass('active');
+						$('#lg-menu').toggleClass(	'hidden-xs')	.toggleClass('visible-xs');
+						$('#xs-menu').toggleClass(	'visible-xs').toggleClass(	'hidden-xs');
 						$('#btnShow').toggle();
 					});
-});
+			$(document).on('change', ".file_input_hidden", function() {
+				alert('실행됨!!');
+				readURL(this);
+				//폼객체를 불러와서
+				var form = $('write_form')[0];
+				//FormData parameter에 담아줌
+				var formData = new FormData(form);
+				$.ajax({
+					type : 'post',
+					url : '<%=request.getContextPath()%>/changeProfilePhoto.do',
+					processData : false,
+					cache : false,
+					contentType : false,
+					data : formData,
+					enctype: "multipart/form-data",
+					dataType : 'json',
+					success : function(resultData) {
+						alert("사진 변경 완료!");
+					},
+					error : function(resultData){
+						alert("사진 변경 실패");
+					}
+				});
+	});
+})
+function readURL(changeInput) {
+	// 	console.log(id);
+	if (changeInput.files && changeInput.files[0]) {
+		var reader = new FileReader();
+		reader.readAsDataURL(changeInput.files[0]);
+		reader.onload = function(e) {
+// 			    	console.log(e.target.result);
+// 			    	alert($(changeInput).siblings('img').attr('src'));
+			
+
+			$(changeInput).siblings('img').attr('src', reader.result);
+		}
+	}
+}
 </script>
 <style type="text/css">
 figure {
@@ -281,19 +297,33 @@ figure>div>.photo-info {
 									<div class="well col-md-12">
 										<div class="row">
 										<div class="my_profile_img img-fluid col-md-4">
-											<button class="btn btn-info btn-lg" data-toggle="modal" 
-												data-target="#myModal" >
-												<img id="profile-img"
-													src="<%=request.getContextPath()%>/${memberVO.photo_path}">
-											</button>
-											<div id="myModal" class="modal fade" role="dialog">
-												<div class="modal-dialog">
-
-													<!-- Modal content-->
-													<div class="modal-content">
-														<input type="file"> <input type="submit" id="send"
-															value="전송">
-													</div>
+										<form  class="form center-block" role="form" action="<%=request.getContextPath()%>/changeProfilePhoto.do"
+													method="post" enctype="multipart/form-data" id="write_form"
+													name="write_form" accept-charset="utf-8">
+											<div class="file_input_div">
+											    <img src="<%=request.getContextPath()%>/${memberVO.photo_path}" class="file_input_img_btn" alt="open" />
+											    <input type="file" name="file" id="file" class="file_input_hidden"/>
+											</div>											
+										</form>
+												<!-- 													Modal content -->
+<!-- 													<div class="modal-content"> -->
+<!-- 														<div class="container"> -->
+<!-- 															<div class="col-md-6"> -->
+<!-- 															    <div class="form-group"> -->
+<!-- 															        <label>Upload Image</label> -->
+<!-- 															        <div class="input-group"> -->
+<!-- 															            <span class="input-group-btn"> -->
+<!-- 															                <span class="btn btn-default btn-file"> -->
+<!-- 															                    Browse… <input type="file" id="imgInp"> -->
+<!-- 															                </span> -->
+<!-- 															            </span> -->
+<!-- 															            <input type="text" class="form-control" readonly> -->
+<!-- 															        </div> -->
+<!-- 															        <img id='img-upload'/> -->
+<!-- 															    </div> -->
+<!-- 															</div> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
 
 												</div>
 											</div>
@@ -304,7 +334,7 @@ figure>div>.photo-info {
 												style="display: flex; align-items: center; align-self: center; margin-top: 10px;">
 												<div
 													style="font-size: 30px; margin-right: 30px; float: left; font-family: 나눔고딕">${memberVO.id }</div>
-												<!-- 												수정 : 성훈  -->
+												<!--  수정 : 성훈  -->
 												<div class="row"
 													style="float: left; display: flex; align-items: center;">
 													<c:choose>
@@ -375,7 +405,7 @@ figure>div>.photo-info {
 							</div>
 							<!-- /col-9 -->
 						</div>
-														<div class="row">
+								<div class="row">
 									<div id="gallery" class="gallery"  style="margin-top: 15px; max-width: 1000px; margin: auto">
 										<c:forEach items="${articleList}" var="articleVO">
 											<c:if test="${not empty articleVO.getPhotoList()}">
