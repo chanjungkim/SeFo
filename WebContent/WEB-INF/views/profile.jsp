@@ -56,8 +56,15 @@
 						$.each(resultData, function() {
 							var myContext = "<%=request.getContextPath()%>";
 							article_last_index = this.article_num;
-							addImage += '<figure><div><img id="article_img" name ="article_img" src="' + myContext + '/' + this.photoList[0].file_origiName + '"';
-							addImage += 'style="z-index: 0; width:35px; height:35px;"><div class="photo-info">' + this.commentCount + '개</div></div> </figure>';
+							addImage += '<figure>'
+							addImage += '<div><img id="article_img" name ="article_img" src="' + myContext + '/' + this.photoList[0].file_origiName + '"';
+							addImage += 'style="z-index: 0;"><div class="photo-info" style="display: inline-block;">'
+							addImage += '<img src="<%=request.getContextPath()%>/assets/img/icon/heart-profile.png"'
+							addImage += 'style="width: 15px; height: 15px; display: inline-block;">';
+							addImage += this.react_count+'개';
+							addImage += '<img src="<%=request.getContextPath()%>/assets/img/icon/chat.png"';
+							addImage += 'style="width: 15px; height: 15px; display: inline-block; margin-left: 10px">'+this.commentCount+'개';
+							addImage += '</div></div></figure>';
 							article_count_sum += 1;
 						})
 						article_count = article_count_sum;
@@ -270,15 +277,13 @@ figure>div>.photo-info {
 						<div class="padding">
 							<div class="profile-container">
 								<div>
-
 									<!-- content -->
 									<div class="row">
-										<div class="my_profile_img col-md-3 img-fluid"
-											style="margin: auto; width: auto; max-height: 100%;">
+										<div class="my_profile_img img-fluid col-md-4" style="margin-left: 50px">
 											<button
 												style="border-style: none; background-color: transparent; outline: none;"
-												class="btn btn-info btn-lg" data-toggle="modal"
-												data-target="#myModal">
+												class="btn btn-info btn-lg" data-toggle="modal" 
+												data-target="#myModal" >
 												<img id="profile_img"
 													src="<%=request.getContextPath()%>/${memberVO.photo_path}">
 											</button>
@@ -295,8 +300,7 @@ figure>div>.photo-info {
 											</div>
 										</div>
 
-										<div class="col-md-9"
-											style="margin: auto; width: auto; max-height: 100%;">
+										<div class="col-md-8">
 											<div class="row"
 												style="display: flex; align-items: center; align-self: center; margin-top: 10px;">
 												<div
@@ -371,10 +375,14 @@ figure>div>.photo-info {
 															src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName}"
 															style="z-index: 0;"
 															onclick="openGalleryModal('<%=request.getContextPath()%>', ${articleVO.article_num})">
-														<div class="photo-info" style="">
+														<div class="photo-info" style="display: inline-block;">
+															<img
+																src="<%=request.getContextPath()%>/assets/img/icon/heart-profile.png"
+																style="width: 15px; height: 15px; display: inline-block;">
+															${articleVO.react_count}개
 															<img
 																src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
-																style="width: 15px; height: 15px; display: inline-block;">
+																style="width: 15px; height: 15px; display: inline-block; margin-left: 10px">
 															${articleVO.commentCount}개
 														</div>
 													</div>

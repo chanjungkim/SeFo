@@ -55,7 +55,7 @@ function showMsg(){
 </head>
 <body>
 	<div id="nav-container" class="top-bar navbar navbar-static-top">
-			<div class="navbar-header col-md-3">
+		<div class="navbar-header col-md-3">
 			<button class="navbar-toggle" type="button" data-toggle="collapse"
 				data-target=".navbar-collapse">
 				<span class="sr-only">Toggle</span> <span class="icon-bar"></span> <span
