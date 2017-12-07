@@ -108,4 +108,14 @@ public class ArticleDao {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectLastComment(article_num, id);
 	}
+
+	public long selectLeftArticleNum(long article_num, String id) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.selectLeftArticleNum(article_num, id);
+	}
+	
+	public long selectRightArticleNum(long article_num, String id) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.selectRightArticleNum(article_num, id);
+	}
 } 

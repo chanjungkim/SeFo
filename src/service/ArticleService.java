@@ -168,7 +168,7 @@ public class ArticleService {
 		if(result > 0) return true;
 		else return false;
 	}
-
+	
 	public ArticleVO getAnArticle(long article_num) {
 		ArticleVO article = dao.selectArticle(article_num);
 		article.setCommentList(dao.selectAllComment(article_num));
@@ -181,5 +181,13 @@ public class ArticleService {
 		// System.out.println(article.getArticle_num()+"/"+article.getCommentList().size());
 		article.toString();
 		return article;
+	}
+
+	public long getLeftArticleNum(long article_num, String id) {
+		return dao.selectLeftArticleNum(article_num, id);
+	}
+	
+	public long getRightArticleNum(long article_num, String id) {
+		return dao.selectRightArticleNum(article_num, id);
 	}
 }

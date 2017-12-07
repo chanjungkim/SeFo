@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=EUC-KR">
+<meta charset="EUC-KR">
 <title>Welcome! ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -57,7 +57,7 @@
 							var myContext = "<%=request.getContextPath()%>";
 							article_last_index = this.article_num;
 							addImage += '<figure><div><img id="article_img" name ="article_img" src="' + myContext + '/' + this.photoList[0].file_origiName + '"';
-							addImage += 'style="z-index: 0;"><div class="photo-info">' + this.commentCount + '개</div></div> </figure>';
+							addImage += 'style="z-index: 0; width:35px; height:35px;"><div class="photo-info">' + this.commentCount + '개</div></div> </figure>';
 							article_count_sum += 1;
 						})
 						article_count = article_count_sum;
@@ -166,6 +166,39 @@
 		});
 	});
 </script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/bootstrap.js"></script>
+<script type="text/javascript">
+$(document)
+	.ready(
+		function() {
+			$('[data-toggle=offcanvas]')
+				.click(
+					function() {
+						$(this)
+							.toggleClass(
+								'visible-xs text-center');
+						$(this)
+							.find('i')
+							.toggleClass(
+								'glyphicon-chevron-right glyphicon-chevron-left');
+						$('.row-offcanvas')
+							.toggleClass(
+								'active');
+						$('#lg-menu')
+							.toggleClass(
+								'hidden-xs')
+							.toggleClass(
+								'visible-xs');
+						$('#xs-menu')
+							.toggleClass(
+								'visible-xs')
+							.toggleClass(
+								'hidden-xs');
+						$('#btnShow').toggle();
+					});
+});
+</script>
 <style type="text/css">
 figure {
 	position: relative;
@@ -182,10 +215,28 @@ figure>div>.photo-info {
 	left: 50%;
 	font-size: 16px;
 }
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
 </style>
 </head>
 <body>
-
 	<c:if test="${empty articleList}">
 		<input type="hidden" id="article_last_index" value="0">
 	</c:if>
@@ -357,64 +408,72 @@ figure>div>.photo-info {
 		</div>
 
 		<!-- GalleryModal Start -->
-		<div class="modal fade bs-example-modal-lg" tabindex="-1"
-			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg">
+		<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="width:100%;">
+			<div class="modal-dialog modal-lg" style="width:90%">
 				<div class="modal-content">
-					<div id="carousel-example-generic" class="carousel slide"
-						data-ride="carousel">
+				<table id="modal-table">
+					<tr>
+						<td>
+							<a href="#" id="modal-left-button" class="glyphicon glyphicon-chevron-left" onclick=""></a>
+						</td>
+						<td style="width:70%">
+								<div class="photo-slide" style="vertical-align: bottom;">
+									<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false" >
+				
+										<!-- Modal Content Area -->
+										<div class="carousel-inner"></div>
+				
+										<!-- Controls -->
+										<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+										<span style="vertical-align: middle; text-align: center;"><</span> 
+										</a> <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+											<span>></span>
+										</a>
+									</div>
+								</div>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<div id="modal-user-info">
+											<a id="modal-user-link" href="" style="display:flex;">
+												<img id="modal-user-picture" src=""  style="width: 50px; height: 50px; border-radius: 50px; ">
+												<lable id="modal-user-id"></lable>
+											</a>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div id="modal-gallery-content"></div>
+										<div style="width:100%; text-align: right;">
+											<a class="modal-article-write-time"></a>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table id="modal-gallery-comment-list" class="comment-area" width="100%">
+										<!-- Start Comment  -->
 
-						<!-- Modal Content Area -->
-						<div class="carousel-inner"></div>
-
-						<!-- Controls -->
-						<a class="left carousel-control" href="#carousel-example-generic"
-							role="button" data-slide="prev"> <span
-							class="glyphicon glyphicon-chevron-left"></span>
-						</a> <a class="right carousel-control"
-							href="#carousel-example-generic" role="button" data-slide="next">
-							<span class="glyphicon glyphicon-chevron-right"></span>
-						</a>
-					</div>
+										<!--  EO Comment -->
+										</table>
+										<hr>
+										<textarea style="width:100%" placeholder="댓글달기..."></textarea>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<a href="#" id="modal-right-button" class="glyphicon glyphicon-chevron-right" onclick=""></a>
+						</td>
+					</tr>
+				</table>
 				</div>
 			</div>
 		</div>
 		<!-- EO Gallery Modal -->
-		<script type="text/javascript"
-			src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
-		<script type="text/javascript"
-			src="<%=request.getContextPath()%>/assets/js/bootstrap.js"></script>
-		<script type="text/javascript">
-			$(document)
-				.ready(
-					function() {
-						$('[data-toggle=offcanvas]')
-							.click(
-								function() {
-									$(this)
-										.toggleClass(
-											'visible-xs text-center');
-									$(this)
-										.find('i')
-										.toggleClass(
-											'glyphicon-chevron-right glyphicon-chevron-left');
-									$('.row-offcanvas')
-										.toggleClass(
-											'active');
-									$('#lg-menu')
-										.toggleClass(
-											'hidden-xs')
-										.toggleClass(
-											'visible-xs');
-									$('#xs-menu')
-										.toggleClass(
-											'visible-xs')
-										.toggleClass(
-											'hidden-xs');
-									$('#btnShow').toggle();
-								});
-					});
-		</script>
 	</c:if>
 </body>
 </html>
