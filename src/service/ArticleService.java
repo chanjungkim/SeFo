@@ -182,4 +182,11 @@ public class ArticleService {
 		article.toString();
 		return article;
 	}
+	
+	public boolean removeArticle(long article_num) {
+		int result = dao.removeArticle(article_num);
+		System.out.println("result="+result);
+		if(result > 0) return true;
+		else return false;
+	}
 }

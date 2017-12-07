@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-    <%@page import="java.util.ArrayList"%>
+  <%@page import="java.util.ArrayList"%>
 <%@page import="vo.ReactVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.awt.image.BufferedImage"%>
@@ -37,6 +37,7 @@
 	text-align: center;
 	margin: 1em 0;
 }
+
 </style>
 <script>
 	var uploadPhotoCount = 0;
@@ -346,6 +347,32 @@
 			addMorePhoto(++uploadPhotoCount);
 		}
 	}
+	
+function removeArticle(article_num) {
+	if (confirm("게시글을 삭제 하시겠습니까?")) {
+		alert(article_num);
+		$.ajax({
+			type : 'post', // 요청 보내면 doPost가 실행됨
+			url : 'remove-article.do', // 우리가 작성한 java 서블릿에게
+			data : {
+				'article_num' : article_num
+			}, // 검색어 데이터
+			dataType : 'text', // 응답데이터 형식
+			success : function(resultData) {
+				if(resultData) {		
+					$('#article-'+article_num).remove();
+				}
+				else {
+					alert("삭제 실패!");
+				}
+			},
+			error : function() {
+				alert('ajax 요청 실패');
+			}
+		})
+	}
+}
+	
 	function reactListener(id, article_num, expression) {
 		alert(id + " " + article_num + " " + expression);
 		$.ajax({
@@ -359,6 +386,43 @@
 			dataType : 'text', // 응답데이터 형식
 			success : function(resultData) {
 				alert("리액션 달기 설공!");
+// 				var a = '<c:if test="${not empty articleVO.reactList}">'
+// 					+ '<ul style="display: inline-block;">'
+// 					+ '<c:if test="${articleVO.react_like == true}" >'
+// 					+ '<li style="display: inline-block;">'
+// 					+ '<img src="assets\img\icon\like.gif" width="40px" height="40px">'
+// 					+ '</li>'	
+// 					+ '</c:if>'
+// 					+ '<c:if test="${articleVO.react_love == true}" >'	
+// 					+ '<li style="display: inline-block;" >'
+// 					+ '<img'
+// 					+ 'src="assets\img\icon\love.gif" width="40px"'	
+// 					+ 'height="40px">'		
+							
+							
+							
+// 						</li>
+// 					</c:if>
+// 					<c:if test="${articleVO.react_angly == true}" >
+// 						<li style="display: inline-block;">
+// 							<img 
+// 							src="assets\img\icon\angry.gif" width="40px"  height="40px">
+							
+// 						</li>
+// 					</c:if>
+// 					<c:if test="${articleVO.react_sad == true}" >
+// 						<li style="display: inline-block;">
+// 							<img
+// 							src="assets\img\icon\sad.gif" width="40px"
+// 							height="40px">
+							
+// 						</li>
+// 					</c:if>
+// 					</ul>
+// 					${articleVO.react_count}명
+// 			</c:if>
+// 		</span>
+		<!-- EO liked list -->'
 				$('#like-indicator-' + article_num).append("+");
 			},
 			error : function() {
@@ -470,7 +534,7 @@
 										<c:if test="${not empty articleList}">
 											<c:forEach items="${articleList}" var="articleVO" begin="0"
 												end="${articleList.size()-1}" step="1" varStatus="i">
-												<div class="panel panel-default">
+												<div id="article-${articleVO.article_num}"class="panel panel-default">
 													<div class="panel-thumbnail"></div>
 													<div class="panel-body">
 														<p class="lead">
@@ -481,8 +545,12 @@
 																height="40px" width="40px"> <span>${articleVO.id}</span>
 																<!--  -->
 															</a> <i class="glyphicon glyphicon-menu-down"></i>
+															<c:if test="${sessionScope.loginId eq articleVO.id}" >
+																<a style="float: right;" onclick="removeArticle(${articleVO.article_num})">
+																<i class="glyphicon glyphicon-remove-circle"></i>
+																</a> 
+															</c:if>
 														</p>
-
 														<!--  if photo exists -->
 														<c:if test="${not empty articleVO.photoList}">
 															<div id="myCarousel-${i.count}"
@@ -698,9 +766,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- remove modal -->
 	</c:if>
 </body>
 </html>
-
-
-

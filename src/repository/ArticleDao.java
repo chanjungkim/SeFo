@@ -108,4 +108,9 @@ public class ArticleDao {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.selectLastComment(article_num, id);
 	}
+	
+	public int removeArticle(long article_num) {
+		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
+		return mapper.removeArticle(article_num);
+	}
 } 

@@ -102,4 +102,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectArticle" parameterType="long" resultType="ArticleVO">
 		SELECT * FROM ARTICLE WHERE ARTICLE_NUM = #{article_num}
 	</select>
+	
+	<delete id="removeArticle" parameterType="long">
+	DELETE
+	FROM ARTICLE
+	WHERE ARTICLE_NUM = #{article_num}
+	</delete>
 </mapper>

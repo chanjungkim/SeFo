@@ -143,7 +143,7 @@ public class ArticleController {
 	public void getAnArticle(HttpSession session, HttpServletResponse response, @PathVariable long article_num) {
 		ArticleVO article = service.getAnArticle(article_num);		
 		PrintWriter writer = null;
-
+ 
 		try {
 			writer = response.getWriter();
 			System.out.println("받아온 article 정보:"+article);
@@ -153,5 +153,13 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="/remove-article.do", method = RequestMethod.POST)
+	public void  removeArticle(HttpSession session, HttpServletResponse response, long article_num) throws IOException {
+		PrintWriter writer = null;
+		writer = response.getWriter();
+		if(service.removeArticle(article_num)) writer.print(true);
+		else writer.print(false);
 	}
 }
