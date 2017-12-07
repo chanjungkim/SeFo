@@ -53,7 +53,7 @@
 </head>
 <body>
 	<div id="nav-container" class="top-bar navbar navbar-static-top">
-			<div class="navbar-header col-md-3">
+		<div class="navbar-header col-md-3">
 			<button class="navbar-toggle" type="button" data-toggle="collapse"
 				data-target=".navbar-collapse">
 				<span class="sr-only">Toggle</span> <span class="icon-bar"></span> <span
@@ -93,17 +93,17 @@
 						src="<%=request.getContextPath()%>/assets/img/icon/heart.png"></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-			<li class="dropdown"><a href="#" class="dropdown-toggle"
-				data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i></a>
-				<ul class="dropdown-menu">
-					<li><a id="logout"
-						href="<%=request.getContextPath()%>/logout.do">Log Out</a></li>
-					<li><a href="">More</a></li>
-					<li><a href="">More</a></li>
-					<li><a href="">More</a></li>
-					<li><a href="">More</a></li>
-				</ul></li>
-		</ul>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i></a>
+					<ul class="dropdown-menu">
+						<li><a id="logout"
+							href="<%=request.getContextPath()%>/logout.do">Log Out</a></li>
+						<li><a href="">More</a></li>
+						<li><a href="">More</a></li>
+						<li><a href="">More</a></li>
+						<li><a href="">More</a></li>
+					</ul></li>
+			</ul>
 		</div>
 	</div>
 </body>
