@@ -23,6 +23,7 @@
 	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script
 	src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+<script src="<%=request.getContextPath()%>/assets/js/gallery.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var article_last_index = $('#article_last_index').val();
@@ -137,7 +138,7 @@
 			$(this).attr('style', 'background-color: none; opacity:1');
 			$(this).siblings().attr('style', 'opacity: 0');
 		});
-		$('#send')on('click',function(){
+		$('#send').on('click',function(){
 			var form = $('#write_form')[0];
 			//FormData parameter에 담아줌
 			var formData = new FormData(form);
@@ -318,7 +319,7 @@ figure>div>.photo-info {
 														<img id="article_img" name="article_img"
 															src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName}"
 															style="z-index: 0;"
-															onclick="openGalleryModal(${articleVO.article_num})">
+															onclick="openGalleryModal('<%=request.getContextPath()%>', ${articleVO.article_num})">
 														<div class="photo-info" style="">
 															<img
 																src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
