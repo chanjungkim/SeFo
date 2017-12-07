@@ -188,6 +188,7 @@ public class ArticleService {
 		System.out.println("result="+result);
 		if(result > 0) return true;
 		else return false;
+	}
 
 	public long getLeftArticleNum(long article_num, String id) {
 		return dao.selectLeftArticleNum(article_num, id);
