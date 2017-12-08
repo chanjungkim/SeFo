@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/topNav.css">
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/assets/js/jquery.js"></script>
@@ -63,7 +62,7 @@ function showMsg(){
 				class="navbar-brand logo">Secret Forest</a>
 		</div>
 		<!-- Search Bar -->
-		<div class="col-md-6">
+		<div class="search-bar-container col-md-6" style="padding-top:10px">
 			<div class="input-group input-group-sm" style="max-width: 360px;">
 				<input class="form-control" placeholder="Search" name="srch-term"
 					id="srch-term" type="text" list="search-data-list">
@@ -85,24 +84,13 @@ function showMsg(){
 					href="<%=request.getContextPath()%>/profile.do/${sessionScope.loginId}"><img
 						src="<%=request.getContextPath()%>/assets/img/icon/user.png"
 						class="top-nav-icon"></a></li>
-				<li><a href="#" role="button" data-toggle="modal"><img
+				<li><a href="#" role="button"><img
 						src="<%=request.getContextPath()%>/assets/img/icon/message.png"
 						class="top-nav-icon"></a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<img class="top-nav-icon" src="<%=request.getContextPath()%>/assets/img/icon/heart.png" style="display:inline-block;">
+				<li>
+					<a href="#">
+						<img class="top-nav-icon" src="<%=request.getContextPath()%>/assets/img/icon/heart.png">
 					</a>
-					<ul class="dropdown-menu">
-			            <li><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
-			            <li class="divider"></li>
-			            <li><a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
-			            <li class="divider"></li>
-			            <li><a href="#">Messages <span class="badge pull-right"> 42 </span></a></li>
-			            <li class="divider"></li>
-			            <li><a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
-			            <li class="divider"></li>
-			        	<li><a href="#">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
-			        </ul>
 			    </li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

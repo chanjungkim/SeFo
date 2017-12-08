@@ -1,10 +1,15 @@
-.profile {
+.female-profile{
 	border-radius: 50px 50px 50px 50px;
 	border-style: dotted;
 	border-color: fuchsia;
 	border-width: 3px;
 }
-
+.male-profile{
+	border-radius: 50px 50px 50px 50px;
+	border-style: dotted;
+	border-color: aqua;
+	border-width: 3px;
+}
 .search-bar {
 	margin-bottom: 0px;
 	border-width: 0px;
@@ -40,6 +45,7 @@ hr {
 	margin-bottom: 15px;
 	margin-left: 0px;
 	margin-right: 0px;
+	color: #333
 }
 
 .comment-write-area {
@@ -96,4 +102,8 @@ hr {
 	left: 0;
 	top: 0;
 	opacity: 0;
+}
+
+textarea{
+	resize: none;
 }

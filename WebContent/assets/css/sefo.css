@@ -8,6 +8,9 @@
 	border-bottom-color: #e6e6e6;
 	padding-bottom: 5px;
 }
+.search-bar-container{
+	margin-top: 15px;	
+}
 .logo{
 	font-family: cursive; 
 	color: black;
@@ -38,4 +41,7 @@
 /* 	margin:auto; */
 /* 	max-width:900px; */
 	margin-top: 50px;
+}
+textarea{
+	resize: none;
 }

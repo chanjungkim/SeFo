@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 		  <%@page import="java.util.ArrayList"%>
 <%@page import="vo.ReactVO"%>
 <%@page import="java.util.List"%>
@@ -44,8 +44,8 @@
 	var wsocket;
 	$(function() {
 		wsocket = new WebSocket("ws://localhost:8888/chatting/echo-ws");
-		wsocket.onopen = function() { //¼­¹ö¿¬°áµÇ¸é ½ÇÇà
-			alert("¼¼¼Ç ¿¬°á")
+		wsocket.onopen = function() { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+			alert("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")
 		};
 		sendMessage();
 		$(document).on('keydown', '.comment-write-area', function(e) {
@@ -177,13 +177,13 @@
 			    console.log(pair[0]+ ', ' + pair[1]); 
 			}
 			$.ajax({
-				type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
-				url : 'writePost.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				type : 'post', 
+				url : 'writePost.do',
 				processData : false,
 				cache : false,
 				contentType : false,
 				data : newForm,
-				dataType : 'json', // ï¿½ï¿½ï¿½äµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+				dataType : 'json',
 				success : function(resultData) {
 					var photoCount = resultData.photo_count;
 					var photoList = resultData.photoList;
@@ -192,8 +192,8 @@
 					var article_num = resultData.article_num;
 					var write_time = resultData.write_time;
 					var article_id = resultData.id;
-					// alert('ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½');
-					var newPost = '<div class="panel panel-default"><div class="panel-thumbnail"></div>'
+									
+					var newPost = '<div id="article-'+article_num+'" class="panel panel-default"><div class="panel-thumbnail"></div>'
 						+ '<div class="panel-body">'
 						+ '<p class="lead">'
 						+ '<a href="<%=request.getContextPath()%>/profile.do/'+article_id+'">'
@@ -202,10 +202,49 @@
 						+ ' src="<%=request.getContextPath()%>/'+photoPath+'"'
 						+ '				height="40px" width="40px"> <span>${sessionScope.loginId}</span>'
 						+ '			<!--  -->'
-						+ '	</a>';
-						+ '</p>'
-					if (photoCount != 0) {
-						newPost += '<img src="' + photoList[0].file_origiName + '" class="img-responsive">';
+					if("${sessionScope.loginId}" == article_id){
+						newPost += '<a style="float: right;" onclick="removeArticle('+article_num+')">'
+						+'<i class="glyphicon glyphicon-remove-circle"></i>'
+						+'</a>'; 
+					}
+					newPost+= '</a>';
+								+'</p>'
+					if (photoCount > 0){
+						newPost +='<div id="myCarousel-new" class="carousel" data-ride="carousel">'
+							+'<!-- Indicators -->'
+							+'<ol class="carousel-indicators">'
+							+'<li data-target="#myCarousel-new" data-slide-to="0" class="active"></li>'
+							for(var i = 1 ; i < photoList.length ; i++){
+								newPost += '<li data-target="#myCarousel-new" data-slide-to="'+i+'"></li>';
+							}
+						newPost +='</ol>'
+							+'<!-- Wrapper for slides -->'
+							+'<div class="carousel-inner">'
+							+'<div class="item active">'
+							+'<img src="'+photoList[0].file_origiName+'">'
+							+'</div>'
+						for(var i = 1 ; i < photoList.length ; i++){
+							newPost += '<div class="item" style="overflow: hidden; background-color: black;">'
+										+'<img src="'+photoList[i].file_origiName+'" class="img-responsive">'
+										+'</div>'
+						}
+							
+						newPost+='</div>'
+									+'<!-- Left and right controls -->'
+						if(photoList.length >=2){
+							newPost += '<a class="left carousel-control"'
+										+'href="#myCarousel-new" data-slide="prev"> <span'
+										+'class="glyphicon glyphicon-chevron-left"></span> <span'
+										+'class="sr-only"></span>'
+										+'</a>'
+										+'<a class="right carousel-control"'
+										+'href="#myCarousel-new" data-slide="next"> <span'
+										+'class="glyphicon glyphicon-chevron-right"></span> <span'
+										+'class="sr-only"></span>'
+										+'</a>';
+						}
+									
+						newPost+='</div>'
 					}
 					newPost += '<p>'
 						+ '<p style="word-break:break-all;">'
@@ -229,14 +268,18 @@
 						+ '<hr>'
 						+ '		<span> <input type="hidden" class="article-num"'
 						+ '			value="'+article_num+'"> <textarea'
-						+ '			class="comment-write-area" placeholder="ï¿½ï¿½Û´Ş±ï¿½..."'
+						+ '			class="comment-write-area" placeholder="ëŒ“ê¸€ ë‹¬ê¸°..."'
 						+ '			name="'+article_num+'"></textarea>'
 						+ '		</span>'
 						+ '		<!--  EO Comment -->'
 						+ '	</p>'
 						+ '</div>'
 						+ '</div>';
+						
+						
+					
 					$("#timeline").after(newPost);
+					$("#none-post").remove();
 				},
 				error : function() {
 					alert('ajax ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½');
@@ -278,7 +321,7 @@
 		})
 	})
 	function deleteComment(comment_num) {
-		if (confirm("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?")) {
+		if (confirm("ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
 			$.ajax({
 				type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 				url : 'deleteComment.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
@@ -297,7 +340,7 @@
 		}
 	}
 	function deleteNewComment(id, content) {
-		if (confirm("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?")) {
+		if (confirm("ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
 			$.ajax({
 				type : 'post', // ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ doPostï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 				url : 'deleteNewComment.do', // ï¿½ì¸®ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ java ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
@@ -347,12 +390,12 @@
 	function sendMessage() {
 		wsocket.onmessage = onMessage;
 	}
-	function onMessage(evt) { //¼­¹ö¿¡¼­ ¸Ş¼¼Áö¸¦¹ŞÀ¸¸é ½ÇÇà
+	function onMessage(evt) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		var data = evt.data;
-		alert("¼­¹ö¿¡¼­ µ¥ÀÌÅÍ ¹ŞÀ½:" + data);
+		alert("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½:" + data);
 	}
-	function onClose(evt) { //¿¬°áÀÌ Á¾·áµÇ¸é ½ÇÇà}
-		alert("¿¬°á ²÷±è");
+	function onClose(evt) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½}
+		alert("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 	}
 function removeArticle(article_num) {
 	if (confirm("ì´ ê¸€ì„ ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
@@ -377,7 +420,7 @@ function removeArticle(article_num) {
 		})
 	}
 }
-	
+
 	function reactListener(id, article_num, expression) {
 		alert(id + " " + article_num + " " + expression);
 		$.ajax({
@@ -528,183 +571,191 @@ function removeArticle(article_num) {
 											<!-- 											</form> -->
 										</div>
 										<!-- Start For Loop  -->
-										<c:if test="${not empty articleList}">
-											<c:forEach items="${articleList}" var="articleVO" begin="0"
-												end="${articleList.size()-1}" step="1" varStatus="i">
-												<div id="article-${articleVO.article_num}"class="panel panel-default">
-													<div class="panel-thumbnail"></div>
-													<div class="panel-body">
-														<p class="lead">
-															<a
-																href="<%=request.getContextPath()%>/profile.do/${articleVO.id}">
-																<!--  profile --> <img class="profile"
-																src="<%=request.getContextPath() %>/${articleVO.photo_path}"
-																height="40px" width="40px"> <span>${articleVO.id}</span>
-																<!--  -->
-															</a> <i class="glyphicon glyphicon-menu-down"></i>
-															<c:if test="${sessionScope.loginId eq articleVO.id}" >
-																<a style="float: right;" onclick="removeArticle(${articleVO.article_num})">
-																<i class="glyphicon glyphicon-remove-circle"></i>
-																</a> 
-															</c:if>
-														</p>
-														<!--  if photo exists -->
-														<c:if test="${not empty articleVO.photoList}">
-															<div id="myCarousel-${i.count}"
-																class="carousel
-															data-ride="carousel">
-																<!-- Indicators -->
-																<ol class="carousel-indicators">
-																	<li data-target="#myCarousel-${i.count}"
-																		data-slide-to="0" class="active"></li>
-																	<c:forEach items="${articleVO.photoList}" var="photo"
-																		begin="1" end="${articleVO.photoList.size()-1}"
-																		step="1" varStatus="j">
-																		<li data-target="#myCarousel-${i.count}"
-																			data-slide-to="${j.count}"></li>
-																	</c:forEach>
-																</ol>
-																<!-- Wrapper for slides -->
-																<div class="carousel-inner">
-																	<div class="item active">
-																		<img
-																			src="${articleVO.photoList.get(0).file_origiName }">
-																	</div>
-																	<c:forEach items="${articleVO.photoList}" var="photo"
-																		begin="1" end="${articleVO.photoList.size()-1}"
-																		step="1" varStatus="j">
-																		<div class="item"
-																			style="overflow: hidden; background-color: black;">
-																			<img src="${photo.file_origiName}"
-																				class="img-responsive">
-																		</div>
-																	</c:forEach>
-																</div>
-																<!-- Left and right controls -->
-																<c:if test="${articleVO.photoList.size()>=2}">
-																	<a class="left carousel-control"
-																		href="#myCarousel-${i.count}" data-slide="prev"> <span
-																		class="glyphicon glyphicon-chevron-left"></span> <span
-																		class="sr-only">Previous</span>
-																	</a>
-																	<a class="right carousel-control"
-																		href="#myCarousel-${i.count}" data-slide="next"> <span
-																		class="glyphicon glyphicon-chevron-right"></span> <span
-																		class="sr-only">Next</span>
-																	</a>
+										<c:choose>
+											<c:when test="${not empty articleList}">
+												<c:forEach items="${articleList}" var="articleVO" begin="0"
+													end="${articleList.size()-1}" step="1" varStatus="i">
+													<div id="article-${articleVO.article_num}"class="panel panel-default">
+														<div class="panel-thumbnail"></div>
+														<div class="panel-body">
+															<p class="lead">
+																<a href="<%=request.getContextPath()%>/profile.do/${articleVO.id}">
+																	<!--  profile -->
+																	<img class="profile"
+																	src="<%=request.getContextPath() %>/${articleVO.photo_path}"
+																	height="40px" width="40px">
+																	<span>${articleVO.id}</span>
+																	<!--  -->
+																</a> <i class="glyphicon glyphicon-menu-down"></i>
+																<c:if test="${sessionScope.loginId eq articleVO.id}" >
+																	<a style="float: right;" onclick="removeArticle(${articleVO.article_num})">
+																	<i class="glyphicon glyphicon-remove-circle"></i>
+																	</a> 
 																</c:if>
-															</div>
-														</c:if>
-														<!--  EOF -->
-														<!-- Content -->
-														<p style="word-break: break-all;">${articleVO.content}</p>
-														<div style="width:100%; text-align: right;">
-															<a class="write-time">${articleVO.write_time}</a>
-														</div>
-														<!-- EO Content -->
-														
-														<br>
-														
-														<!-- React Start -->
-														<div class="react-button dropdown btn btn-default btn-sm">
-															<ul class="dropdown-menu">
-																<li><img
-																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '1')"
-																	src="assets\img\icon\like.gif" width="40px"
-																	height="40px"></li>
-																<li><img
-																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '2')"
-																	src="assets\img\icon\love.gif" width="40px"
-																	height="40px"></li>
-																<li><img
-																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '3')"
-																	src="assets\img\icon\angry.gif" width="40px"
-																	height="40px"></li>
-																<li><img
-																	onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '4')"
-																	src="assets\img\icon\sad.gif" width="40px"
-																	height="40px"></li>
-															</ul>
-															<i class="glyphicon glyphicon-thumbs-up"></i>
-														</div>
-														<!-- List of people who liked if more than 3, show number  otherwise id -->
-														<span onclick="alert('test')">
-																<c:if test="${not empty articleVO.reactList}">
-																	<ul style="display: inline-block;">
-																	<c:if test="${articleVO.react_like == true}" >
-																		<li style="display: inline-block;">
+															</p>
+															<!--  if photo exists -->
+															<c:if test="${not empty articleVO.photoList}">
+																<div id="myCarousel-${i.count}"
+																	class="carousel
+																data-ride="carousel">
+																	<!-- Indicators -->
+																	<ol class="carousel-indicators">
+																		<li data-target="#myCarousel-${i.count}"
+																			data-slide-to="0" class="active"></li>
+																		<c:forEach items="${articleVO.photoList}" var="photo"
+																			begin="1" end="${articleVO.photoList.size()-1}"
+																			step="1" varStatus="j">
+																			<li data-target="#myCarousel-${i.count}"
+																				data-slide-to="${j.count}"></li>
+																		</c:forEach>
+																	</ol>
+																	<!-- Wrapper for slides -->
+																	<div class="carousel-inner">
+																		<div class="item active">
 																			<img
-																			src="assets\img\icon\like.gif" width="40px"
-																			height="40px">
-																		</li>
+																				src="${articleVO.photoList.get(0).file_origiName }">
+																		</div>
+																		<c:forEach items="${articleVO.photoList}" var="photo"
+																			begin="1" end="${articleVO.photoList.size()-1}"
+																			step="1" varStatus="j">
+																			<div class="item"
+																				style="overflow: hidden; background-color: black;">
+																				<img src="${photo.file_origiName}"
+																					class="img-responsive">
+																			</div>
+																		</c:forEach>
+																	</div>
+																	<!-- Left and right controls -->
+																	<c:if test="${articleVO.photoList.size()>=2}">
+																		<a class="left carousel-control"
+																			href="#myCarousel-${i.count}" data-slide="prev"> <span
+																			class="glyphicon glyphicon-chevron-left"></span> <span
+																			class="sr-only">Previous</span>
+																		</a>
+																		<a class="right carousel-control"
+																			href="#myCarousel-${i.count}" data-slide="next"> <span
+																			class="glyphicon glyphicon-chevron-right"></span> <span
+																			class="sr-only">Next</span>
+																		</a>
 																	</c:if>
-																	<c:if test="${articleVO.react_love == true}" >
-																		<li style="display: inline-block;" >
-																			<img
-																			src="assets\img\icon\love.gif" width="40px"
-																			height="40px">
-																			
-																		</li>
-																	</c:if>
-																	<c:if test="${articleVO.react_angly == true}" >
-																		<li style="display: inline-block;">
-																			<img 
-																			src="assets\img\icon\angry.gif" width="40px"  height="40px">
-																			
-																		</li>
-																	</c:if>
-																	<c:if test="${articleVO.react_sad == true}" >
-																		<li style="display: inline-block;">
-																			<img
-																			src="assets\img\icon\sad.gif" width="40px"
-																			height="40px">
-																			
-																		</li>
-																	</c:if>
-																	</ul>
-																	${articleVO.react_count}ï¿½ï¿½
+																</div>
 															</c:if>
-														</span>
-														<!-- EO liked list -->
-														
-														<!-- Comment Start -->
-														<table id="comment-area-${articleVO.article_num}" class="comment-area" width="100%">
-															<!-- Start Comment  -->
-															<c:forEach var="commentVO" items="${articleVO.commentList}">
-																<tr id="comment-${commentVO.comment_num}" style="margin-bottom: 5px;">
-																	<td width="45px">
-																		<a href="<%=request.getContextPath()%>/profile.do/${commentVO.id}">
-																			<img class="comment-img"
-																				src="<%=request.getContextPath()%>/${commentVO.photo_path}">
-																		</a> 
-																	</td>
-																	<td>
-																		<a href="<%=request.getContextPath()%>/profile.do/${commentVO.id}"><b>${commentVO.id}
-																			</b></a> &nbsp;${commentVO.content}
-																			<c:if test="${sessionScope.loginId==commentVO.id}">
-																				<input id="comment-delete" type="hidden"
-																					name="comment_num"
-																					value="${commentVO.comment_num}">
-																				<a onclick="deleteComment(${commentVO.comment_num})"
-																					style="color: #CCC; font-size: 5px;">X</a>
-																			</c:if>
-																		<div style="font-size: 5px; color:grey;">${commentVO.write_time}</div>
-																	</td>
-																</tr>
-															</c:forEach>
-															<!--  EO Comment -->
-														</table>
-														
-														<hr>
-														<span> <input type="hidden" class="article-num"
-															value="${articleVO.article_num}"> <textarea
-																class="comment-write-area" placeholder="ï¿½ï¿½Û´Ş±ï¿½..."
-																name="${articleVO.article_num}"></textarea>
-														</span>
+															<!--  EOF -->
+															<!-- Content -->
+															<p style="word-break: break-all;">${articleVO.content}</p>
+															<div style="width:100%; text-align: right;">
+																<a class="write-time">${articleVO.write_time}</a>
+															</div>
+															<!-- EO Content -->
+															
+															<br>
+															
+															<!-- React Start -->
+															<div class="react-button dropdown btn btn-default btn-sm">
+																<ul class="dropdown-menu">
+																	<li><img
+																		onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '1')"
+																		src="assets\img\icon\like.gif" width="40px"
+																		height="40px"></li>
+																	<li><img
+																		onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '2')"
+																		src="assets\img\icon\love.gif" width="40px"
+																		height="40px"></li>
+																	<li><img
+																		onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '3')"
+																		src="assets\img\icon\angry.gif" width="40px"
+																		height="40px"></li>
+																	<li><img
+																		onclick="reactListener('${sessionScope.loginId}', ${articleVO.article_num}, '4')"
+																		src="assets\img\icon\sad.gif" width="40px"
+																		height="40px"></li>
+																</ul>
+																<i class="glyphicon glyphicon-thumbs-up"></i>
+															</div>
+															<!-- List of people who liked if more than 3, show number  otherwise id -->
+															<span onclick="alert('test')">
+																	<c:if test="${not empty articleVO.reactList}">
+																		<ul style="display: inline-block;">
+																		<c:if test="${articleVO.react_like == true}" >
+																			<li style="display: inline-block;">
+																				<img
+																				src="assets\img\icon\like.gif" width="40px"
+																				height="40px">
+																			</li>
+																		</c:if>
+																		<c:if test="${articleVO.react_love == true}" >
+																			<li style="display: inline-block;" >
+																				<img
+																				src="assets\img\icon\love.gif" width="40px"
+																				height="40px">
+																				
+																			</li>
+																		</c:if>
+																		<c:if test="${articleVO.react_angly == true}" >
+																			<li style="display: inline-block;">
+																				<img 
+																				src="assets\img\icon\angry.gif" width="40px"  height="40px">
+																				
+																			</li>
+																		</c:if>
+																		<c:if test="${articleVO.react_sad == true}" >
+																			<li style="display: inline-block;">
+																				<img
+																				src="assets\img\icon\sad.gif" width="40px"
+																				height="40px">
+																				
+																			</li>
+																		</c:if>
+																		</ul>
+																		${articleVO.react_count}ëª…
+																</c:if>
+															</span>
+															<!-- EO liked list -->
+															
+															<!-- Comment Start -->
+															<table id="comment-area-${articleVO.article_num}" class="comment-area" width="100%">
+																<!-- Start Comment  -->
+																<c:forEach var="commentVO" items="${articleVO.commentList}">
+																	<tr id="comment-${commentVO.comment_num}" style="margin-bottom: 5px;">
+																		<td width="45px">
+																			<a href="<%=request.getContextPath()%>/profile.do/${commentVO.id}">
+																				<img class="comment-img"
+																					src="<%=request.getContextPath()%>/${commentVO.photo_path}">
+																			</a> 
+																		</td>
+																		<td>
+																			<a href="<%=request.getContextPath()%>/profile.do/${commentVO.id}"><b>${commentVO.id}
+																				</b></a> &nbsp;${commentVO.content}
+																				<c:if test="${sessionScope.loginId==commentVO.id}">
+																					<input id="comment-delete" type="hidden"
+																						name="comment_num"
+																						value="${commentVO.comment_num}">
+																					<a onclick="deleteComment(${commentVO.comment_num})"
+																						style="color: #CCC; font-size: 5px;">X</a>
+																				</c:if>
+																			<div style="font-size: 5px; color:grey;">${commentVO.write_time}</div>
+																		</td>
+																	</tr>
+																</c:forEach>
+																<!--  EO Comment -->
+															</table>
+															
+															<hr>
+															<span> <input type="hidden" class="article-num"
+																value="${articleVO.article_num}"> <textarea
+																	class="comment-write-area" placeholder="ëŒ“ê¸€ë‹¬ê¸°..."
+																	name="${articleVO.article_num}" style="width:100%; resize:none;"></textarea>
+															</span>
+														</div>
 													</div>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<div id="none-post" class="well">
+													<p>ê²Œì‹œê¸€ì´ ì—†ìŠµë‹ˆë‹¤. ê²€ìƒ‰ì„ í†µí•´ ë‹¤ë¥¸ ì‚¬ëŒì„ íŒ”ë¡œì›Œí•˜ê±°ë‚˜ ê²Œì‹œê¸€ì„ ì‘ì„±í•´ë³´ì„¸ìš”.</p>
 												</div>
-											</c:forEach>
-										</c:if>
+											</c:otherwise>
+										</c:choose>
 <!-- 										!end of articleList c: if -->
 									</div>
 								</div>

@@ -274,7 +274,6 @@ function readURL(changeInput) {
 		}
 	}
 }
-});
 
 </script>
 <style type="text/css">
@@ -374,16 +373,16 @@ figure>div>.photo-info {
 									<!-- content -->
 									<div class="well col-md-12">
 										<div class="row">
-										<div class="my_profile_img img-fluid col-md-4">
-										<form  class="form center-block" role="form" action="<%=request.getContextPath()%>/changeProfilePhoto.do"
-													method="post" enctype="multipart/form-data" id="write_form"
-													name="write_form" accept-charset="utf-8">
-											<div class="file_input_div">
-											    <img src="<%=request.getContextPath()%>/${memberVO.photo_path}" class="file_input_img_btn" alt="open" />
-											    <input type="file" name="file" id="file" class="file_input_hidden"/>
-											</div>											
-										</form>
-												<!-- 													Modal content -->
+											<div class="my_profile_img img-fluid col-md-4">
+											<form  class="form center-block" role="form" action="<%=request.getContextPath()%>/changeProfilePhoto.do"
+														method="post" enctype="multipart/form-data" id="write_form"
+														name="write_form" accept-charset="utf-8" style="display:inline-block;">
+												<div class="file_input_div">
+												    <img src="<%=request.getContextPath()%>/${memberVO.photo_path}" class="file_input_img_btn" alt="open" />
+												    <input type="file" name="file" id="file" class="file_input_hidden"/>
+												</div>											
+											</form>
+												<!-- 	Modal content -->
 <!-- 													<div class="modal-content"> -->
 <!-- 														<div class="container"> -->
 <!-- 															<div class="col-md-6"> -->
@@ -402,11 +401,7 @@ figure>div>.photo-info {
 <!-- 															</div> -->
 <!-- 														</div> -->
 <!-- 													</div> -->
-
-												</div>
-											</div>
 										</div>
-
 										<div class="col-md-8">
 											<div class="row"
 												style="display: flex; align-items: center; align-self: center; margin-top: 10px;">
@@ -574,31 +569,39 @@ figure>div>.photo-info {
 						</div>
 								<div class="row">
 									<div id="gallery" class="gallery"  style="margin-top: 15px; max-width: 1000px; margin: auto">
-										<c:forEach items="${articleList}" var="articleVO">
-											<c:if test="${not empty articleVO.getPhotoList()}">
-												<c:if
-													test="${not empty articleVO.getPhotoList().get(0).file_origiName}">
-													<figure>
-													<div data-toggle="modal" data-target=".bs-example-modal-lg">
-														<img id="article_img" name="article_img"
-															src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName}"
-															style="z-index: 0;"
-															onclick="openGalleryModal('<%=request.getContextPath()%>', ${articleVO.article_num})">
-														<div class="photo-info" style="display: inline-block;">
-															<img
-																src="<%=request.getContextPath()%>/assets/img/icon/heart-profile.png"
-																style="width: 15px; height: 15px; display: inline-block;">
-															${articleVO.react_count}개
-															<img
-																src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
-																style="width: 15px; height: 15px; display: inline-block; margin-left: 10px">
-															${articleVO.commentCount}개
-														</div>
+										<c:choose>
+											<c:when test="${not empty articleList}">
+													<c:forEach items="${articleList}" var="articleVO">
+														<c:if test="${not empty articleVO.getPhotoList()}">
+															<c:if test="${not empty articleVO.getPhotoList().get(0).file_origiName}">
+																<figure>
+																<div data-toggle="modal" data-target=".bs-example-modal-lg">
+																	<img id="article_img" name="article_img"
+																		src="<%=request.getContextPath()%>/${articleVO.getPhotoList().get(0).file_origiName}"
+																		style="z-index: 0;"
+																		onclick="openGalleryModal('<%=request.getContextPath()%>', ${articleVO.article_num})">
+																	<div class="photo-info" style="display: inline-block;">
+																		<img
+																			src="<%=request.getContextPath()%>/assets/img/icon/heart-profile.png"
+																			style="width: 15px; height: 15px; display: inline-block;">
+																		${articleVO.react_count}개
+																		<img
+																			src="<%=request.getContextPath()%>/assets/img/icon/chat.png"
+																			style="width: 15px; height: 15px; display: inline-block; margin-left: 10px">
+																		${articleVO.commentCount}개
+																	</div>
+																</div>
+																</figure>
+															</c:if>
+														</c:if>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<div class="well">
+														<p>게시글이 없습니다. <a href="<%=request.getContextPath()%>/initMain.do">타임라인</a>에서 첫 글을 작성해보세요.</p>
 													</div>
-													</figure>
-												</c:if>
-											</c:if>
-										</c:forEach>
+												</c:otherwise>
+											</c:choose>
 									</div>
 								</div>
 						<!-- /padding -->
@@ -614,11 +617,11 @@ figure>div>.photo-info {
 </div>
 		<!-- GalleryModal Start -->
 		<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="width:100%;">
-			<div class="modal-dialog modal-lg" style="width:90%">
+			<div class="modal-dialog modal-lg" style="width:90%; padding:0px;">
 				<div class="modal-content">
-				<table id="modal-table">
+				<table id="modal-table" style="width:100%">
 					<tr>
-						<td>
+						<td class="modal-controller" style="width:5%; bakcground-color:transparent">
 							<a href="#" id="modal-left-button" class="glyphicon glyphicon-chevron-left" onclick=""></a>
 						</td>
 						<td style="width:70%">
@@ -637,10 +640,10 @@ figure>div>.photo-info {
 									</div>
 								</div>
 						</td>
-						<td>
+						<td style="width:20%">
 							<table>
 								<tr>
-									<td>
+									<td style="width:100%">
 										<div id="modal-user-info">
 											<a id="modal-user-link" href="" style="display:flex;">
 												<img id="modal-user-picture" src=""  style="width: 50px; height: 50px; border-radius: 50px; ">
@@ -665,12 +668,12 @@ figure>div>.photo-info {
 										<!--  EO Comment -->
 										</table>
 										<hr>
-										<textarea style="width:100%" placeholder="댓글달기..."></textarea>
+										<textarea placeholder="댓글달기..." style="width:100%; resize:none;"></textarea>
 									</td>
 								</tr>
 							</table>
 						</td>
-						<td>
+						<td class="modal-controller" style="width:5%; bakcground-color:transparent">
 							<a href="#" id="modal-right-button" class="glyphicon glyphicon-chevron-right" onclick=""></a>
 						</td>
 					</tr>

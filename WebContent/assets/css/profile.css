@@ -1,13 +1,8 @@
 .profile {
 	border-radius: 50px 50px 50px 50px;
-	border-style: dotted;
-	border-color: fuchsia;
+	border-style: solid;
+	border-color: aqua;
 	border-width: 3px;
-}
-
-.search-bar {
-	margin-bottom: 0px;
-	border-width: 0px;
 }
 
 .top-bar {
@@ -261,4 +256,18 @@ hr {
 }
 .well{
 	resize: none;
+	word-break:break-all;
+}
+textarea{
+	resize: none;
+   -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+           box-sizing: border-box;
+}
+td{
+	table-layout: auto;	
+}
+
+.modal-controller{
+	background-color:rgba(0, 0, 0, 0);		
 }
