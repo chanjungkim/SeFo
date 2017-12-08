@@ -1,12 +1,6 @@
-.female-profile{
+.profile{
 	border-radius: 50px 50px 50px 50px;
-	border-style: dotted;
-	border-color: fuchsia;
-	border-width: 3px;
-}
-.male-profile{
-	border-radius: 50px 50px 50px 50px;
-	border-style: dotted;
+	border-style: solid;
 	border-color: aqua;
 	border-width: 3px;
 }

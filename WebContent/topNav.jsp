@@ -62,7 +62,7 @@ function showMsg(){
 				class="navbar-brand logo">Secret Forest</a>
 		</div>
 		<!-- Search Bar -->
-		<div class="search-bar-container col-md-6" style="padding-top:10px">
+		<div class="search-bar-container col-md-6">
 			<div class="input-group input-group-sm" style="max-width: 360px;">
 				<input class="form-control" placeholder="Search" name="srch-term"
 					id="srch-term" type="text" list="search-data-list">

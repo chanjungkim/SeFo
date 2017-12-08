@@ -9,13 +9,15 @@
 	padding-bottom: 5px;
 }
 .search-bar-container{
-	margin-top: 15px;	
+	margin-top: 10px;	
 }
 .logo{
 	font-family: cursive; 
 	color: black;
-	font-size: 25px;
-	padding-left: 80px;
+	font-size: 1.9vw;
+	margin-left: 90px;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 .top-nav-icon {
 	width: 25px;

@@ -96,24 +96,18 @@
 		$(".item").width("100%");
 		$(".item").height($(".item").width());
 		// image
-		$(".item img").each(function() {
+		$(".item > img").each(function() {
 			// 			$(this).load(function(){
 			var width = this.naturalWidth;
 			var height = this.naturalHeight;
 			var parentHeight = $(this).parent().height();
 			var parentWidth = $(this).parent().width()
-			if (width < height) {
-				var w = width * (parentHeight / height);
-				$(this).css({
-					width : w,
-					height : parentHeight
-				})
+// 			if (width < height) {
+// 				var w = width * (parentHeight / height);
+				$(this).css({width : w, 	height : parentHeight	})
 			} else {
 				var h = height * (parentWidth / width);
-				$(this).css({
-					width : parentWidth,
-					height : h
-				})
+				$(this).css({width : parentWidth, height : h})
 			}
 			// 				if(width < height){
 			// 					$(this).width("auto");
@@ -131,9 +125,8 @@
 			var diffWidth = $(this).parent().width() - $(this).width();
 			var diffHeight = $(this).parent().height() - $(this).height();
 			console.log("diffWidth: " + diffWidth + ", diffHeight: " + diffHeight);
-			$(this).attr('style', 'vertical-align:middle');
-			$(this).parent().attr('style', 'text-align:center')
-			$(this).css('margin', '30px 10px');
+			$(this).attr('style', 'margin-left:diffWidth; margin-top:diffHeight;');
+// 			$(this).parent().attr('style', 'margin: 0 auto;')
 		// 			})
 		})
 		//
@@ -330,7 +323,7 @@
 				}, // �˻��� ������
 				dataType : 'text', // ���䵥���� ����
 				success : function(resultData) {
-					alert("���� ����!");
+					alert("댓글 삭제 완료!");
 					$('#comment-' + comment_num).remove();
 				},
 				error : function() {
@@ -350,7 +343,7 @@
 				}, // �˻��� ������
 				dataType : 'text', // ���䵥���� ����
 				success : function(resultData) {
-					alert("���� ����!");
+					alert("댓글 삭제 완료!");
 					$('#new-comment').remove();
 				},
 				error : function() {
@@ -390,11 +383,11 @@
 	function sendMessage() {
 		wsocket.onmessage = onMessage;
 	}
-	function onMessage(evt) { //�������� �޼����������� ����
+	function onMessage(evt) {
 		var data = evt.data;
 		alert("�������� ������ ����:" + data);
 	}
-	function onClose(evt) { //������ ����Ǹ� ����}
+	function onClose(evt) {
 		alert("���� ����");
 	}
 function removeArticle(article_num) {
@@ -411,7 +404,7 @@ function removeArticle(article_num) {
 					$('#article-'+article_num).remove();
 				}
 				else {
-					alert("���� ����!");
+					alert("글 삭제 완료!");
 				}
 			},
 			error : function() {

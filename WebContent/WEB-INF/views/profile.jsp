@@ -258,7 +258,7 @@ $(document).ready(function() {
 						alert("사진 변경 실패");
 					}
 				});
-	});
+			});
 })
 function readURL(changeInput) {
 	// 	console.log(id);
@@ -332,8 +332,26 @@ figure>div>.photo-info {
   -ms-user-select: none;
   user-select: none;
 }
-
-
+.thumbnail {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+.thumbnail img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+.thumbnail img.portrait {
+  width: 100%;
+  height: auto;
+}
 </style>
 </head>
 <body>											
@@ -379,7 +397,9 @@ figure>div>.photo-info {
 														name="write_form" accept-charset="utf-8" style="display:inline-block;">
 												<div class="file_input_div">
 												    <img src="<%=request.getContextPath()%>/${memberVO.photo_path}" class="file_input_img_btn" alt="open" />
-												    <input type="file" name="file" id="file" class="file_input_hidden"/>
+												    <c:if test="${sessionScope.loginId == memberVO.id}">
+												    	<input type="file" name="file" id="file" class="file_input_hidden"/>
+													</c:if>
 												</div>											
 											</form>
 												<!-- 	Modal content -->
