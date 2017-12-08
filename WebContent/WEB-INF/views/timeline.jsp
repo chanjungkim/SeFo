@@ -12,13 +12,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Welcome! ${sessionScope.loginId}</title>
+<title>비밀의숲 - ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="shortcut icon"  href="<%=request.getContextPath()%>/favicon.ico" />
 <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+<link rel="shortcut icon"  href="<%=request.getContextPath()%>/favicon.ico" />
 <link href="assets/css/sefo.css" rel="stylesheet">
 <link href="assets/css/timeline.css" rel="stylesheet">
 <script src="https://use.fontawesome.com/804ea8b780.js"></script>
@@ -43,11 +45,11 @@
 	var photoNum = 0;
 	var wsocket;
 	$(function() {
-		wsocket = new WebSocket("ws://localhost:8888/chatting/echo-ws");
-		wsocket.onopen = function() { //��������Ǹ� ����
-			alert("���� ����")
-		};
-		sendMessage();
+// 		wsocket = new WebSocket("ws://localhost:8888/chatting/echo-ws");
+// 		wsocket.onopen = function() { //��������Ǹ� ����
+// 			alert("���� ����")
+// 		};
+// 		sendMessage();
 		$(document).on('keydown', '.comment-write-area', function(e) {
 			var article_num = $(this).attr("name");
 			var content = $(this).val()
@@ -102,8 +104,8 @@
 			var height = this.naturalHeight;
 			var parentHeight = $(this).parent().height();
 			var parentWidth = $(this).parent().width()
-// 			if (width < height) {
-// 				var w = width * (parentHeight / height);
+			if (width < height) {
+				var w = width * (parentHeight / height);
 				$(this).css({width : w, 	height : parentHeight	})
 			} else {
 				var h = height * (parentWidth / width);
@@ -248,13 +250,13 @@
 						+ '</div>'
 						+ '<br>'
 						+ '</p>'
-						+ '	<p>'
+						+ '	<div>'
 						+ '		<button type="button" class="btn btn-default btn-sm">'
 						+ '			<i class="glyphicon glyphicon-thumbs-up"></i>'
 						+ '		</button>'
 						+ '		<!-- List of people who liked if more than 3, show number  otherwise id -->'
 						+ '		<!-- EO liked list -->'
-						+ '	</p>'
+						+ '	</div>'
 						+ '<table id="comment-area-'+article_num+'" class="comment-area" width="100%">'
 						+ '	<p>'
 						+ '</table>'

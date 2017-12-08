@@ -6,9 +6,10 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=EUC-KR">
 <meta charset="EUC-KR">
-<title>Welcome! ${sessionScope.loginId}</title>
+<title>비밀의숲 - ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="shortcut icon"  href="<%=request.getContextPath()%>/favicon.ico" />
 <link href="<%=request.getContextPath()%>/assets/css/bootstrap.css"
 	rel="stylesheet">
 <link href="<%=request.getContextPath()%>/assets/css/profile.css"

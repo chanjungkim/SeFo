@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>비밀의숲 회원가입</title>
+<link rel="shortcut icon"  href="<%=request.getContextPath()%>/favicon.ico" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <link rel='stylesheet prefetch'
@@ -38,7 +39,7 @@ $(function(){
 		if($('#gender-female').attr('checked') == 'checked'){
 			$('#gender-male').attr('checked', '');
 		}else{
-			$('#gender-male').attr('checked', 'checked');
+			$('#gender-female').attr('checked', 'checked');
 		}
 	})
 	
@@ -46,7 +47,7 @@ $(function(){
 		if($('#gender-male').attr('checked') == 'checked'){
 			$('#gender-female').attr('checked', '');
 		}else{
-			$('#gender-female').attr('checked', 'checked');
+			$('#gender-male').attr('checked', 'checked');
 		}
 	})
 	

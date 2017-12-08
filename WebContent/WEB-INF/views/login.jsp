@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="EUC-KR">
-<title>Login Box Concept</title>
+<title>비밀의숲</title>
 <link rel='stylesheet prefetch'
 	href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/login.css">

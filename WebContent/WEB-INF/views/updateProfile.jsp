@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>비밀의숲 - ${sessionScope.loginId}</title>
+
 <script type="text/javascript">
 	window.onload=function(){
 		alert("수정 완료")
@@ -12,6 +13,7 @@
 	}
 </script>
 </head>
+<link rel="shortcut icon"  href="<%=request.getContextPath()%>/favicon.ico" />
 <body>
 
 </body>
