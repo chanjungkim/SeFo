@@ -71,15 +71,15 @@
 	</select>
 	
 	<select id="selectAllfollow" resultType="FollowVO">
-		SELECT * 
-		FROM follow 
-		WHERE id = #{id}; 
+		select f.*,m.photo_path 
+		from follow f, member m 
+		where f.id=#{id} and f.followee= m.id; 
 	</select>
 	
 	<select id="selectAllfollower" resultType="FollowVO">
-		SELECT *
-		FROM follow 
-		WHERE followee = #{id}; 
+		select f.*,m.photo_path 
+		from follow f, member m 
+		where f.followee =#{id} and f.id= m.id;  
 	</select>
 	
 	<delete id="deleteMember" parameterType="MemberVO"> 
@@ -92,4 +92,8 @@
   	<insert id="insertArticlePhoto" parameterType="FileVO"> 
   		INSERT INTO article_photo(article_num, file_path, file_name, file_origiName) VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName}) 
   	</insert>
+  	
+  	<update id="updateProfilePhoto">
+  		UPDATE MEMBER SET PHOTO_PATH = ${photo_path} WHERE ID = ${id}
+  	</update>
 </mapper>
