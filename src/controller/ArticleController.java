@@ -30,6 +30,8 @@ import vo.ReactVO;
 
 @Controller
 public class ArticleController {
+	private String TAG = this.getClass().getSimpleName();
+	
 	@Autowired
 	private ArticleService service;
 
@@ -37,6 +39,7 @@ public class ArticleController {
 	@ResponseBody
 	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			ArticleVO article) throws UnsupportedEncodingException {
+		System.out.println(TAG + ", writePost()");
 		String decodedData = URLDecoder.decode(article.getContent(), "UTF-8");
 		article.setContent(decodedData);
 		
@@ -73,7 +76,8 @@ public class ArticleController {
 	@RequestMapping(value = "/writeComment.do", method = RequestMethod.POST)
 	@ResponseBody
 	public CommentVO writeComment(HttpSession session, HttpServletResponse response, String content, long article_num) {
-		System.out.println("writeComment 컨틀롤러 실행" + content);
+		System.out.println(TAG+ ", writeComment()");
+		
 		CommentVO comment = new CommentVO();
 
 		String id = (String) session.getAttribute("loginId");
@@ -99,7 +103,7 @@ public class ArticleController {
 
 	@RequestMapping(value = "/deleteComment.do", method = RequestMethod.POST)
 	public void deleteComment(HttpSession session, HttpServletResponse response, long comment_num) {
-		System.out.println("deleteComment컨트롤러 실행: " + comment_num);
+		System.out.println(TAG + "deleteComment()");
 		boolean result = service.deleteComment(comment_num);
 		try {
 			response.getWriter().println(result);
@@ -111,7 +115,8 @@ public class ArticleController {
 
 	@RequestMapping(value = "/deleteNewComment.do", method = RequestMethod.POST)
 	public void deleteComment(HttpSession session, HttpServletResponse response, String id, String content) {
-		System.out.println("deleteNewComment컨트롤러 실행: " + id + ":" + content);
+		System.out.println(TAG + ", deleteComment()");
+
 		boolean result = service.deleteNewComment(id, content);
 		try {
 			response.getWriter().println(result);
@@ -124,6 +129,8 @@ public class ArticleController {
 	@RequestMapping(value = "/react.do", method = RequestMethod.POST)
 	public void saveReact(HttpSession session, HttpServletResponse response, String id, long article_num,
 			String expression) {
+		System.out.println(TAG + ", saveReact()");
+
 		if(service.selectReact(article_num, id)) {
 			//이미 눌렀을 경우
 			service.updateReact(article_num, id, expression);
@@ -136,11 +143,15 @@ public class ArticleController {
 
 	@RequestMapping("/showReactList.do")
 	public List<ReactVO> getReactList(long article_num) {
+		System.out.println(TAG + ", getReactList()");
+
 		return service.getReactList(article_num);
 	}
 	
 	@RequestMapping("/article.do/{article_num}")
 	public void getAnArticle(HttpSession session, HttpServletResponse response, @PathVariable long article_num) {
+		System.out.println(TAG + ", getAnArticle()");
+
 		ArticleVO article = service.getAnArticle(article_num);		
 		PrintWriter writer = null;
  
@@ -157,6 +168,8 @@ public class ArticleController {
 	
 	@RequestMapping(value="/remove-article.do", method = RequestMethod.POST)
 	public void  removeArticle(HttpSession session, HttpServletResponse response, long article_num) throws IOException {
+		System.out.println(TAG + ", removeArticle()");
+
 		PrintWriter writer = null;
 		writer = response.getWriter();
 		if(service.removeArticle(article_num)) writer.print(true);
@@ -164,6 +177,8 @@ public class ArticleController {
 	}
 	@RequestMapping("/leftArticle.do")
 	public void getLeftArticleNum(HttpSession session, HttpServletResponse response, long article_num, String id) {
+		System.out.println(TAG + ", getLeftAticleNum()");
+
 		long leftArticleNum = service.getLeftArticleNum(article_num, id);
 		
 		PrintWriter writer = null;
@@ -181,6 +196,8 @@ public class ArticleController {
 	
 	@RequestMapping("/rightArticle.do")
 	public void getRightArticleNum(HttpSession session, HttpServletResponse response, long article_num, String id) {
+		System.out.println(TAG + ", getRightArticleNum()");
+
 		long rightArticleNum = service.getRightArticleNum(article_num, id);	
 		PrintWriter writer = null;
 

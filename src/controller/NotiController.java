@@ -12,12 +12,16 @@ import vo.NotificationVO;
 
 @Component
 public class NotiController {
+	private String TAG = this.getClass().getSimpleName();
+
 	@Autowired
 	NotiService service;
 	
 	@RequestMapping
 	@ResponseBody
 	public NotificationVO addNotification(HttpSession session, String recieve_id, int article_num,int notification_type) {
+		System.out.println(TAG);
+
 		String id = (String) session.getAttribute("loginId");
 		NotificationVO noti = new NotificationVO();
 		noti.setMy_id(id);

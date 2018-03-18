@@ -30,6 +30,7 @@ import vo.MemberVO;
 
 @Controller
 public class MemberController {
+	private String TAG = this.getClass().getSimpleName();
 	
 	@Autowired
 	private MemberService service;
@@ -40,6 +41,8 @@ public class MemberController {
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public void login(String id, @RequestParam("password")String pwd, HttpSession session, HttpServletResponse response) {
+		System.out.println(TAG + ", login()");
+
 		if(service.login(id, pwd)) {
 		    String personJson = "true";
 		    try {
@@ -60,6 +63,8 @@ public class MemberController {
 	
 	@RequestMapping("/initMain.do")
 	public ModelAndView initMain(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {   	
+		System.out.println(TAG + ", initMain()");
+
 		String id = (String) session.getAttribute("loginId");
 		Cookie cookie = new Cookie("sefoId", id);
 		cookie.setComment("last id");
@@ -97,16 +102,22 @@ public class MemberController {
 	
 	@RequestMapping("/loginPageMove.do")
 	public String loginPageMove(HttpSession session) {
+		System.out.println(TAG + ", loginPageMove()");
+
 		return "login";
  	}
 	
 	@RequestMapping("/moveSignupForm.do")
 	public String moveSignupForm() {
+		System.out.println(TAG +", moveSignupForm()");
+
 		return "signup_form";
 	}
 	
 	@RequestMapping("/signup.do")
 	public String join(HttpServletRequest request) {
+		System.out.println(TAG + ", join()");
+
 		MemberVO member = new MemberVO();
 		member.setId(request.getParameter("id"));
 		member.setPassword(request.getParameter("password"));
@@ -130,7 +141,7 @@ public class MemberController {
 	
 	@RequestMapping("/overlab-check.do")
 	public void CheckOverlabID(String id, HttpServletResponse response) {
-		System.out.println(id);
+		System.out.println(TAG+", CheckOverlabID()");
 		if(service.checkOverlabID(id)) {
 		    try {
 				response.getWriter().print("true");
@@ -148,12 +159,16 @@ public class MemberController {
 	
     @RequestMapping("/logout.do")
     public String logout(HttpSession session) {
+		System.out.println(TAG + ", logout()");
+
         session.invalidate();
         return "login";
     }
 	
     @RequestMapping("/search.do")
     public void searchUserId(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println(TAG + ", searchUserId()");
+
     	String searchWord = request.getParameter("searchWord");
     	
     	PrintWriter writer = response.getWriter();

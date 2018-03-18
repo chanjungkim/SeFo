@@ -23,6 +23,8 @@ import vo.ReactVO;
 
 @Component
 public class ArticleService {
+	private String TAG = this.getClass().getSimpleName();
+
 	@Autowired
 	private ArticleDao dao;
 
@@ -30,7 +32,7 @@ public class ArticleService {
 	private MemberDao memberDao;
 	
 	public ArticleVO writeArticle(ArticleVO article, HttpServletRequest req) throws UnsupportedEncodingException {
-		System.out.println("articleService 실행!");
+		System.out.println(TAG);
 		int result = dao.insertArticle(article);
 		// System.out.println(result + " : "+article.getContent());
 		if (result > 0) {
@@ -84,6 +86,7 @@ public class ArticleService {
 	}
 
 	public List<ArticleVO> getArticleList(String id) {
+		System.out.println(TAG);
 		List<ArticleVO> articleList = dao.selectAllArticle(id);
 		
 		for (ArticleVO article : articleList) {
@@ -97,11 +100,12 @@ public class ArticleService {
 	}
 
 	public List<CommentVO> getCommentList(long article_num) {
+		System.out.println(TAG);
 		return dao.selectAllComment(article_num);
 	}
 
 	public boolean deleteComment(long comment_num) {
-		System.out.println("deleteComment서비스 실행" + comment_num);
+		System.out.println(TAG);
 		int result = dao.deleteComment(comment_num);
 		System.out.println(result);
 		if (result > 0)
@@ -111,7 +115,7 @@ public class ArticleService {
 	}
 
 	public boolean deleteNewComment(String id, String content) {
-		System.out.println("deleteNewComment서비스 실행" + id + ":" + content);
+		System.out.println(TAG);
 		int result = dao.deleteNewComment(id, content);
 		System.out.println(result);
 		if (result > 0)
@@ -121,7 +125,7 @@ public class ArticleService {
 	}
 
 	public CommentVO writeComment(CommentVO comment) {
-		System.out.println("writeComment 서비스 실행" + comment.getId() + ":" + comment.getContent());
+		System.out.println(TAG);
 		int result = dao.insertComment(comment);
 		if (result > 0)
 			return dao.selectLastComment(comment.getArticle_num(), comment.getId());
@@ -130,10 +134,12 @@ public class ArticleService {
 	}
 
 	public List<FileVO> getArticlePhoto(long article_num) {
+		System.out.println(TAG);
 		return dao.selectArticlePhoto(article_num);
 	}
 	
 	public boolean updatePhotoCount(long article_num, int count) {
+		System.out.println(TAG);
 		int result = dao.updatePhotoCount(article_num, count);
 		if (result > 0)
 			return true;
@@ -142,34 +148,40 @@ public class ArticleService {
 	}
 
 	public boolean selectReact(long article_num, String id) {
+		System.out.println(TAG);
 		int result = dao.selectReact(article_num, id);
 		if(result > 0) return true;
 		else return false;
 	}
 	
 	public boolean countReact(long article_num) {
+		System.out.println(TAG);
 		int result = dao.countReact(article_num);
 		if( result > 0) return true;
 		else return false;
 	}
 
 	public boolean saveReact(long article_num, String id, String expression) {
+		System.out.println(TAG);
 		int result = dao.insertReact(article_num, id, expression);
 		if( result > 0) return true;
 		else return false;
 	}
 
 	public List<ReactVO> getReactList(long article_num) {
+		System.out.println(TAG);
 		return dao.selectAllReact(article_num);
 	}
 
 	public boolean updateReact(long article_num, String id, String expression) {
+		System.out.println(TAG);
 		int result = dao.updateReact(article_num, id, expression);
 		if(result > 0) return true;
 		else return false;
 	}
 	
 	public ArticleVO getAnArticle(long article_num) {
+		System.out.println(TAG);
 		ArticleVO article = dao.selectArticle(article_num);
 		article.setCommentList(dao.selectAllComment(article_num));
 		for (CommentVO v : article.getCommentList()) {
@@ -184,6 +196,7 @@ public class ArticleService {
 	}
 	
 	public boolean removeArticle(long article_num) {
+		System.out.println(TAG);
 		int result = dao.removeArticle(article_num);
 		System.out.println("result="+result);
 		if(result > 0) return true;
@@ -191,10 +204,12 @@ public class ArticleService {
 	}
 
 	public long getLeftArticleNum(long article_num, String id) {
+		System.out.println(TAG);
 		return dao.selectLeftArticleNum(article_num, id);
 	}
 	
 	public long getRightArticleNum(long article_num, String id) {
+		System.out.println(TAG);
 		return dao.selectRightArticleNum(article_num, id);
 	}
 }
