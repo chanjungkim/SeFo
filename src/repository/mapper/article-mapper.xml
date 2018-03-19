@@ -12,40 +12,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insertArticlePhoto" parameterType="FileVO">
 		INSERT INTO
-		article_photo(article_num, file_path, file_name, file_origiName)
+		ARTICLE_PHOTO(ARTICLE_NUM, FILE_PATH, FILE_NAME, FILE_ORIGINAME)
 		VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName})
 	</insert>
 
 	<select id="selectAllArticle" resultType="ArticleVO">
-		SELECT af.*, m.photo_path 
+		SELECT af.*,
+		m.PHOTO_PATH
 		FROM (SELECT * FROM ARTICLE
-					WHERE ID IN
-							(SELECT FOLLOWEE FROM FOLLOW WHERE ID = #{id}) OR ID = #{id}) af, MEMBER m 
-			WHERE af.id = m.id
+		WHERE ID IN
+		(SELECT FOLLOWEE
+		FROM FOLLOW WHERE ID = #{id}) OR ID = #{id}) af, MEMBER m
+		WHERE af.ID =
+		m.ID
 		ORDER BY
 		WRITE_TIME DESC;
-		
+
 	</select>
 	<select id="selectArticlePhoto" resultType="FileVO">
 		SELECT * FROM
-		article_photo
+		ARTICLE_PHOTO
 		WHERE article_num = #{article_num}
 	</select>
-	
+
 	<select id="selectAllComment" resultType="CommentVO">
-		SELECT c.*, m.photo_path 
-		FROM comment c, article a, member m 
-		WHERE c.article_num = a.article_num AND m.id = c.id AND a.article_num = #{article_num};
+		SELECT c.*,
+		m.PHOTO_PATH
+		FROM COMMENT c, ARTICLE a, MEMBER m
+		WHERE c.ARTICLE_NUM =
+		a.ARTICLE_NUM AND m.ID = c.ID AND a.ARTICLE_NUM = #{article_num};
 	</select>
-	
-	<select id="selectLastComment" resultType = "CommentVO">
-		SELECT c.*, m.photo_path 
-		FROM comment c, member m
-		WHERE comment_num = 
-				(select max(comment_num) from comment where article_num=#{article_num} and id= #{id})
-				AND c.id = m.id;
+
+	<select id="selectLastComment" resultType="CommentVO">
+		SELECT c.*,
+		m.PHOTO_PATH
+		FROM COMMENT c, MEMBER m
+		WHERE COMMENT_NUM =
+		(SELECT
+		max(COMMENT_NUM) FROM COMMENT WHERE ARTICLE_NUM=#{article_num} AND ID
+		= #{id})
+		AND c.ID = m.ID;
 	</select>
-	
+
 	<insert id="insertComment" parameterType="CommentVO">
 		INSERT INTO
 		COMMENT(ARTICLE_NUM, ID, WRITE_TIME, CONTENT)
@@ -64,10 +72,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<update id="updatePhotoCount">
-		UPDATE article
-		SET photo_count = #{count}
+		UPDATE ARTICLE
+		SET PHOTO_COUNT = #{count}
 		WHERE
-		article_num = #{article_num}
+		ARTICLE_NUM = #{article_num}
 	</update>
 
 	<select id="selectReact" resultType="int">
@@ -75,50 +83,61 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM REACT
 		WHERE ARTICLE_NUM = #{article_num} AND ID= #{id}
 	</select>
-	
-	 <update id="countReact">
+
+	<update id="countReact">
 		UPDATE ARTICLE
 		SET REACT_COUNT = REACT_COUNT+1
-		WHERE ARTICLE_NUM = #{article_num}
+		WHERE
+		ARTICLE_NUM = #{article_num}
 	</update>
-	
+
 	<update id="updateReact">
 		UPDATE REACT
-		SET TYPE_NUM = ${expression}, REACT_TIME = now()
+		SET TYPE_NUM = ${expression}, REACT_TIME
+		= now()
 		WHERE ARTICLE_NUM = #{article_num} AND ID = #{id}
 	</update>
-		
+
 	<insert id="insertReact">
-		INSERT INTO REACT(ARTICLE_NUM, ID, TYPE_NUM, REACT_TIME)
+		INSERT INTO REACT(ARTICLE_NUM, ID, TYPE_NUM,
+		REACT_TIME)
 		VALUES(#{article_num}, #{id}, ${expression}, now())
-		ON DUPLICATE KEY UPDATE ID=#{id} AND ID=#{id},TYPE_NUM=${expression};
+		ON
+		DUPLICATE KEY UPDATE ID=#{id} AND ID=#{id},TYPE_NUM=${expression};
 	</insert>
 
-	<select id="selectAllReact"   parameterType="long" resultType="ReactVO">
+	<select id="selectAllReact" parameterType="long" resultType="ReactVO">
 		SELECT * FROM REACT WHERE ARTICLE_NUM = #{article_num};
 	</select>
 
-	
+
 	<select id="selectArticle" parameterType="long" resultType="ArticleVO">
-		SELECT c.* , m.photo_path FROM ARTICLE c , Member m WHERE c.ARTICLE_NUM = #{article_num}  AND c.id = m.id;
+		SELECT c.* , m.PHOTO_PATH FROM ARTICLE c , MEMBER m WHERE
+		c.ARTICLE_NUM = #{article_num} AND c.id = m.id;
 	</select>
-	
+
 	<delete id="removeArticle" parameterType="long">
-	DELETE
-	FROM ARTICLE
-	WHERE ARTICLE_NUM = #{article_num}
+		DELETE
+		FROM ARTICLE
+		WHERE ARTICLE_NUM = #{article_num}
 	</delete>
-		
+
 	<select id="selectLeftArticleNum" resultType="long">
-		SELECT ARTICLE_NUM FROM ARTICLE WHERE id = #{id} AND ARTICLE_NUM &gt; #{article_num} AND PHOTO_COUNT &gt; 0  LIMIT 1 
+		SELECT ARTICLE_NUM
+		FROM ARTICLE WHERE id = #{id} AND ARTICLE_NUM &gt; #{article_num} AND
+		PHOTO_COUNT &gt; 0 LIMIT 1
 	</select>
 
 	<select id="selectRightArticleNum" resultType="long">
-		SELECT ARTICLE_NUM FROM ARTICLE WHERE id = #{id} AND ARTICLE_NUM &lt; #{article_num} AND PHOTO_COUNT &gt; 0 ORDER BY ARTICLE_NUM DESC LIMIT 1 
+		SELECT ARTICLE_NUM
+		FROM ARTICLE WHERE id = #{id} AND ARTICLE_NUM &lt; #{article_num} AND
+		PHOTO_COUNT &gt; 0 ORDER BY ARTICLE_NUM DESC LIMIT 1
 	</select>
 	<!-- &gt == '>' , &lt == '<' -->
 	<insert id="insertNotification" parameterType="NotificationVO">
-		INSERT into notification(recieve_id, notification_type, article_num)
-		VALUES(#{id}, #{type}, #{article_num});
+		INSERT INTO
+		notification(recieve_id, notification_type, article_num)
+		VALUES(#{id},
+		#{type}, #{article_num});
 	</insert>
 </mapper>

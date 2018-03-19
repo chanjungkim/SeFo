@@ -4,26 +4,26 @@
 	<select id="selectContentCount" resultType="int">
 		SELECT count(*)
 		FROM
-		article
-		WHERE id = #{id}
+		ARTICLE
+		WHERE ID = #{id}
 	</select>
 	<select id="selectInfo" resultType="MemberVO">
 		SELECT *
-		FROM member
+		FROM MEMBER
 		WHERE id =
 		#{id}
 	</select>
 
 	<select id="selectFisrtArticleList" resultType="ArticleVO">
 		SELECT *
-		FROM article
-		WHERE id = #{id}
+		FROM ARTICLE
+		WHERE ID = #{id}
 		AND article_num &lt;= (SELECT
 		MAX(article_num)
 		FROM article
-		WHERE id= #{id} AND photo_count &gt; 0)
+		WHERE ID= #{id} AND PHOTO_COUNT &gt; 0)
 		<!-- &gt == '>' , &lt == '<' -->
-		AND photo_count &gt; 0
+		AND PHOTO_COUNT &gt; 0
 		ORDER BY write_time DESC
 		LIMIT 12
 	</select>
@@ -31,69 +31,78 @@
 	<select id="selectMoreArticleList" resultType="ArticleVO">
 		SELECT *
 		FROM
-		article
-		WHERE id = #{id} AND article_num &lt; #{articleNum}
+		ARTICLE
+		WHERE id = #{id} AND ARTICLE_NUM &lt; #{articleNum}
 		AND
-		photo_count &gt; 0
-		ORDER BY write_time DESC
+		PHOTO_COUNT &gt; 0
+		ORDER BY WRITE_TIME DESC
 		LIMIT 12
 	</select>
 	<update id="update" parameterType="MemberVO">
-		update member set name=#{name},
-		self_info=#{self_info},email=#{email},phone=#{phone},gender=#{gender}
-		where id=#{id}
+		update MEMBER set
+		name=#{name},
+		SELF_INFO = #{self_info}, EMAIL = #{email}, PHONE =
+		#{phone}, GENDER = #{gender}
+		where ID=#{id}
 	</update>
 
-	<update id="updatePw" >
-		update member set password=#{password} where id=#{id}
+	<update id="updatePw">
+		update MEMBER set PASSWORD = #{password}
+		where ID = #{id}
 	</update>
-	
+
 	<insert id="insertFollow">
-		INSERT into follow(id, followee)
-		VALUES(#{id}, #{followee})
+		INSERT into FOLLOW( ID, FOLLOWEE )
+		VALUES(#{id},
+		#{followee})
 	</insert>
-	
+
 	<delete id="deleteFollow">
-		DELETE from follow
-		where id = #{id} AND followee = #{followee}
-	</delete>	
-	
+		DELETE from FOLLOW
+		where ID = #{id} AND FOLLOWEE =
+		#{followee}
+	</delete>
+
 	<select id="selectTotalfollowCount" resultType="int">
-		SELECT count(followee) 
-		FROM follow 
-		WHERE id = #{id}; 
+		SELECT
+		count(followee)
+		FROM FOLLOW
+		WHERE id = #{id};
 	</select>
-	
+
 	<select id="selectTotalfolloweeCount" resultType="int">
-		SELECT count(id) 
-		FROM follow 
-		WHERE followee = #{followee}; 
+		SELECT
+		count(id)
+		FROM FOLLOW
+		WHERE FOLLOWEE = #{followee};
 	</select>
-	
+
 	<select id="selectAllfollow" resultType="FollowVO">
-		select f.*,m.photo_path 
-		from follow f, member m 
-		where f.id=#{id} and f.followee= m.id; 
+		select f.*,m.PHOTO_PATH
+		from FOLLOW f, MEMBER m
+		where f.ID = #{id} and f.FOLLOWEE = m.ID;
 	</select>
-	
+
 	<select id="selectAllfollower" resultType="FollowVO">
-		select f.*,m.photo_path 
-		from follow f, member m 
-		where f.followee =#{id} and f.id= m.id;  
+		select
+		f.*,m.PHOTO_PATH
+		from FOLLOW f, MEMBER m
+		where f.FOLLOWEE =#{id} and f.ID= m.id;
 	</select>
-	
-	<delete id="deleteMember" parameterType="MemberVO"> 
-		delete from member where id=#{id} 
+
+	<delete id="deleteMember" parameterType="MemberVO">
+		delete from MEMBER where ID=#{id}
 	</delete>
 
 	<delete id="deleteArticle" parameterType="ArticleVO">
-		 delete from article where id=#{id}
-  	</delete>
-  	<insert id="insertArticlePhoto" parameterType="FileVO"> 
-  		INSERT INTO article_photo(article_num, file_path, file_name, file_origiName) VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName}) 
-  	</insert>
-  	
-  	<update id="updateProfilePhoto">
-  		UPDATE MEMBER SET PHOTO_PATH = ${photo_path} WHERE ID = ${id}
-  	</update>
+		delete from ARTICLE where ID=#{id}
+	</delete>
+	<insert id="insertArticlePhoto" parameterType="FileVO">
+		INSERT INTO ARTICLE_PHOTO (ARTICLE_NUM, FILE_PATH, FILE_NAME, FILE_ORIGINAME)
+		VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName})
+	</insert>
+
+	<update id="updateProfilePhoto">
+		UPDATE MEMBER SET PHOTO_PATH = ${photo_path} WHERE ID = ${id}
+	</update>
 </mapper>

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import lib.FileLib;
+import lib.MyLog;
 import repository.ArticleDao;
 import repository.MemberDao;
 import vo.ArticleVO;
@@ -32,54 +34,10 @@ public class ArticleService {
 	private MemberDao memberDao;
 	
 	public ArticleVO writeArticle(ArticleVO article, HttpServletRequest req) throws UnsupportedEncodingException {
-		System.out.println(TAG);
-		int result = dao.insertArticle(article);
-		// System.out.println(result + " : "+article.getContent());
-		if (result > 0) {
-			if (article.getFileList() != null && article.getFileList().size() != 0) {
-				//////////////////////////////////
-				// 파일처리
-				String uploadPath = req.getServletContext().getRealPath("userArticleImage");
-				File dir = new File(uploadPath + "/" + article.getArticle_num());
-				// 폴더가 없을 경우 생성
-				if (!dir.exists()) {
-					dir.mkdirs();
-				}
-				if (article.getFileList() != null && article.getFileList().size() != 0) {
-					//사진 리스트
-					article.setPhotoList(new ArrayList<FileVO>());
-					article.setPhoto_count(article.getFileList().size());
-					for (MultipartFile m : article.getFileList()) {
-						FileVO fileVO = new FileVO();
-						
-						String savedName = URLDecoder.decode(m.getOriginalFilename(),"UTF-8");
-						long time = System.currentTimeMillis();
-						File savedFile = new File(dir.getAbsolutePath() + "/"+time + savedName);
-						try {
-							m.transferTo(savedFile);
-							fileVO.setArticle_num(article.getArticle_num());
-							fileVO.setFile_name(savedName);
-							fileVO.setFile_origiName("userArticleImage/" + article.getArticle_num() + "/" +time+ savedName);
-							fileVO.setFile_path(savedFile.getAbsolutePath());
-							// DB에 업로드 내역 기록
-							dao.insertArticlePhoto(fileVO);
-							// 사진 정보 하나씩 넣기
-							article.getPhotoList().add(fileVO);
-							System.out.println("---------------");
-							System.out.println("업로드 완료");
-							System.out.println("원본이름:" + m.getOriginalFilename());
-							System.out.println("fileVO origiName:" + fileVO.getFile_origiName());
-							System.out.println("저장된 경로:" + savedFile.getAbsolutePath());
-							System.out.println("---------------");
-						} catch (IllegalStateException | IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					// article에 fileVo 넣기
-				}
-			}
-		}
+		MyLog.d(TAG, "writeArticle()");
+
+		FileLib.getInstane().uploadArticleImageFiles(dao, memberDao, article, req);
+
 		article.setReactList(getReactList(article.getArticle_num()));
 		article.setPhoto_path(memberDao.initMain(article.getId()).getPhoto_path());
 		return article;

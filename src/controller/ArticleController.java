@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import lib.MyLog;
 import service.ArticleService;
 import vo.ArticleVO;
 import vo.CommentVO;
@@ -39,7 +40,8 @@ public class ArticleController {
 	@ResponseBody
 	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			ArticleVO article) throws UnsupportedEncodingException {
-		System.out.println(TAG + ", writePost()");
+		MyLog.d(TAG, "writePost()");
+
 		String decodedData = URLDecoder.decode(article.getContent(), "UTF-8");
 		article.setContent(decodedData);
 		
