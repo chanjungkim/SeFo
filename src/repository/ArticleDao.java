@@ -149,17 +149,23 @@ public class ArticleDao {
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
 		return mapper.removeArticle(article_num);
 	}
-	public long selectLeftArticleNum(long article_num, String id) {
+	public Long selectLeftArticleNum(long article_num, String id) {
 		MyLog.d(TAG, "selectLeftArticleNum()");
 
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
-		return mapper.selectLeftArticleNum(article_num, id);
+		Long result = mapper.selectLeftArticleNum(article_num, id);
+		if(result == null) result = (long) 0;
+		
+		return result;
 	}
 	
-	public long selectRightArticleNum(long article_num, String id) {
+	public Long selectRightArticleNum(long article_num, String id) {
 		MyLog.d(TAG, "selectRightArticleNum()");
 
 		ArticleMapper mapper = session.getMapper(ArticleMapper.class);
-		return mapper.selectRightArticleNum(article_num, id);
+		Long result = mapper.selectRightArticleNum(article_num, id);
+		if(result == null) result = (long) 0;
+		
+		return result;
 	}
 } 

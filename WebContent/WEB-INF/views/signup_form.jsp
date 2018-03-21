@@ -2,7 +2,7 @@
 	pageEncoding="EUC-KR"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>비밀의숲 회원가입</title>
 <link rel="shortcut icon"  href="<%=request.getContextPath()%>/favicon.ico" />
 <link rel="stylesheet"
@@ -35,21 +35,16 @@ $(function(){
 			}
 		})
 	})
-	$('#gender-female').on('click', function(){
-		if($('#gender-female').attr('checked') == 'checked'){
-			$('#gender-male').attr('checked', '');
-		}else{
-			$('#gender-female').attr('checked', 'checked');
-		}
-	})
 	
 	$('#gender-male').on('click', function(){
-		if($('#gender-male').attr('checked') == 'checked'){
-			$('#gender-female').attr('checked', '');
-		}else{
-			$('#gender-male').attr('checked', 'checked');
-		}
-	})
+		$('#gender-male').attr('checked', 'checked');
+		$('#gender-female').removeAttr('checked');
+	});
+	
+	$('#gender-female').on('click', function(){
+		$('#gender-female').attr('checked', 'checked');
+		$('#gender-male').removeAttr('checked');
+	});
 	
 })
 function checkIn() {
@@ -94,8 +89,6 @@ function checkIn() {
 			alert("중복확인을 안했습니다.");
 			return false;
 		}
-		
-	
 }
 </script>
 </head>
@@ -178,7 +171,7 @@ function checkIn() {
 						</div>
 					</div>
 				</div>
-				<div clas="col-half">
+				<div class="col-half">
 					<input style="color: #ffffff; float: right;" type="submit"
 						value="회원 가입">
 				</div>

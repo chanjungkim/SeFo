@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="EUC-KR">
-<title>ºñ¹ĞÀÇ½£</title>
+<meta charset="UTF-8">
+<title>ë¹„ë°€ì˜ìˆ²</title>
 <link rel='stylesheet prefetch'
 	href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/login.css">
@@ -13,8 +13,8 @@
 <script type="text/javascript">
 	$(function() {
 		wsocket = new WebSocket("ws://localhost:8888/chatting/echo-ws");
-		wsocket.onopen = function() { //¼­¹ö¿¬°áµÇ¸é ½ÇÇà
-// 			alert("¼¼¼Ç ¿¬°á")
+		wsocket.onopen = function() { //ì„œë²„ì—°ê²°ë˜ë©´ ì‹¤í–‰
+// 			alert("ì„¸ì…˜ ì—°ê²°")
 		};
 		$('#id').focus();
 
@@ -34,23 +34,23 @@
 			var id = $('#id').val();
 			var pwd = $('#pwd').val();
 			$.ajax({
-				type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-				url : 'login.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+				type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
+				url : 'login.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
 				data : {
 					'id' : '' + id,
 					'password' : '' + pwd
-				}, // °Ë»ö¾î µ¥ÀÌÅÍ
-				dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+				}, // ê²€ìƒ‰ì–´ ë°ì´í„°
+				dataType : 'text', // ì‘ë‹µë°ì´í„° í˜•ì‹
 				success : function(resultData) {
 // 					alert('login success:' + resultData);
 					if (resultData == 'true') {
-						location.href = "initMain.do" // ·Î±×ÀÎ ¿Ï·áÈÄ ÀÌµ¿ÇÒ È­¸é
+						location.href = "initMain.do" // ë¡œê·¸ì¸ ì™„ë£Œí›„ ì´ë™í•  í™”ë©´
 					} else {
-						alert('·Î±×ÀÎ ½ÇÆĞ') // ·Î±×ÀÎ ½ÇÆĞ½Ã ÆË¾÷
+						alert('ë¡œê·¸ì¸ ì‹¤íŒ¨') // ë¡œê·¸ì¸ ì‹¤íŒ¨ì‹œ íŒì—…
 					}
 				},
 				error : function() {
-					alert('ajax ¿äÃ» ½ÇÆĞ');
+					alert('ajax ìš”ì²­ ì‹¤íŒ¨');
 				}
 			})
 		})
@@ -63,12 +63,12 @@
 		function sendMessage() {
 			wsocket.onmessage = onMessage;
 		}
-		function onMessage(evt) { //¼­¹ö¿¡¼­ ¸Ş¼¼Áö¸¦¹ŞÀ¸¸é ½ÇÇà
+		function onMessage(evt) { //ì„œë²„ì—ì„œ ë©”ì„¸ì§€ë¥¼ë°›ìœ¼ë©´ ì‹¤í–‰
 			var data = evt.data;
-			alert("¼­¹ö¿¡¼­ µ¥ÀÌÅÍ ¹ŞÀ½:" + data);
+			alert("ì„œë²„ì—ì„œ ë°ì´í„° ë°›ìŒ:" + data);
 		}
-		function onClose(evt) { //¿¬°áÀÌ Á¾·áµÇ¸é ½ÇÇà}
-			alert("¿¬°á ²÷±è");
+		function onClose(evt) { //ì—°ê²°ì´ ì¢…ë£Œë˜ë©´ ì‹¤í–‰}
+			alert("ì—°ê²° ëŠê¹€");
 		}
 	})
 </script>
@@ -137,16 +137,16 @@
 				</div>
 			</div>
 			<div class='login_fields__submit'>
-				<input id="btnLogin" type='submit' value='·Î±×ÀÎ'> <input
-					id="btnSignup" style="margin-left: 8px" type='submit' value='È¸¿ø°¡ÀÔ'>
+				<input id="btnLogin" type='submit' value='ë¡œê·¸ì¸'> <input
+					id="btnSignup" style="margin-left: 8px" type='submit' value='íšŒì›ê°€ì…'>
 				<div class='forgot'>
 					<a href='#'>Forgotten password?</a>
 				</div>
 			</div>
 		</div>
 		<div class='disclaimer'>
-			<p>SeFo¿¡¼­ »õ·Î¿î Ä£±¸¸¦ ¸¸³ªº¸¼¼¿ä!</p>
-			<!-- 			<h3>Áö³­ ·Î±×ÀÎ</h3> -->
+			<p>SeFoì—ì„œ ìƒˆë¡œìš´ ì¹œêµ¬ë¥¼ ë§Œë‚˜ë³´ì„¸ìš”!</p>
+			<!-- 			<h3>ì§€ë‚œ ë¡œê·¸ì¸</h3> -->
 			<!-- 			<table border="1"> -->
 
 			<%-- 				<c:forEach var="logInfo" items="loggedInIdList"> --%>

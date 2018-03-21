@@ -167,13 +167,13 @@ public class ArticleService {
 		else return false;
 	}
 
-	public long getLeftArticleNum(long article_num, String id) {
+	public Long getLeftArticleNum(long article_num, String id) {
 		MyLog.d(TAG, "getLeftArticleNum()");
 
 		return dao.selectLeftArticleNum(article_num, id);
 	}
 	
-	public long getRightArticleNum(long article_num, String id) {
+	public Long getRightArticleNum(long article_num, String id) {
 		MyLog.d(TAG, "getRightArticleNum()");
 
 		return dao.selectRightArticleNum(article_num, id);

@@ -78,8 +78,7 @@ public class ProfileService {
 	};
 
 	public boolean update(MemberVO member) {
-		MyLog.d(TAG, Thread.currentThread().getStackTrace()[1].getMethodName());
-
+		MyLog.d(TAG, Thread.currentThread().getStackTrace()[1].getMethodName() + " = member: "+ member.toString());
 		int original = dao.update(member);
 		if (original > 0) {
 			return true;

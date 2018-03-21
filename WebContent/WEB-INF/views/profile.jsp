@@ -4,8 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=EUC-KR">
-<meta charset="EUC-KR">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <title>비밀의숲 - ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -143,7 +142,7 @@
 					dataType : 'json',
 					success : function (resultData){
 						$('#follow-btn').attr('id', 'following-btn');
-						$('#following-btn').text('팔로윙');
+						$('#following-btn').text('팔로잉');
 						$('#following-btn').css("float","left");
 						$('#following-btn').css("background-color","transparent");
 						$('#following-btn').css("color","black");

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ºñ¹ĞÀÇ½£ - ${sessionScope.loginId}</title>
+<title>ë¹„ë°€ì˜ìˆ² - ${sessionScope.loginId}</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -41,29 +41,29 @@
 					alert(id+" "+newPw);
 					
 					$.ajax({
-						type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-						url : 'updatePw.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+						type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
+						url : 'updatePw.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
 						data : {
 							'id' : id,
 							'newPw' : newPw
-						}, // °Ë»ö¾î µ¥ÀÌÅÍ
-						dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+						}, // ê²€ìƒ‰ì–´ ë°ì´í„°
+						dataType : 'text', // ì‘ë‹µë°ì´í„° í˜•ì‹
 						success : function(resultData) {
-							alert("ºñ¹Ğ¹øÈ£ º¯°æ ¿Ï·á");
+							alert("ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ ì™„ë£Œ");
 							window.location.href="profile.do/${sessionScope.loginId}"
 						},
 						error : function() {
-							alert('ºñ¹Ğ¹øÈ£ º¯°æ ajax ¿äÃ» ½ÇÆĞ');
+							alert('ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ ajax ìš”ì²­ ì‹¤íŒ¨');
 						}
 					});
 				}
 			}else{
-				alert("ÇöÀç ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù.");
+				alert("í˜„ì¬ ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.");
 			}
 		});
 		
 		$('#logoutBtn').on('click',function(){
-			alert("·Î±×¾Æ¿ôµÇ¾ú½À´Ï´Ù.")
+			alert("ë¡œê·¸ì•„ì›ƒë˜ì—ˆìŠµë‹ˆë‹¤.")
 		});
 		
 		$('#submit2').on('click',function(){
@@ -71,24 +71,24 @@
 				var id = '${original.id}';
 				var deletePw= $('#new_password').val();
 				$.ajax({
-					type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-					url : 'deleteAll.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+					type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
+					url : 'deleteAll.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
 					data : {
 						'id' : id,
 						'deletePw' : deletePw
-					}, // °Ë»ö¾î µ¥ÀÌÅÍ
-					dataType : 'text', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+					}, // ê²€ìƒ‰ì–´ ë°ì´í„°
+					dataType : 'text', // ì‘ë‹µë°ì´í„° í˜•ì‹
 					success : function(resultData) {
-						alert("È¸¿øÅ»Åğ  ¿Ï·á");
+						alert("íšŒì›íƒˆí‡´  ì™„ë£Œ");
 						window.location.href="logout.do"
 					},
 					error : function() {
-						alert('È¸¿øÅ»Åğ ajax ¿äÃ» ½ÇÆĞ');
+						alert('íšŒì›íƒˆí‡´ ajax ìš”ì²­ ì‹¤íŒ¨');
 					}
 				});
 			}
 			return false;
-		})
+		});
 	});
 </script>
 <style type="text/css">
@@ -147,37 +147,36 @@ table {
 									<form action="updateProfile.do" method="post">
 										<table>
 											<tr class="panel panel-info">
-												<td class="panel-body"><h3 class="panel-title">ÀÌ¸§</h3></td>
-												<td><input id=aaa type="text" name="name"
+												<td class="panel-body"><h3 class="panel-title">ì´ë¦„</h3></td>
+												<td><input id="aaa" type="text" name="name"
 													value="${original.name}"></td>
 											</tr>
 											<tr class="panel panel-info">
-												<td class="panel-body"><h3 class="panel-title">ÀÚ±â¼Ò°³</h3></td>
-												<td><input id=aaa type="textarea" name="self_info"
+												<td class="panel-body"><h3 class="panel-title">ìê¸°ì†Œê°œ</h3></td>
+												<td><input id="aaa" type="textarea" name="self_info"
 													value="${original.self_info}"></td>
 											</tr>
 											<tr class="panel panel-info">
-												<td class="panel-body"><h3 class="panel-title">ÀÌ¸ŞÀÏ</h3></td>
-												<td><input id=aaa type="text" name="email"
+												<td class="panel-body"><h3 class="panel-title">ì´ë©”ì¼</h3></td>
+												<td><input id="aaa" type="text" name="email"
 													value="${original.email}"></td>
 											</tr>
 											<tr class="panel panel-info">
-												<td class="panel-body"><h3 class="panel-title">ÀüÈ­¹øÈ£</h3></td>
-												<td><input id=aaa type="text" name="phone"
+												<td class="panel-body"><h3 class="panel-title">ì „í™”ë²ˆí˜¸</h3></td>
+												<td><input id="aaa" type="text" name="phone"
 													value="${original.phone}"></td>
 											</tr>
+											
 											<tr class="panel panel-info">
-												<td class="panel-body"><h3 class="panel-title">¼ºº°</h3></td>
-												<td><select class="panel-body">
-														<option id=aaa value="³²" selecter>³²</option>
-														<option id=aaa value="¿©" selecter>¿©</option>
-												</select></td>
+												<td class="panel-body"><h3 class="panel-title">ì„±ë³„</h3></td>
+												<td><input id="aaa" type="text" name="gender" value="${original.gender}">
+												</td>
 											</tr>
 											<tr class="panel panel-info">
 
-												<td class="panel-body"><input id=aaa type="hidden"
+												<td class="panel-body"><input id="aaa" type="hidden"
 													name="id" value="${original.id}"> <input
-													class="btn btn-primary" type="submit" value="º¯°æ"></td>
+													class="btn btn-primary" type="submit" value="ë³€ê²½"></td>
 											</tr>
 										</table>
 									</form>
@@ -188,8 +187,8 @@ table {
 								<div class="panel panel-info" style="margin: 1em;">
 									<div class="panel-heading">
 										<h3 class="panel-title">
-											<label for="new_password" class="control-label panel-title">ÇöÀç
-												ºñ¹Ğ¹øÈ£</label>
+											<label for="new_password" class="control-label panel-title">í˜„ì¬
+												ë¹„ë°€ë²ˆí˜¸</label>
 										</h3>
 									</div>
 									<div class="panel-body">
@@ -244,7 +243,7 @@ table {
 										<div class="form-group">
 											<div class="pull-left">
 												<input type="button" class="form-control btn btn-primary"
-													name="submit" id="submit" value="Á¦Ãâ">
+													name="submit" id="submit" value="ì œì¶œ">
 											</div>
 										</div>
 									</div>
@@ -255,7 +254,7 @@ table {
 								<div class="panel panel-info" style="margin: 1em;">
 									<div class="panel-heading">
 										<h3 class="panel-title">
-											<label for="new_password" class="control-label panel-title">ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ½Ã¿À</label>
+											<label for="new_password" class="control-label panel-title">ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì‹œì˜¤</label>
 										</h3>
 									</div>
 									<div class="panel-body">
@@ -273,7 +272,7 @@ table {
 										<div class="form-group">
 											<div class="pull-left">
 												<input type="button" class="form-control btn btn-primary"
-													name="submit" id="submit2" value="È¸¿øÅ»Åğ">
+													name="submit" id="submit2" value="íšŒì›íƒˆí‡´">
 											</div>
 										</div>
 									</div>
@@ -290,7 +289,7 @@ table {
 											</h4>
 										</div>
 										<div class="modal-body">
-											<i class="fa fa-question-circle"></i> ³ªÁ¤¸» ¹ö¸±²¿¾ß?:(
+											<i class="fa fa-question-circle"></i> ë‚˜ì •ë§ ë²„ë¦´ê¼¬ì•¼?:(
 										</div>
 										<div class="modal-footer">
 											<a href="logout.do" class="btn btn-primary btn-block">Logout</a>

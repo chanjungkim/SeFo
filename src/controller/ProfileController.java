@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -93,28 +94,36 @@ public class ProfileController {
 		return mv;
 	}
 	
-	@RequestMapping(value="updateProfile.do",method=RequestMethod.POST)
-	public ModelAndView update(MemberVO member, HttpSession session) {
+	@RequestMapping(value="updateProfile.do", method=RequestMethod.POST)
+	public String update(HttpSession session, HttpServletRequest request) {
 		MyLog.d(TAG, "update()");
 
-		boolean result=profileService.update(member);
-		ModelAndView mv=new ModelAndView();
+		MemberVO member = new MemberVO();
 		
-		if(result) {
-			mv.addObject("original", member);
-			mv.setViewName("profile");
-			System.out.println("디비 확인:"+member);
-		}else {
-			 mv.setViewName("updateProfile");
+		try {
+			request.setCharacterEncoding("UTF-8");
+			member.setId(request.getParameter("id"));
+			member.setName(request.getParameter("name"));
+			member.setSelf_info(request.getParameter("self_info"));
+			member.setEmail(request.getParameter("email"));
+			member.setPhone(request.getParameter("phone"));
+			member.setGender(request.getParameter("gender"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return mv;
+		
+		MyLog.d(TAG, member.toString());
+		boolean result = profileService.update(member);
+		
+		return "redirect:profile.do/"+member.getId();
 	}
 	
-	@RequestMapping(value="updatePw.do",method=RequestMethod.POST)
+	@RequestMapping(value="updatePw.do", method=RequestMethod.POST)
 	public void updatePw(String id, String newPw,HttpSession session,HttpServletResponse response) {
 		MyLog.d(TAG, "updatePw()");
 
-		boolean result=profileService.getUpdatePw(id, newPw);
+		boolean result = profileService.getUpdatePw(id, newPw);
 		try {
 			response.getWriter().println(result);
 		} catch (IOException e) {
@@ -157,6 +166,7 @@ public class ProfileController {
 	public int changePhofilePhoto (HttpSession session, HttpServletRequest request, HttpServletResponse response, MemberVO member) 
 			throws UnsupportedEncodingException {
 		
+
 		String id = (String) session.getAttribute("loginId");
 		member.setId(id);
 		MyLog.d(TAG, "changePhotofilePhoto() = member: " + member.toString());

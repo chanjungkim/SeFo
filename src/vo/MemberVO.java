@@ -14,7 +14,7 @@ public class MemberVO {
 	private Date birth;
 	private String photo_path;
 	private String phone;
-	private Character gender;
+	private String gender;
 	private int follow_count;
 	private int follower_count;
 	private String self_info;
@@ -89,12 +89,12 @@ public class MemberVO {
 		this.phone = phone;
 	}
 
-	public Character getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Character gender) {
-		this.gender = gender;
+	public void setGender(String string) {
+		this.gender = string;
 	}
 
 	public int getFollow_count() {

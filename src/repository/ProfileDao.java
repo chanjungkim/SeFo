@@ -45,7 +45,7 @@ public class ProfileDao {
 		return mapper.selectMoreArticleList(id, articleNum);
 	};
 	public int update(MemberVO member){
-		MyLog.d(TAG, "update()");
+		MyLog.d(TAG, "update() = member: " + member.toString());
 
 		ProfileMapper mapper=session.getMapper(ProfileMapper.class);
 		return mapper.update(member);

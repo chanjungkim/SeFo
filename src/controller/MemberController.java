@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import lib.MyLog;
 import service.ArticleService;
 import service.MemberService;
 import vo.ArticleVO;
@@ -114,15 +116,25 @@ public class MemberController {
 		return "signup_form";
 	}
 	
-	@RequestMapping("/signup.do")
+	@RequestMapping(value="/signup.do", method=RequestMethod.POST)
 	public String join(HttpServletRequest request) {
 		System.out.println(TAG + ", join()");
 
 		MemberVO member = new MemberVO();
-		member.setId(request.getParameter("id"));
-		member.setPassword(request.getParameter("password"));
-		member.setName(request.getParameter("name"));
-		member.setEmail("email");
+		try {
+			request.setCharacterEncoding("UTF-8");
+
+			member.setId(request.getParameter("id"));
+			member.setName(request.getParameter("name"));
+			member.setGender(request.getParameter("gender"));
+			member.setPassword(request.getParameter("password"));
+			member.setEmail(request.getParameter("email"));
+
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		String from = request.getParameter("birth_year")+"-"+request.getParameter("birth_month")+"-"+request.getParameter("birth_day");
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -134,7 +146,9 @@ public class MemberController {
 		}
 		String phone = request.getParameter("phone_1")+"-"+request.getParameter("phone_2")+"-"+request.getParameter("phone_3");
 		member.setPhone(phone);
-		member.setGender(request.getParameter("gender").charAt(0));
+		
+		MyLog.d(TAG, member.toString());
+		
 		if(service.signup(member)) return "login";
 		else return "join_fail";
 	}

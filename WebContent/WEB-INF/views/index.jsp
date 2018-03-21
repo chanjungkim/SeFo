@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,8 +21,8 @@
 			<div class="carouselGallery-col-60">
 				<div class="carouselGallery-col-40">
 					<div class="carouselGallery-col-2 carouselGallery-carousel"
-						data-index="1" data-username="userId" data-imagetext="³»¿ë"
-						data-location="" data-likes="like ¼ö" data-imagepath="img/1.JPG"
+						data-index="1" data-username="userId" data-imagetext="ë‚´ìš©"
+						data-location="" data-likes="like ìˆ˜" data-imagepath="img/1.JPG"
 						style="background-image: url(img/3.JPG);">
 						<div class="carouselGallery-item">
 							<div class="carouselGallery-item-meta">

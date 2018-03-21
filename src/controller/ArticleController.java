@@ -180,7 +180,7 @@ public class ArticleController {
 	public void getLeftArticleNum(HttpSession session, HttpServletResponse response, long article_num, String id) {
 		System.out.println(TAG + ", getLeftAticleNum()");
 
-		long leftArticleNum = service.getLeftArticleNum(article_num, id);
+		Long leftArticleNum = service.getLeftArticleNum(article_num, id);
 		
 		PrintWriter writer = null;
 
