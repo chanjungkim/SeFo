@@ -3,6 +3,8 @@ package vo;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberVO {
 	private int member_num;
 	private String id;
@@ -18,7 +20,9 @@ public class MemberVO {
 	private String self_info;
 	private List<FollowVO> followList;
 	private List<FollowVO> followerList;
-	
+
+	private MultipartFile file;
+	private FileVO photo;
 	/////////////////////////////////////////////////////////////
 
 	public int getMember_num() {
@@ -135,11 +139,30 @@ public class MemberVO {
 		follower_count = followerList.size();
 	}
 
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public FileVO getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(FileVO photo) {
+		this.photo = photo;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [member_num=" + member_num + ", id=" + id + ", password=" + password + ", name=" + name
 				+ ", email=" + email + ", birth=" + birth + ", photo_path=" + photo_path + ", phone=" + phone
 				+ ", gender=" + gender + ", follow_count=" + follow_count + ", follower_count=" + follower_count
-				+ ", self_info=" + self_info + "]";
+				+ ", self_info=" + self_info + ", followList=" + followList + ", followerList=" + followerList
+				+ ", file=" + file + ", photo=" + photo + "]";
 	}
+
+	
 }

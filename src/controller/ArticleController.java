@@ -40,7 +40,7 @@ public class ArticleController {
 	@ResponseBody
 	public ArticleVO writePost(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			ArticleVO article) throws UnsupportedEncodingException {
-		MyLog.d(TAG, "writePost()");
+		MyLog.d(TAG, "writePost() = article: " + article.toString());
 
 		String decodedData = URLDecoder.decode(article.getContent(), "UTF-8");
 		article.setContent(decodedData);
@@ -48,7 +48,7 @@ public class ArticleController {
 		if (article.getFileList() != null) {
 			for (MultipartFile m : article.getFileList()) {
 				String filename = URLDecoder.decode(m.getOriginalFilename(), "UTF-8");
-				System.out.println("tt:"+filename);
+				MyLog.d(TAG, "tt:"+filename);
 			}
 		}
 		String id = (String) session.getAttribute("loginId");
@@ -67,7 +67,6 @@ public class ArticleController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("writePost.do ½ÇÇà");
 		article = service.writeArticle(article, request);
 
 		if (article.getPhotoList() != null && article.getPhotoList().size() > 0)

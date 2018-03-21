@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="repository.mapper.ProfileMapper">
+	<update id="updateProfile" parameterType="MemberVO"
+		useGeneratedKeys="true" keyProperty="article_num">
+		UPDATE MEMBER SET PHOTO_PATH = #{photo_path}
+		WHERE ID = #{id}
+	</update>
 	<select id="selectContentCount" resultType="int">
 		SELECT count(*)
 		FROM
@@ -20,7 +25,7 @@
 		WHERE ID = #{id}
 		AND article_num &lt;= (SELECT
 		MAX(article_num)
-		FROM article
+		FROM ARTICLE
 		WHERE ID= #{id} AND PHOTO_COUNT &gt; 0)
 		<!-- &gt == '>' , &lt == '<' -->
 		AND PHOTO_COUNT &gt; 0
@@ -32,7 +37,7 @@
 		SELECT *
 		FROM
 		ARTICLE
-		WHERE id = #{id} AND ARTICLE_NUM &lt; #{articleNum}
+		WHERE ID = #{id} AND ARTICLE_NUM &lt; #{articleNum}
 		AND
 		PHOTO_COUNT &gt; 0
 		ORDER BY WRITE_TIME DESC
@@ -43,12 +48,13 @@
 		name=#{name},
 		SELF_INFO = #{self_info}, EMAIL = #{email}, PHONE =
 		#{phone}, GENDER = #{gender}
-		where ID=#{id}
+		where ID = #{id}
 	</update>
 
 	<update id="updatePw">
 		update MEMBER set PASSWORD = #{password}
-		where ID = #{id}
+		where ID =
+		#{id}
 	</update>
 
 	<insert id="insertFollow">
@@ -67,7 +73,7 @@
 		SELECT
 		count(followee)
 		FROM FOLLOW
-		WHERE id = #{id};
+		WHERE ID = #{id};
 	</select>
 
 	<select id="selectTotalfolloweeCount" resultType="int">
@@ -87,22 +93,27 @@
 		select
 		f.*,m.PHOTO_PATH
 		from FOLLOW f, MEMBER m
-		where f.FOLLOWEE =#{id} and f.ID= m.id;
+		where f.FOLLOWEE =#{id} and
+		f.ID= m.id;
 	</select>
 
 	<delete id="deleteMember" parameterType="MemberVO">
-		delete from MEMBER where ID=#{id}
+		delete FROM MEMBER where
+		ID = #{id}
 	</delete>
 
 	<delete id="deleteArticle" parameterType="ArticleVO">
-		delete from ARTICLE where ID=#{id}
+		delete FROM ARTICLE
+		where ID = #{id}
 	</delete>
 	<insert id="insertArticlePhoto" parameterType="FileVO">
-		INSERT INTO ARTICLE_PHOTO (ARTICLE_NUM, FILE_PATH, FILE_NAME, FILE_ORIGINAME)
+		INSERT INTO
+		ARTICLE_PHOTO (ARTICLE_NUM, FILE_PATH, FILE_NAME, FILE_ORIGINAME)
 		VALUES(#{article_num},#{file_path},#{file_name},#{file_origiName})
 	</insert>
 
 	<update id="updateProfilePhoto">
-		UPDATE MEMBER SET PHOTO_PATH = ${photo_path} WHERE ID = ${id}
+		UPDATE MEMBER SET PHOTO_PATH = ${photo_path} WHERE ID
+		= ${id}
 	</update>
 </mapper>

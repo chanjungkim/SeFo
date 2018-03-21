@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -239,10 +239,24 @@ $(document).ready(function() {
 			$(document).on('change', ".file_input_hidden", function() {
 				alert('실행됨!!');
 				readURL(this);
+				
 				//폼객체를 불러와서
-				var form = $('write_form')[0];
+				var form = $('#write_form')[0];
 				//FormData parameter에 담아줌
 				var formData = new FormData(form);
+				
+				var newForm = new FormData();
+				for(var pair of formData.entries()) {
+					if (pair[0] == 'content'){
+					   	newForm.append(pair[0],encodeURIComponent(pair[1]));
+					}else{
+						newForm.append(pair[0],pair[1],encodeURIComponent(pair[1].name));
+					}
+				}
+				for (var pair of newForm.entries()) {
+				    console.log(pair[0]+ ', ' + pair[1]); 
+				}
+				
 				$.ajax({
 					type : 'post',
 					url : '<%=request.getContextPath()%>/changeProfilePhoto.do',
@@ -250,13 +264,12 @@ $(document).ready(function() {
 					cache : false,
 					contentType : false,
 					data : formData,
-					enctype: "multipart/form-data",
 					dataType : 'json',
 					success : function(resultData) {
 						alert("사진 변경 완료!");
 					},
-					error : function(resultData){
-						alert("사진 변경 실패");
+					error : function(err){
+						alert("사진 변경 실패:\n"+JSON.stringify(err));
 					}
 				});
 			});

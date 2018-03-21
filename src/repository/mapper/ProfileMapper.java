@@ -25,5 +25,5 @@ public interface ProfileMapper {
 	public int deleteMember(@Param("id")String id, @Param("password")String pw);
 	public int deleteArticle(@Param("id")String id);
 	public int insertArticlePhoto(FileVO vo);
-	public int updateProfilePhoto(@Param("id") String userId, @Param("photo_path") String photo_path);
+	public int updateProfile(MemberVO member);
 }

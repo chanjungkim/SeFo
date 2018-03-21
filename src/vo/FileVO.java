@@ -3,13 +3,13 @@ package vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileVO {
+	private long member_num;
 	private long article_num;
 	private int article_photo_num;
 	private String file_path;
 	private String file_name;
 	private String file_origiName;
 	private MultipartFile memImg;
-	
 	///////////////////////////////
 	public String getFile_path() {
 		return file_path;
@@ -47,6 +47,16 @@ public class FileVO {
 	public void setMemImg(MultipartFile memImg) {
 		this.memImg = memImg;
 	}
-	
-	
+	public long getMember_num() {
+		return member_num;
+	}
+	public void setMember_num(long member_num) {
+		this.member_num = member_num;
+	}
+	@Override
+	public String toString() {
+		return "FileVO [member_num=" + member_num + ", article_num=" + article_num + ", article_photo_num="
+				+ article_photo_num + ", file_path=" + file_path + ", file_name=" + file_name + ", file_origiName="
+				+ file_origiName + ", memImg=" + memImg + "]";
+	}
 }

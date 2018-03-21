@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 		  <%@page import="java.util.ArrayList"%>
 <%@page import="vo.ReactVO"%>
@@ -11,7 +11,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>비밀의숲 - ${sessionScope.loginId}</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -153,7 +153,6 @@
 			$("#content").val();
 		});
 		$(document).on('click', '#postBtn', function(e) {
-			//����ü�� �ҷ��ͼ�
 			var form = $('#write_form')[0];
 			var formData = new FormData(form);
 			$('#content').val("");
@@ -277,7 +276,7 @@
 					$("#none-post").remove();
 				},
 				error : function() {
-					alert('ajax ��û ����');
+					alert('ajax fail');
 				}
 			})
 		})
@@ -291,12 +290,12 @@
 			var searchWord = $(this).val();
 			console.log(searchWord);
 			$.ajax({
-				type : 'post', // ��û ������ doPost�� �����
-				url : 'search.do', // �츮�� �ۼ��� java ��������
+				type : 'post',
+				url : 'search.do', 
 				data : {
-					'searchWord' : searchWord // �˻��� ������	
+					'searchWord' : searchWord
 				},
-				dataType : 'json', // ���䵥���� ����
+				dataType : 'json',
 				success : function(resultData) {
 					console.log(resultData);
 					$('.search-option').remove();
@@ -310,7 +309,7 @@
 					$('#search-data-list').append(bookData);
 				},
 				error : function() {
-					console.log('�˻� ajax ��û ����');
+					console.log('ajax fail');
 				}
 			})
 		})
@@ -318,18 +317,18 @@
 	function deleteComment(comment_num) {
 		if (confirm("삭제하시겠습니까?")) {
 			$.ajax({
-				type : 'post', // ��û ������ doPost�� �����
-				url : 'deleteComment.do', // �츮�� �ۼ��� java ��������
+				type : 'post',
+				url : 'deleteComment.do', 
 				data : {
 					'comment_num' : comment_num
-				}, // �˻��� ������
-				dataType : 'text', // ���䵥���� ����
+				}, 
+				dataType : 'text', 
 				success : function(resultData) {
 					alert("댓글 삭제 완료!");
 					$('#comment-' + comment_num).remove();
 				},
 				error : function() {
-					alert('ajax ��û ����');
+					alert('ajax fail');
 				}
 			})
 		}
@@ -337,19 +336,19 @@
 	function deleteNewComment(id, content) {
 		if (confirm("삭제하시겠습니까?")) {
 			$.ajax({
-				type : 'post', // ��û ������ doPost�� �����
-				url : 'deleteNewComment.do', // �츮�� �ۼ��� java ��������
+				type : 'post',
+				url : 'deleteNewComment.do', 
 				data : {
 					'id' : id,
 					'content' : content
-				}, // �˻��� ������
-				dataType : 'text', // ���䵥���� ����
+				}, 
+				dataType : 'text',
 				success : function(resultData) {
 					alert("댓글 삭제 완료!");
 					$('#new-comment').remove();
 				},
 				error : function() {
-					alert('ajax ��û ����');
+					alert('ajax fail');
 				}
 			})
 		}
@@ -419,16 +418,16 @@ function removeArticle(article_num) {
 	function reactListener(id, article_num, expression) {
 		alert(id + " " + article_num + " " + expression);
 		$.ajax({
-			type : 'post', // ��û ������ doPost�� �����
-			url : 'react.do', // �츮�� �ۼ��� java ��������
+			type : 'post',
+			url : 'react.do',
 			data : {
 				'article_num' : article_num,
 				'id' : id,
 				'expression' : expression
-			}, // �˻��� ������
-			dataType : 'text', // ���䵥���� ����
+			}, 
+			dataType : 'text', 
 			success : function(resultData) {
-				alert("���׼� �ޱ� ����!");
+				alert("성공!");
 // 				var a = '<c:if test="${not empty articleVO.reactList}">'
 // 					+ '<ul style="display: inline-block;">'
 // 					+ '<c:if test="${articleVO.react_like == true}" >'
@@ -465,21 +464,21 @@ function removeArticle(article_num) {
 // 					${articleVO.react_count}��
 // 			</c:if>
 // 		</span>
-		<!-- EO liked list -->'
+		<!-- EO liked list -->
 				$('#like-indicator-' + article_num).append("+");
 			},
 			error : function() {
 				$.ajax({
-					type : 'post', // ��û ������ doPost�� �����
-					url : 'reactUpdate.do', // �츮�� �ۼ��� java ��������
+					type : 'post',
+					url : 'reactUpdate.do',
 					data : {
 						'article_num' : article_num,
 						'id' : id,
 						'expression' : expression
-					}, // �˻��� ������
-					dataType : 'text', // ���䵥���� ����
+					},
+					dataType : 'text',
 					success : function(resultData) {
-						alert("���׼� �ޱ� ����!");
+						alert("성공!");
 						$('#like-indicator-' + article_num).append("+");
 					},
 					error : function() {
