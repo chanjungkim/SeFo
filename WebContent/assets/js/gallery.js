@@ -14,6 +14,8 @@ function openGalleryModal(myContextPath, article_num){
 		},
 		dataType : 'json',
 		success : function(articleVO) {
+			alert(JSON.stringify(articleVO));
+			
 			var photoList = articleVO.photoList;
 			var myContext = myContextPath;
 

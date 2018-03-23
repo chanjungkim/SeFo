@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
@@ -13,13 +13,13 @@ $(function() {
 	$('#srch-term').on('keyup', function() {
 				var searchWord = $(this).val();
 				$.ajax({
-						type : 'post', // ¿äÃ» º¸³»¸é doPost°¡ ½ÇÇàµÊ
-						url : 'search.do', // ¿ì¸®°¡ ÀÛ¼ºÇÑ java ¼­ºí¸´¿¡°Ô
+						type : 'post', // ìš”ì²­ ë³´ë‚´ë©´ doPostê°€ ì‹¤í–‰ë¨
+						url : 'search.do', // ìš°ë¦¬ê°€ ì‘ì„±í•œ java ì„œë¸”ë¦¿ì—ê²Œ
 						data : {
 							'searchWord' : searchWord
-						// °Ë»ö¾î µ¥ÀÌÅÍ	
+						// ê²€ìƒ‰ì–´ ë°ì´í„°	
 						},
-						dataType : 'json', // ÀÀ´äµ¥ÀÌÅÍ Çü½Ä
+						dataType : 'json', // ì‘ë‹µë°ì´í„° í˜•ì‹
 						success : function(resultData) {
 							console.log(resultData);
 							$('.search-option').remove();
@@ -31,7 +31,7 @@ $(function() {
 							$('#search-data-list')	.append(bookData);
 						},
 						error : function() {
-							console.log('°Ë»ö ajax ¿äÃ» ½ÇÆĞ');
+							console.log('ê²€ìƒ‰ ajax ìš”ì²­ ì‹¤íŒ¨');
 						}
 					})
 	})

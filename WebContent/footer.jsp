@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -11,23 +11,23 @@
 		<div>
 			<div class="col-sm-3">
 				<ul>
-					<li><a href="#">SeFoа╓╨╦</a></li>
-					<li><a href="#">аЖ©Ь</a></li>
+					<li><a href="#">SeFoЛ═∙КЁ╢</a></li>
+					<li><a href="#">Л╖─Л⌡░</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-3">
 				<ul>
-					<li><a href="#">╨М╥н╠в</a></li>
-					<li><a href="#">х╚╨╦ ╪╬ем</a></li>
-					<li><a href="#">ц╓©К а╓╨╦</a></li>
+					<li><a href="#">К╦■К║°Й╥╦</a></li>
+					<li><a href="#">М≥█КЁ╢ Л└╪М└╟</a></li>
+					<li><a href="#">Л╠└Л ╘ Л═∙КЁ╢</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-3">
 				<ul>
-					<li><a href="#">╟Ёюна╓╨╦цЁ╦╝╧Фд╖</a></li>
-					<li><a href="#">╬Ю╟Э</a></li>
-					<li><a href="#">╣П╥╨ем╦╝</a></li>
-					<li><a href="#">╬П╬Н</a></li>
+					<li><a href="#">Й╟°Л²╦Л═∙КЁ╢Л╡≤К╕╛К╟╘Л╧╗</a></li>
+					<li><a href="#">Л∙╫Й╢─</a></li>
+					<li><a href="#">К■■К═┴М└╟К╕╛</a></li>
+					<li><a href="#">Л√╦Л√╢</a></li>
 				</ul>
 			</div>
 		</div>
